@@ -1,0 +1,9 @@
+POST http://localhost:8080/internship
+Accept: application/json
+{
+ "title": "Software Engineer",
+"description": "Software Engineer",
+"is_approved": true,
+"start_date": "2019-01-01",
+"end_date": "2019-01-02",
+}
