@@ -46,7 +46,7 @@ public class SignUpServiceImpl implements SignUpService {
         );
         institutionRepository.save(institution);
         // generate the verification code
-        VerificationCode verificationCode = verificationCodeService.createVerificationCode();
+        VerificationCode verificationCode = verificationCodeService.createVerificationCode(savedUser.getUserId());
         // send verification code to the email
         Thread mailThread = new Thread(() -> {
             try {

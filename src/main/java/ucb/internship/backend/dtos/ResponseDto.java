@@ -5,6 +5,8 @@ public class ResponseDto<T> {
     private String message;
     private boolean success;
 
+    public ResponseDto(){}
+
     public ResponseDto(T data, String message, boolean success) {
         this.data = data;
         this.message = message;

@@ -3,7 +3,7 @@ package ucb.internship.backend.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "user", schema = "public")
+@Table(name = "ucb_user", schema = "public")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

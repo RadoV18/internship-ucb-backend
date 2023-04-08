@@ -3,7 +3,10 @@ package ucb.internship.backend.services;
 import org.springframework.web.multipart.MultipartFile;
 import ucb.internship.backend.dtos.InstitutionSignUpDto;
 import ucb.internship.backend.dtos.VerificationCodeDto;
+import ucb.internship.backend.dtos.VerificationCodeReqDto;
 import ucb.internship.backend.exceptions.FileStorageException;
+
+import java.util.ArrayList;
 
 public interface SignUpService {
 

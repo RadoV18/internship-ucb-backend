@@ -13,14 +13,17 @@ public class VerificationCode {
     private Long verificationCodeId;
     private String uuid;
     private String code;
+    @Column(name = "user_id")
+    private Long userId;
     private boolean status;
 
     public VerificationCode(){
     }
 
-    public VerificationCode(String uuid, String code, boolean status) {
+    public VerificationCode(String uuid, String code, Long userId, boolean status) {
         this.uuid = uuid;
         this.code = code;
+        this.userId = userId;
         this.status = status;
     }
 
@@ -48,6 +51,14 @@ public class VerificationCode {
         this.code = code;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     public boolean isStatus() {
         return status;
     }
@@ -62,6 +73,7 @@ public class VerificationCode {
                 "verificationCodeId=" + verificationCodeId +
                 ", uuid='" + uuid + '\'' +
                 ", code='" + code + '\'' +
+                ", userId=" + userId +
                 ", status=" + status +
                 '}';
     }

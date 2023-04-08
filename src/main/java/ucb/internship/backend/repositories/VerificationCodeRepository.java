@@ -1,7 +1,11 @@
 package ucb.internship.backend.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import ucb.internship.backend.models.VerificationCode;
+
+import java.util.Optional;
 
 public interface VerificationCodeRepository extends JpaRepository<VerificationCode, Long> {
     /**
@@ -10,4 +14,15 @@ public interface VerificationCodeRepository extends JpaRepository<VerificationCo
      * @return the stored verification code
      */
     VerificationCode save(VerificationCode verificationCode);
+
+    /**
+     * @param uuid the uuid to look in the database
+     * @return the code if it exists
+     */
+    VerificationCode findByUuidAndStatusIs(String uuid, Boolean status);
+
+    /**
+     * @param codeId the code id to look in the database
+     */
+    void deleteById(Long codeId);
 }
