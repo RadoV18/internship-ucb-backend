@@ -1,4 +1,4 @@
-package ucb.internship.backend.dto;
+package ucb.internship.backend.dtos;
 
 import ucb.internship.backend.models.InternshipBenefit;
 import ucb.internship.backend.models.InternshipRequirement;
