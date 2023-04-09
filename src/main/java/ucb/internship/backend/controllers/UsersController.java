@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ucb.internship.backend.services.UserService;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/users")
 public class UsersController
