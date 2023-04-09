@@ -7,6 +7,9 @@ public class StudentDto {
     private Integer semester;
     private Boolean status;
 
+    public StudentDto() {
+    }
+
     public StudentDto(Long studentId, PersonDto personDto, Long campusMajorId, Integer semester, Boolean status) {
         this.studentId = studentId;
         this.personDto = personDto;

@@ -16,14 +16,13 @@ public class Student {
     private Long personId;
     private Long campusMajorId;
     private Integer semester;
-    private Boolean status;
+    private Boolean status = false;
 
-    public Student(Long studentId, Long personId, Long campusMajorId, Integer semester, Boolean status) {
+    public Student(Long studentId, Long personId, Long campusMajorId, Integer semester) {
         this.studentId = studentId;
         this.personId = personId;
         this.campusMajorId = campusMajorId;
         this.semester = semester;
-        this.status = status;
     }
 
     public Student(Long studentId) {

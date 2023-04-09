@@ -18,14 +18,13 @@ public class Graduate {
     private Long personId;
     private Date graduationDate;
     private Long campusMajorId;
-    private Boolean status;
+    private Boolean status = false;
 
-    public Graduate(Long graduateId, Long personId, Date graduationDate, Long campusMajorId, Boolean status) {
+    public Graduate(Long graduateId, Long personId, Date graduationDate, Long campusMajorId) {
         this.graduateId = graduateId;
         this.personId = personId;
         this.graduationDate = graduationDate;
         this.campusMajorId = campusMajorId;
-        this.status = status;
     }
 
     public Graduate(Long graduateId) {

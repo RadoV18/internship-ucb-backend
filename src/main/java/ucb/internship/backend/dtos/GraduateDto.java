@@ -9,6 +9,9 @@ public class GraduateDto {
     private Long campusMajorId;
     private Boolean status;
 
+    public GraduateDto() {
+    }
+
     public GraduateDto(Long graduateId, PersonDto personDto, Date graduationDate, Long campusMajorId, Boolean status) {
         this.graduateId = graduateId;
         this.personDto = personDto;

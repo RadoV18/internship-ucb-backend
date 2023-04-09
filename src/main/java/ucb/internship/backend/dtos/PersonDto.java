@@ -9,6 +9,9 @@ public class PersonDto {
     private String phoneNumber;
     private String s3Cv;
 
+    public PersonDto() {
+    }
+
     public PersonDto(Long personId, UserDto userDto, String firstName, String lastName, String ci, String phoneNumber,
             String s3Cv) {
         this.personId = personId;

@@ -14,6 +14,7 @@ import ucb.internship.backend.exceptions.FileStorageException;
 import ucb.internship.backend.models.Graduate;
 import ucb.internship.backend.models.Institution;
 import ucb.internship.backend.models.Person;
+import ucb.internship.backend.models.S3Object;
 import ucb.internship.backend.models.Student;
 import ucb.internship.backend.models.User;
 import ucb.internship.backend.models.VerificationCode;
@@ -35,6 +36,8 @@ public class SignUpServiceImpl implements SignUpService {
     private EmailService emailService;
     @Autowired
     private InstitutionRepository institutionRepository;
+    @Autowired
+    private FileStorageService fileStorageService;
     @Autowired
     private PersonRepository personRepository;
     @Autowired
@@ -65,7 +68,8 @@ public class SignUpServiceImpl implements SignUpService {
         // send verification code to the email
         Thread mailThread = new Thread(() -> {
             try {
-                emailService.sendVerificationCode(savedUser.getEmail(), verificationCode.getCode());
+                emailService.sendVerificationCode(savedUser.getEmail(),
+                        verificationCode.getCode());
             } catch (Exception e) {
                 e.printStackTrace();
                 logger.error("Error sending verification code.");
@@ -83,7 +87,7 @@ public class SignUpServiceImpl implements SignUpService {
         String password = studentDto.getPersonDto().getUserDto().getPassword();
         User savedUser = userService.createUser(email, password, profilePicture);
         // upload the cv
-        // S3Object cv = fileStorageService.createObject(cvFile);
+        S3Object cv = fileStorageService.createObject(cvFile);
 
         // TODO: save the person in the database using cv_id from cv
         // TODO: save the graduate in the database using person_id
@@ -91,14 +95,15 @@ public class SignUpServiceImpl implements SignUpService {
                 studentDto.getPersonDto().getFirstName(), studentDto.getPersonDto().getLastName(),
                 studentDto.getPersonDto().getCi(), studentDto.getPersonDto().getPhoneNumber(), ""));
         Student student = studentRepository.save(new Student(null, person.getPersonId(), studentDto.getCampusMajorId(),
-                studentDto.getSemester(), studentDto.getStatus()));
+                studentDto.getSemester()));
 
         // generate the verification code
         VerificationCode verificationCode = verificationCodeService.createVerificationCode(savedUser.getUserId());
         // send verification code to the email
         Thread mailThread = new Thread(() -> {
             try {
-                emailService.sendVerificationCode(savedUser.getEmail(), verificationCode.getCode());
+                emailService.sendVerificationCode(savedUser.getEmail(),
+                        verificationCode.getCode());
             } catch (Exception e) {
                 e.printStackTrace();
                 logger.error("Error sending verification code.");
@@ -116,21 +121,22 @@ public class SignUpServiceImpl implements SignUpService {
         String password = graduateDto.getPersonDto().getUserDto().getPassword();
         User savedUser = userService.createUser(email, password, profilePicture);
         // upload the cv
-        // S3Object cv = fileStorageService.createObject(cvFile);
+        S3Object cv = fileStorageService.createObject(cvFile);
         // TODO: save the person in the database using cv_id from cv
         // TODO: save the graduate in the database using person_id
         Person person = personRepository.save(new Person(null, savedUser.getUserId(),
                 graduateDto.getPersonDto().getFirstName(), graduateDto.getPersonDto().getLastName(),
                 graduateDto.getPersonDto().getCi(), graduateDto.getPersonDto().getPhoneNumber(), ""));
         Graduate graduate = graduateRepository.save(new Graduate(null, person.getPersonId(),
-                graduateDto.getGraduationDate(), graduateDto.getCampusMajorId(), graduateDto.getStatus()));
+                graduateDto.getGraduationDate(), graduateDto.getCampusMajorId()));
 
         // generate the verification code
         VerificationCode verificationCode = verificationCodeService.createVerificationCode(savedUser.getUserId());
         // send verification code to the email
         Thread mailThread = new Thread(() -> {
             try {
-                emailService.sendVerificationCode(savedUser.getEmail(), verificationCode.getCode());
+                emailService.sendVerificationCode(savedUser.getEmail(),
+                        verificationCode.getCode());
             } catch (Exception e) {
                 e.printStackTrace();
                 logger.error("Error sending verification code.");

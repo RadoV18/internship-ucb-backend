@@ -1,5 +1,6 @@
 package ucb.internship.backend.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,6 +19,7 @@ public class Person {
     private String lastName;
     private String ci;
     private String phoneNumber;
+    @Column(name = "s3_cv")
     private String s3Cv;
 
     public Person(Long personId) {
