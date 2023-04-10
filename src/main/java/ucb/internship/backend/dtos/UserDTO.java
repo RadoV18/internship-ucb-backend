@@ -1,16 +1,16 @@
-package ucb.internship.backend.DTO;
+package ucb.internship.backend.dtos;
 
 import lombok.Data;
 
 @Data
 public class UserDTO {
-    private Integer user_id;
+    private Integer userId;
     private String email;
-    private Integer is_approved;
+    private Integer isApproved;
     private String password;
-    private String profile_picture;
+    private String profilePicture;
     private Integer status;
-    
+
 
     
 }

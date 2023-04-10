@@ -1,4 +1,4 @@
-package ucb.internship.backend.BL;
+package ucb.internship.backend.services;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,24 +11,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import ucb.internship.backend.DAO.ENTITY.InstitutionsENTITY;
-import ucb.internship.backend.DAO.ENTITY.UserENTITY;
-import ucb.internship.backend.DAO.REPOSITORY.InstitutionsREPOSITORY;
-import ucb.internship.backend.DAO.REPOSITORY.UserREPOSITORY;
-import ucb.internship.backend.DTO.InstitucionsDTO;
-import ucb.internship.backend.DTO.MAPPER.InstitutionsMAPPER;
+import ucb.internship.backend.models.InstitutionsENTITY;
+import ucb.internship.backend.models.UserENTITY;
+import ucb.internship.backend.dtos.InstitucionsDTO;
+import ucb.internship.backend.mapper.InstitutionsMAPPER;
+import ucb.internship.backend.repositories.InstitutionsRepository;
+import ucb.internship.backend.repositories.UserRepository;
 
 
 @Service
-public class InstitutionsBL {
-    private Logger LOGGER = LoggerFactory.getLogger(InstitutionsBL.class);
-    private InstitutionsREPOSITORY institutionsREPOSITORY;
-    private UserREPOSITORY userREPOSITORY;
+public class InstitutionsService {
+    private Logger LOGGER = LoggerFactory.getLogger(InstitutionsService.class);
+    private InstitutionsRepository institutionsREPOSITORY;
+    private UserRepository userREPOSITORY;
 
     
 
     @Autowired
-    public InstitutionsBL(InstitutionsREPOSITORY institutionsREPOSITORY, UserREPOSITORY userREPOSITORY) {
+    public InstitutionsService(InstitutionsRepository institutionsREPOSITORY, UserRepository userREPOSITORY) {
         this.institutionsREPOSITORY = institutionsREPOSITORY;
         this.userREPOSITORY = userREPOSITORY;
     }

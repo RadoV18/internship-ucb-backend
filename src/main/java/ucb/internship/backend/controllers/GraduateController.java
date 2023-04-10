@@ -1,4 +1,4 @@
-package ucb.internship.backend.API;
+package ucb.internship.backend.controllers;
 
 import java.util.List;
 
@@ -12,29 +12,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import ucb.internship.backend.BL.InstitutionsBL;
-import ucb.internship.backend.DAO.ENTITY.InstitutionsENTITY;
-import ucb.internship.backend.DTO.InstitucionsDTO;
+import ucb.internship.backend.dtos.GraduateDTO;
+import ucb.internship.backend.services.GraduateService;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("obtener/instituciones")
-public class InstitutionsAPI {
-
+@RequestMapping("admin/graduates")
+public class GraduateController {
+    
     private Logger LOGGER = LoggerFactory.getLogger(InstitutionsAPI.class);
-    private InstitutionsBL institutionsBL;
+    private GraduateService graduateBL;
 
     @Autowired
-    public InstitutionsAPI(InstitutionsBL institutionsBL) {
-        this.institutionsBL = institutionsBL;
+    public GraduateController(GraduateService graduateBL) {
+        this.graduateBL = graduateBL;
     }
 
+
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<InstitucionsDTO>> get_institutions() {
+    public ResponseEntity<List<GraduateDTO>> get_graduates() {
         LOGGER.info("REQUEST: Iniciando petición para obtener el listado de instituciones");
-        List<InstitucionsDTO> result = institutionsBL.getInstitutions();
+        List<GraduateDTO> result = graduateBL.getGraduates();
         LOGGER.info("REQUEST: El resultado de la consulta es {}", result);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
     
 }

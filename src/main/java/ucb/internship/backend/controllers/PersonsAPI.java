@@ -1,4 +1,4 @@
-package ucb.internship.backend.API;
+package ucb.internship.backend.controllers;
 
 import java.util.List;
 
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import ucb.internship.backend.BL.PersonsBL;
-import ucb.internship.backend.DTO.PersonsDTO;
+import ucb.internship.backend.dtos.PersonsDTO;
+import ucb.internship.backend.services.PersonsService;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -21,10 +21,10 @@ import ucb.internship.backend.DTO.PersonsDTO;
 public class PersonsAPI {
 
     private Logger LOGGER = LoggerFactory.getLogger(InstitutionsAPI.class);
-    private PersonsBL personsBL;
+    private PersonsService personsBL;
 
     @Autowired
-    public PersonsAPI(PersonsBL personsBL) {
+    public PersonsAPI(PersonsService personsBL) {
         this.personsBL = personsBL;
     }
 

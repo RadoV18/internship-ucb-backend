@@ -1,10 +1,10 @@
-package ucb.internship.backend.DTO.MAPPER;
+package ucb.internship.backend.mapper;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import ucb.internship.backend.DAO.ENTITY.UserENTITY;
-import ucb.internship.backend.DTO.UserDTO;
+import ucb.internship.backend.models.UserENTITY;
+import ucb.internship.backend.dtos.UserDTO;
 
 @JsonIdentityInfo(
   generator = ObjectIdGenerators.PropertyGenerator.class, 
@@ -13,11 +13,11 @@ public class UserMAPPER {
     
     public static UserDTO entityToDto(UserENTITY userENTITY) {
         UserDTO userDTO = new UserDTO();
-        userDTO.setUser_id(userENTITY.getUser_id());
+        userDTO.setUserId(userENTITY.getUser_id());
         userDTO.setEmail(userENTITY.getEmail());
-        userDTO.setIs_approved(userENTITY.getIs_approved());
+        userDTO.setIsApproved(userENTITY.getIs_approved());
         userDTO.setPassword(userENTITY.getPassword());
-        userDTO.setProfile_picture(userENTITY.getProfile_picture());
+        userDTO.setProfilePicture(userENTITY.getProfile_picture());
         userDTO.setStatus(userENTITY.getStatus());
         return userDTO;
     }

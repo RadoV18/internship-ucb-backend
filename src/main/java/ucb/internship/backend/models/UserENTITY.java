@@ -1,4 +1,4 @@
-package ucb.internship.backend.DAO.ENTITY;
+package ucb.internship.backend.models;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -46,4 +46,8 @@ public class UserENTITY {
     @JsonIgnore
     @OneToOne(mappedBy = "userENTITY", cascade = CascadeType.ALL)
     private InstitutionsENTITY institutionsENTITY;
+    @JsonIgnore
+    @OneToOne(mappedBy = "userENTITY", cascade = CascadeType.ALL)
+    private PersonsENTITY personsENTITY;
+
 }

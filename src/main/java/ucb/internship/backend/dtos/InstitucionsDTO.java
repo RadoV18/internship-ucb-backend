@@ -1,4 +1,4 @@
-package ucb.internship.backend.DTO;
+package ucb.internship.backend.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -6,19 +6,19 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ucb.internship.backend.DAO.ENTITY.UserENTITY;
+import ucb.internship.backend.models.UserENTITY;
 
 @Data
 @NoArgsConstructor
 public class InstitucionsDTO {
 
-        private Integer institution_id;     
+        private Integer institutionId;     
         private String name;
         private String description;
         private String area;
-        private String contact_first_name;
-        private String contact_last_name;
-        private String contact_email;
-        private String contact_phone;
-        private UserENTITY user_ucb_id;
+        private String contactFirstName;
+        private String contactLastName;
+        private String contactEmail;
+        private String contactPhone;
+        private UserENTITY user;
 }

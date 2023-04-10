@@ -1,4 +1,4 @@
-package ucb.internship.backend.DAO.ENTITY;
+package ucb.internship.backend.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
