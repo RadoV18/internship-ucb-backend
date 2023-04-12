@@ -87,13 +87,17 @@ public class SignUpServiceImpl implements SignUpService {
         String password = studentDto.getPersonDto().getUserDto().getPassword();
         User savedUser = userService.createUser(email, password, profilePicture);
         // upload the cv
-        S3Object cv = fileStorageService.createObject(cvFile);
-
+        Long s3ObjectId = null;
+        if (cvFile != null) {
+            S3Object savedS3Object = fileStorageService.createObject(cvFile);
+            s3ObjectId = savedS3Object.getS3ObjectId();
+        }
+        System.out.println(s3ObjectId);
         // TODO: save the person in the database using cv_id from cv
         // TODO: save the graduate in the database using person_id
         Person person = personRepository.save(new Person(null, savedUser.getUserId(),
                 studentDto.getPersonDto().getFirstName(), studentDto.getPersonDto().getLastName(),
-                studentDto.getPersonDto().getCi(), studentDto.getPersonDto().getPhoneNumber(), ""));
+                studentDto.getPersonDto().getCi(), studentDto.getPersonDto().getPhoneNumber(), s3ObjectId));
         Student student = studentRepository.save(new Student(null, person.getPersonId(), studentDto.getCampusMajorId(),
                 studentDto.getSemester()));
 
@@ -121,12 +125,17 @@ public class SignUpServiceImpl implements SignUpService {
         String password = graduateDto.getPersonDto().getUserDto().getPassword();
         User savedUser = userService.createUser(email, password, profilePicture);
         // upload the cv
-        S3Object cv = fileStorageService.createObject(cvFile);
+        Long s3ObjectId = null;
+        if (cvFile != null) {
+            S3Object savedS3Object = fileStorageService.createObject(cvFile);
+            s3ObjectId = savedS3Object.getS3ObjectId();
+        }
+        System.out.println(s3ObjectId);
         // TODO: save the person in the database using cv_id from cv
         // TODO: save the graduate in the database using person_id
         Person person = personRepository.save(new Person(null, savedUser.getUserId(),
                 graduateDto.getPersonDto().getFirstName(), graduateDto.getPersonDto().getLastName(),
-                graduateDto.getPersonDto().getCi(), graduateDto.getPersonDto().getPhoneNumber(), ""));
+                graduateDto.getPersonDto().getCi(), graduateDto.getPersonDto().getPhoneNumber(), s3ObjectId));
         Graduate graduate = graduateRepository.save(new Graduate(null, person.getPersonId(),
                 graduateDto.getGraduationDate(), graduateDto.getCampusMajorId()));
 

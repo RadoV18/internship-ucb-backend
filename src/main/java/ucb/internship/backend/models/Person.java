@@ -20,7 +20,7 @@ public class Person {
     private String ci;
     private String phoneNumber;
     @Column(name = "s3_cv")
-    private String s3Cv;
+    private Long s3Cv;
 
     public Person(Long personId) {
         this.personId = personId;
@@ -30,7 +30,7 @@ public class Person {
     }
 
     public Person(Long personId, Long userId, String firstName, String lastName, String ci, String phoneNumber,
-            String s3Cv) {
+            Long s3Cv) {
         this.personId = personId;
         this.userId = userId;
         this.firstName = firstName;
@@ -88,11 +88,11 @@ public class Person {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getS3Cv() {
+    public Long getS3Cv() {
         return s3Cv;
     }
 
-    public void setS3Cv(String s3Cv) {
+    public void setS3Cv(Long s3Cv) {
         this.s3Cv = s3Cv;
     }
 
