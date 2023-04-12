@@ -7,20 +7,17 @@ public class PersonDto {
     private String lastName;
     private String ci;
     private String phoneNumber;
-    private String s3Cv;
 
     public PersonDto() {
     }
 
-    public PersonDto(Long personId, UserDto userDto, String firstName, String lastName, String ci, String phoneNumber,
-            String s3Cv) {
+    public PersonDto(Long personId, UserDto userDto, String firstName, String lastName, String ci, String phoneNumber) {
         this.personId = personId;
         this.userDto = userDto;
         this.firstName = firstName;
         this.lastName = lastName;
         this.ci = ci;
         this.phoneNumber = phoneNumber;
-        this.s3Cv = s3Cv;
     }
 
     public Long getPersonId() {
@@ -71,17 +68,9 @@ public class PersonDto {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getS3Cv() {
-        return s3Cv;
-    }
-
-    public void setS3Cv(String s3Cv) {
-        this.s3Cv = s3Cv;
-    }
-
     @Override
     public String toString() {
         return "PersonDto [personId=" + personId + ", userDto=" + userDto + ", firstName=" + firstName + ", lastName="
-                + lastName + ", ci=" + ci + ", phoneNumber=" + phoneNumber + ", s3Cv=" + s3Cv + "]";
+                + lastName + ", ci=" + ci + ", phoneNumber=" + phoneNumber + "]";
     }
 }

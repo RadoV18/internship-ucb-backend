@@ -60,8 +60,7 @@ public class SignUpController {
             @RequestParam(value = "cvFile") MultipartFile cvFile) throws FileStorageException {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            String json = "{\"personDto\":{\"userDto\":{\"email\":\"esteban1@email.com\",\"password\":\"Password123!\"},\"firstName\":\"estudianteNombre\",\"lastName\":\"estudianteApellido\",\"ci\":\"1012341234\",\"phoneNumber\":\"7010101\",\"s3Cv\":\"estudianteCv\"},\"campusMajorId\":1,\"semester\":1}";
-            StudentDto studentDto = objectMapper.readValue(json, StudentDto.class);
+            StudentDto studentDto = objectMapper.readValue(data, StudentDto.class);
             VerificationCodeDto verificationCodeDto = signUpService.studentSignUp(studentDto, profilePicture, cvFile);
             return ResponseEntity.ok(new ResponseDto<>(verificationCodeDto, null, true));
         } catch (IOException e) {
@@ -76,8 +75,7 @@ public class SignUpController {
             @RequestParam(value = "cvFile") MultipartFile cvFile) throws FileStorageException {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            String json = "{\"personDto\":{\"userDto\":{\"email\":\"esteban1ksk@email.com\",\"password\":\"Password123!\"},\"firstName\":\"estudianteNombre\",\"lastName\":\"estudianteApellido\",\"ci\":\"1012341234\",\"phoneNumber\":\"7010101\",\"s3Cv\":\"estudianteCv\"},\"graduationDate\":\"2023-01-01\",\"campusMajorId\":1}";
-            GraduateDto graduateDto = objectMapper.readValue(json, GraduateDto.class);
+            GraduateDto graduateDto = objectMapper.readValue(data, GraduateDto.class);
             VerificationCodeDto verificationCodeDto = signUpService.graduateSignUp(graduateDto, profilePicture, cvFile);
             return ResponseEntity.ok(new ResponseDto<>(verificationCodeDto, null, true));
         } catch (IOException e) {
