@@ -8,9 +8,9 @@ public class GraduateMAPPER {
     
     public static GraduateDTO entityToDto(GraduateENTITY graduateENTITY, PersonsENTITY personsENTITY) {
         GraduateDTO graduateDTO = new GraduateDTO();
-        graduateDTO.setGraduateId(graduateENTITY.getGraduate_id());
-        graduateDTO.setCampusMajorId(graduateENTITY.getCampus_major_id());
-        graduateDTO.setGraduationDate(graduateENTITY.getGraduation_date());
+        graduateDTO.setGraduateId(graduateENTITY.getGraduateId());
+        graduateDTO.setCampusMajorId(graduateENTITY.getCampusMajorId());
+        graduateDTO.setGraduationDate(graduateENTITY.getGraduationDate());
         graduateDTO.setStatus(graduateENTITY.getStatus()); 
         graduateDTO.setPerson(personsENTITY);
         return graduateDTO;

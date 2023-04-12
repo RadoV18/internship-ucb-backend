@@ -35,7 +35,7 @@ public class PersonsService {
         List<PersonsENTITY> result = this.personsREPOSITORY.findAll();
         List<PersonsDTO> resultDTO = new ArrayList<>();
         result.stream().forEach(person ->{
-            UserENTITY usuario = this.userREPOSITORY.findById(person.getUserENTITY().getUser_id()).orElseThrow();
+            UserENTITY usuario = this.userREPOSITORY.findById(person.getUserENTITY().getUserId()).orElseThrow();
             PersonsDTO personsDTO = PersonsMAPPER.entitytoDto(person, usuario);
             resultDTO.add(personsDTO);
         });

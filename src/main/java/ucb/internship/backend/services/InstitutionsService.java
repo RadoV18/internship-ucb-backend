@@ -2,13 +2,9 @@ package ucb.internship.backend.services;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.SortOrder;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import ucb.internship.backend.models.InstitutionsENTITY;
@@ -41,10 +37,8 @@ public class InstitutionsService {
         List<InstitutionsENTITY> result = this.institutionsREPOSITORY.findAll();
         List<InstitucionsDTO> resultDTO = new ArrayList<>();
         result.stream().forEach(institution ->{
-            UserENTITY usuario = this.userREPOSITORY.findById(institution.getUserENTITY().getUser_id()).orElseThrow();
+            UserENTITY usuario = this.userREPOSITORY.findById(institution.getUserENTITY().getUserId()).orElseThrow();
             InstitucionsDTO institucionsDTO = new InstitucionsDTO();
-            // institucionsDTO.setArea((institution.getArea()));
-            // institucionsDTO.setUser_ucb_id(usuario);
             institucionsDTO = InstitutionsMAPPER.entityToDto(institution, usuario);
             resultDTO.add(institucionsDTO);
         });

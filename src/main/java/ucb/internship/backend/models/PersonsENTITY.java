@@ -33,19 +33,20 @@ import lombok.ToString;
 @Table(name = "persons")
 @JsonIdentityInfo(
   generator = ObjectIdGenerators.PropertyGenerator.class, 
-  property = "person_id")
+  property = "personId")
 public class PersonsENTITY {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer person_id;
+    @Column(name = "person_id")
+    private Integer personId;
     @Column(name = "first_name",length = 50)
-    private String first_name;
+    private String firstName;
     @Column(name = "last_name", length = 50)
-    private String last_name;
+    private String lastName;
     @Column(name = "ci", length = 20)
     private String ci;
     @Column(name = "phone_number", length = 20)
-    private String phone_number;
+    private String phoneNumber;
     @CreationTimestamp
     private LocalDateTime creatioDateTime;
     @UpdateTimestamp

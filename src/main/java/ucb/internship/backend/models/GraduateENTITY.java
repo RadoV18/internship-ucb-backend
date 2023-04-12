@@ -29,22 +29,23 @@ import lombok.ToString;
 @Table(name = "graduates")
 @JsonIdentityInfo(
   generator = ObjectIdGenerators.PropertyGenerator.class, 
-  property = "graduate_id")
+  property = "graduateId")
 public class GraduateENTITY {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer graduate_id;
+    private Integer graduateId;
 
     @Column(name = "graduation_date")
-    private Date graduation_date;
+    private Date graduationDate;
     @Column(name = "campus_major_id")
-    private Integer campus_major_id;
+    private Integer campusMajorId;
     @Column(name = "status")
     private Integer status;
 
     @OneToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "person_id", referencedColumnName = "person_id")
+    @ToString.Exclude
     private PersonsENTITY personsENTITY;
 
     

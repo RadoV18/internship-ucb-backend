@@ -34,8 +34,7 @@ public class GraduateService {
         List<GraduateENTITY> result = this.graduateREPOSITORY.findAll();
         List<GraduateDTO> resultDTO = new ArrayList<>();
         result.stream().forEach(graduate ->{
-            // UserENTITY usuario = this.userREPOSITORY.findById(person.getUserENTITY().getUser_id()).orElseThrow();
-            PersonsENTITY personsENTITY = this.personsREPOSITORY.findById(graduate.getGraduate_id()).orElseThrow();
+            PersonsENTITY personsENTITY = this.personsREPOSITORY.findById(graduate.getGraduateId()).orElseThrow();
             GraduateDTO graduateDTO = GraduateMAPPER.entityToDto(graduate, personsENTITY);
             resultDTO.add(graduateDTO);
         });

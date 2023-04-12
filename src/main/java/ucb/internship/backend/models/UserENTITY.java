@@ -1,8 +1,7 @@
 package ucb.internship.backend.models;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -10,7 +9,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -26,28 +24,28 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @Table(name = "ucb_user")
-// @JsonIdentityInfo(
-//   generator = ObjectIdGenerators.PropertyGenerator.class, 
-//   property = "user_id")
 public class UserENTITY {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer user_id;
+    @Column(name = "user_id")
+    private Integer userId;
     @Column(name = "email", length = 50)
     private String email;
     @Column(name = "password", length = 64)
     private String password;
     @Column(name = "profile_picture", length = 100)
-    private String profile_picture;
+    private String profilePicture;
     @Column(name = "is_approved")
-    private Integer is_approved;
+    private Integer isApproved;
     @Column(name = "status")
     private Integer status;
-    @JsonIgnore
+    @JsonBackReference
     @OneToOne(mappedBy = "userENTITY", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private InstitutionsENTITY institutionsENTITY;
     @JsonIgnore
     @OneToOne(mappedBy = "userENTITY", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private PersonsENTITY personsENTITY;
 
 }

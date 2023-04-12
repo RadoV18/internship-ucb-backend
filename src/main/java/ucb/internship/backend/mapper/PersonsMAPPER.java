@@ -8,11 +8,11 @@ public class PersonsMAPPER {
 
     public static PersonsDTO entitytoDto(PersonsENTITY personsENTITY, UserENTITY userENTITY) {
         PersonsDTO personsDTO = new PersonsDTO();
-        personsDTO.setPersonId(personsENTITY.getPerson_id());
-        personsDTO.setFirstName(personsENTITY.getFirst_name());
-        personsDTO.setLastName(personsENTITY.getLast_name());
+        personsDTO.setPersonId(personsENTITY.getPersonId());
+        personsDTO.setFirstName(personsENTITY.getFirstName());
+        personsDTO.setLastName(personsENTITY.getLastName());
         personsDTO.setCi(personsENTITY.getCi());
-        personsDTO.setPhoneNumber(personsENTITY.getPhone_number());
+        personsDTO.setPhoneNumber(personsENTITY.getPhoneNumber());
         personsDTO.setUser(userENTITY);
         return personsDTO;
 

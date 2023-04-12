@@ -20,7 +20,7 @@ import ucb.internship.backend.services.GraduateService;
 @RequestMapping("admin/graduates")
 public class GraduateController {
     
-    private Logger LOGGER = LoggerFactory.getLogger(InstitutionsAPI.class);
+    private Logger LOGGER = LoggerFactory.getLogger(InstitutionsController.class);
     private GraduateService graduateBL;
 
     @Autowired

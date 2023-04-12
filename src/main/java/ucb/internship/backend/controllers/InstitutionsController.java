@@ -11,31 +11,28 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import ucb.internship.backend.dtos.PersonsDTO;
-import ucb.internship.backend.services.PersonsService;
+import ucb.internship.backend.dtos.InstitucionsDTO;
+import ucb.internship.backend.services.InstitutionsService;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("obtener/personas")
-public class PersonsAPI {
+@RequestMapping("admin/institutions")
+public class InstitutionsController {
 
-    private Logger LOGGER = LoggerFactory.getLogger(InstitutionsAPI.class);
-    private PersonsService personsBL;
+    private Logger LOGGER = LoggerFactory.getLogger(InstitutionsController.class);
+    private InstitutionsService institutionsBL;
 
     @Autowired
-    public PersonsAPI(PersonsService personsBL) {
-        this.personsBL = personsBL;
+    public InstitutionsController(InstitutionsService institutionsBL) {
+        this.institutionsBL = institutionsBL;
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<PersonsDTO>> get_institutions() {
+    public ResponseEntity<List<InstitucionsDTO>> get_institutions() {
         LOGGER.info("REQUEST: Iniciando petición para obtener el listado de instituciones");
-        List<PersonsDTO> result = personsBL.getPersons();
+        List<InstitucionsDTO> result = institutionsBL.getInstitutions();
         LOGGER.info("REQUEST: El resultado de la consulta es {}", result);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-
-    
     
 }

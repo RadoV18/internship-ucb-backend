@@ -13,10 +13,7 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;
 
@@ -27,13 +24,11 @@ import jakarta.persistence.*;
 @Getter
 @ToString
 @Table(name = "institutions")
-@JsonIdentityInfo(
-  generator = ObjectIdGenerators.PropertyGenerator.class, 
-  property = "institution_id")
 public class InstitutionsENTITY {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer institution_id;
+    @Column(name = "institution_id")
+    private Integer institutionId;
     @Column(name = "name", length = 50)
     private String name;
     @Column(name = "description")
@@ -41,18 +36,19 @@ public class InstitutionsENTITY {
     @Column(name = "area", length = 20)
     private String area;
     @Column(name = "contact_first_name", length = 50)
-    private String contact_first_name;
+    private String contactFirstName;
     @Column(name = "contact_last_name", length = 50)
-    private String contact_last_name;
+    private String contactLastName;
     @Column(name = "contact_email", length = 50)
-    private String contact_email;
+    private String contactEmail;
     @Column(name = "contact_phone", length = 50)
-    private String contact_phone;
+    private String contactPhone;
     @CreationTimestamp
     private LocalDateTime creatioDateTime;
     @UpdateTimestamp
     private LocalDateTime updatDateTime;
     @OneToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    @JsonManagedReference
     private UserENTITY userENTITY;
 }

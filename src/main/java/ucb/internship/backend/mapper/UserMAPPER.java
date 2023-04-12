@@ -13,11 +13,11 @@ public class UserMAPPER {
     
     public static UserDTO entityToDto(UserENTITY userENTITY) {
         UserDTO userDTO = new UserDTO();
-        userDTO.setUserId(userENTITY.getUser_id());
+        userDTO.setUserId(userENTITY.getUserId());
         userDTO.setEmail(userENTITY.getEmail());
-        userDTO.setIsApproved(userENTITY.getIs_approved());
+        userDTO.setIsApproved(userENTITY.getIsApproved());
         userDTO.setPassword(userENTITY.getPassword());
-        userDTO.setProfilePicture(userENTITY.getProfile_picture());
+        userDTO.setProfilePicture(userENTITY.getProfilePicture());
         userDTO.setStatus(userENTITY.getStatus());
         return userDTO;
     }
