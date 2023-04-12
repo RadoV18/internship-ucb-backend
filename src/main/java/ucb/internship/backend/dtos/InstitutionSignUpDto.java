@@ -15,7 +15,9 @@ public class InstitutionSignUpDto {
     public InstitutionSignUpDto() {
     }
 
-    public InstitutionSignUpDto(String name, String area, String description, String contactFirstName, String contactLastName, String contactEmail, String contactPhone, String contactPosition, String password, String email) {
+    public InstitutionSignUpDto(String name, String area, String description, String contactFirstName,
+            String contactLastName, String contactEmail, String contactPhone, String contactPosition, String password,
+            String email) {
         this.name = name;
         this.area = area;
         this.description = description;
@@ -109,7 +111,10 @@ public class InstitutionSignUpDto {
     }
 
     @Override
-public String toString() {
-        return "InstitutionSignUpDto [name=" + name + ", area=" + area + ", description=" + description + ", contactFirstName=" + contactFirstName + ", contactLastName=" + contactLastName + ", contactEmail=" + contactEmail + ", contactPhone=" + contactPhone + ", contactPosition=" + contactPosition + ", password=" + password + ", email=" + email + "]";
+    public String toString() {
+        return "InstitutionSignUpDto [name=" + name + ", area=" + area + ", description=" + description
+                + ", contactFirstName=" + contactFirstName + ", contactLastName=" + contactLastName + ", contactEmail="
+                + contactEmail + ", contactPhone=" + contactPhone + ", contactPosition=" + contactPosition
+                + ", password=" + password + ", email=" + email + "]";
     }
 }

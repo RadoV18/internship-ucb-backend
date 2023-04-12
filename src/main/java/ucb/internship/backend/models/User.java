@@ -20,7 +20,6 @@ public class User {
     private boolean isApproved;
     private boolean status;
 
-
     public User() {
     }
 

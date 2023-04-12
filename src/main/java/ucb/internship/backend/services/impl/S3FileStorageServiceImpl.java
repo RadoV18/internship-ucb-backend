@@ -21,9 +21,9 @@ import java.util.UUID;
 @Service
 public class S3FileStorageServiceImpl implements FileStorageService {
     private AmazonS3 amazonS3 = AmazonS3ClientBuilder
-        .standard()
-        .withRegion(Regions.DEFAULT_REGION)
-        .build();
+            .standard()
+            .withRegion(Regions.DEFAULT_REGION)
+            .build();
 
     @Autowired
     private S3ObjectRepository s3ObjectRepository;
@@ -37,7 +37,6 @@ public class S3FileStorageServiceImpl implements FileStorageService {
     public S3FileStorageServiceImpl(AmazonS3 amazonS3) {
         this.amazonS3 = amazonS3;
     }
-
 
     private String upload(MultipartFile file) throws FileStorageException {
         try {
@@ -65,10 +64,8 @@ public class S3FileStorageServiceImpl implements FileStorageService {
         // save the image data in the database
         S3Object s3Object = new S3Object(
                 url,
-                true
-        );
+                true);
         return s3ObjectRepository.save(s3Object);
     }
-
 
 }
