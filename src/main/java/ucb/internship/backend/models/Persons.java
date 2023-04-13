@@ -34,7 +34,7 @@ import lombok.ToString;
 @JsonIdentityInfo(
   generator = ObjectIdGenerators.PropertyGenerator.class, 
   property = "personId")
-public class PersonsENTITY {
+public class Persons {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "person_id")
@@ -53,8 +53,8 @@ public class PersonsENTITY {
     private LocalDateTime updatDateTime;
     @OneToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "person_id", referencedColumnName = "user_id")
-    private UserENTITY userENTITY;
+    private User user;
     @JsonIgnore
-    @OneToOne(mappedBy = "personsENTITY", cascade = CascadeType.ALL)
-    private GraduateENTITY graduateENTITY;
+    @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
+    private Graduate graduateENTITY;
 }

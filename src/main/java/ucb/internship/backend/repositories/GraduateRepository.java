@@ -2,8 +2,8 @@ package ucb.internship.backend.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import ucb.internship.backend.models.GraduateENTITY;
+import ucb.internship.backend.models.Graduate;
 
-public interface GraduateRepository extends JpaRepository<GraduateENTITY, Integer>{
+public interface GraduateRepository extends JpaRepository<Graduate, Integer>{
     
 }

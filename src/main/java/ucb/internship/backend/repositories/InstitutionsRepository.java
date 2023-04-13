@@ -1,9 +1,9 @@
-package ucb.internship.backend.repositories;
+// package ucb.internship.backend.repositories;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+// import org.springframework.data.jpa.repository.JpaRepository;
 
-import ucb.internship.backend.models.InstitutionsENTITY;
+// import ucb.internship.backend.models.InstitutionsENTITY;
 
-public interface InstitutionsRepository extends JpaRepository<InstitutionsENTITY,Integer>{
+// public interface InstitutionsRepository extends JpaRepository<InstitutionsENTITY,Integer>{
     
-}
+// }

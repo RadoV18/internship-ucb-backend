@@ -1,12 +1,12 @@
 package ucb.internship.backend.mapper;
 
-import ucb.internship.backend.models.GraduateENTITY;
-import ucb.internship.backend.models.PersonsENTITY;
+import ucb.internship.backend.models.Graduate;
+import ucb.internship.backend.models.Persons;
 import ucb.internship.backend.dtos.GraduateDTO;
 
 public class GraduateMAPPER {
     
-    public static GraduateDTO entityToDto(GraduateENTITY graduateENTITY, PersonsENTITY personsENTITY) {
+    public static GraduateDTO entityToDto(Graduate graduateENTITY, Persons personsENTITY) {
         GraduateDTO graduateDTO = new GraduateDTO();
         graduateDTO.setGraduateId(graduateENTITY.getGraduateId());
         graduateDTO.setCampusMajorId(graduateENTITY.getCampusMajorId());

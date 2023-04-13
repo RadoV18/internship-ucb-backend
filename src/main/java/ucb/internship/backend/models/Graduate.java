@@ -30,7 +30,7 @@ import lombok.ToString;
 @JsonIdentityInfo(
   generator = ObjectIdGenerators.PropertyGenerator.class, 
   property = "graduateId")
-public class GraduateENTITY {
+public class Graduate {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,7 +46,7 @@ public class GraduateENTITY {
     @OneToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "person_id", referencedColumnName = "person_id")
     @ToString.Exclude
-    private PersonsENTITY personsENTITY;
+    private Persons person;
 
     
 }

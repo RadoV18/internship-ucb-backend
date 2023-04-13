@@ -1,7 +1,7 @@
 package ucb.internship.backend.dtos;
 
 import lombok.Data;
-import ucb.internship.backend.models.UserENTITY;
+import ucb.internship.backend.models.User;
 
 
 @Data
@@ -12,5 +12,5 @@ public class PersonsDTO {
     private String lastName;
     private String ci;
     private String phoneNumber;
-    private UserENTITY user;
+    private User user;
 }

@@ -3,7 +3,7 @@ package ucb.internship.backend.dtos;
 import java.util.Date;
 
 import lombok.Data;
-import ucb.internship.backend.models.PersonsENTITY;
+import ucb.internship.backend.models.Persons;
 
 
 @Data
@@ -12,5 +12,5 @@ public class GraduateDTO {
     private Date graduationDate;
     private Integer campusMajorId;
     private Integer status;
-    private PersonsENTITY person;
+    private Persons person;
 }

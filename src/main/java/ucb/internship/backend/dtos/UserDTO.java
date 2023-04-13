@@ -4,12 +4,12 @@ import lombok.Data;
 
 @Data
 public class UserDTO {
-    private Integer userId;
+    private Long userId;
     private String email;
-    private Integer isApproved;
+    private boolean isApproved;
     private String password;
-    private String profilePicture;
-    private Integer status;
+    private Long s3ProfilePicture;
+    private boolean status;
 
 
     

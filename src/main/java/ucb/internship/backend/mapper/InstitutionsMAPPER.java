@@ -1,12 +1,12 @@
 package ucb.internship.backend.mapper;
 
-import ucb.internship.backend.models.InstitutionsENTITY;
-import ucb.internship.backend.models.UserENTITY;
 import ucb.internship.backend.dtos.InstitucionsDTO;
+import ucb.internship.backend.models.Institution;
+import ucb.internship.backend.models.User;
 
 public class InstitutionsMAPPER {
 
-    public static InstitucionsDTO entityToDto(InstitutionsENTITY institution, UserENTITY user) {
+    public static InstitucionsDTO entityToDto(Institution institution, User user) {
         InstitucionsDTO institucionsDTO = new InstitucionsDTO();
         institucionsDTO.setInstitutionId(institution.getInstitutionId());
         institucionsDTO.setName(institution.getName());

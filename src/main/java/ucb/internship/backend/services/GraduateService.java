@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ucb.internship.backend.models.GraduateENTITY;
-import ucb.internship.backend.models.PersonsENTITY;
+import ucb.internship.backend.models.Graduate;
+import ucb.internship.backend.models.Persons;
 import ucb.internship.backend.dtos.GraduateDTO;
 import ucb.internship.backend.mapper.GraduateMAPPER;
 import ucb.internship.backend.repositories.GraduateRepository;
@@ -31,10 +31,10 @@ public class GraduateService {
 
     public List<GraduateDTO> getGraduates() {
         LOGGER.info("BUSINESS-LOGIC: Iniciando petición para obtener el listado de instituciones");
-        List<GraduateENTITY> result = this.graduateREPOSITORY.findAll();
+        List<Graduate> result = this.graduateREPOSITORY.findAll();
         List<GraduateDTO> resultDTO = new ArrayList<>();
         result.stream().forEach(graduate ->{
-            PersonsENTITY personsENTITY = this.personsREPOSITORY.findById(graduate.getGraduateId()).orElseThrow();
+            Persons personsENTITY = this.personsREPOSITORY.findById(graduate.getGraduateId()).orElseThrow();
             GraduateDTO graduateDTO = GraduateMAPPER.entityToDto(graduate, personsENTITY);
             resultDTO.add(graduateDTO);
         });
