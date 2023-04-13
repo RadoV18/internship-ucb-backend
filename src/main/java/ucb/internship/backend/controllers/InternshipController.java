@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ucb.internship.backend.services.InternshipService;
+import ucb.internship.backend.services.impl.InternshipServiceImpl;
 import ucb.internship.backend.dtos.InternshipDTO;
 import ucb.internship.backend.models.Internship;
 
@@ -12,11 +12,11 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-public class InternshiController {
-    private InternshipService internshipService;
-    public static final Logger LOGGER = LoggerFactory.getLogger(InternshiController.class);
+public class InternshipController {
+    private InternshipServiceImpl internshipService;
+    public static final Logger LOGGER = LoggerFactory.getLogger(InternshipController.class);
     @Autowired
-    public InternshiController(InternshipService internshipService) {
+    public InternshipController(InternshipServiceImpl internshipService) {
         this.internshipService = internshipService;
     }
     @PostMapping("/internship")
