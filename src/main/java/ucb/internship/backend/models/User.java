@@ -1,5 +1,7 @@
 package ucb.internship.backend.models;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,6 +12,7 @@ public class User {
     @Column(name = "user_id")
     private Long userId = 1L;
     private String email;
+    @JsonIgnore
     private String password;
     @Column(name = "s3_profile_picture")
     private Long s3ProfilePicture;
@@ -82,6 +85,7 @@ public class User {
      * @return true if the password is correct, false otherwise
      */
     public boolean authenticate(String password) {
-        return this.password.equals(password);
+        BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), this.password);
+        return result.verified;
     }
 }

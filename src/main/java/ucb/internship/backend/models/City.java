@@ -1,13 +1,12 @@
 package ucb.internship.backend.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class City {
     @Id
     @Column(name = "city_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer cityId;
     private Integer countryId;
     private String name;
