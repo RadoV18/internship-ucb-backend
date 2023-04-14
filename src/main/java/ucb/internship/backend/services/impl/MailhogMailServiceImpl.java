@@ -19,7 +19,7 @@ public class MailhogMailServiceImpl implements EmailService {
     @Autowired
     private JavaMailSender mailSender;
 
-    public MailhogMailServiceImpl(){
+    public MailhogMailServiceImpl() {
     }
 
     @Override
@@ -33,9 +33,9 @@ public class MailhogMailServiceImpl implements EmailService {
                     message.setTo(email);
                     message.setSubject("Internship by Cato - Código de Verificación");
                     message.setText("""
-                            <h1>Bienvenido a Internship by Cato</h1>
-                            <p>Tu código de verificación es: %s</p>
-                    """.formatted(code), true);
+                                    <h1>Bienvenido a Internship by Cato</h1>
+                                    <p>Tu código de verificación es: %s</p>
+                            """.formatted(code), true);
 
                 }
             };
