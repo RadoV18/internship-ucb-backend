@@ -1,11 +1,8 @@
 package ucb.internship.backend.services;
 
-import ucb.internship.backend.dtos.InternshipDTO;
-import ucb.internship.backend.dtos.MajorDTO;
-
-import java.util.List;
+import ucb.internship.backend.dtos.InternshipDto;
 
 public interface InternshipService {
 
-    String createInternship(InternshipDTO internshipDto);
+    String createInternship(InternshipDto internshipDto);
 }

@@ -1,6 +1,6 @@
 package ucb.internship.backend.dtos;
 
-public class CityDTO {
+public class CityDto {
     private Integer cityId;
     private String name;
 

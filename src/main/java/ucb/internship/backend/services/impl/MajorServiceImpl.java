@@ -2,7 +2,7 @@ package ucb.internship.backend.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ucb.internship.backend.dtos.MajorDTO;
+import ucb.internship.backend.dtos.MajorDto;
 import ucb.internship.backend.models.Major;
 import ucb.internship.backend.repositories.MajorRepository;
 import ucb.internship.backend.services.MajorService;
@@ -18,12 +18,12 @@ public class MajorServiceImpl implements MajorService {
     }
 
     @Override
-    public List<MajorDTO> findAllMajors() {
+    public List<MajorDto> findAllMajors() {
         List<Major> majors = majorRepository.findAll();
-        List<MajorDTO> majorDTOS = new ArrayList<>();
+        List<MajorDto> majorDtos = new ArrayList<>();
         for (Major major : majors) {
-            majorDTOS.add(new MajorDTO(major.getMajorId(), major.getName()));
+            majorDtos.add(new MajorDto(major.getMajorId(), major.getName()));
         }
-        return majorDTOS;
+        return majorDtos;
     }
 }

@@ -1,10 +1,10 @@
 package ucb.internship.backend.dtos;
 
-public class MajorDTO {
+public class MajorDto {
     private Integer majorId;
     private String name;
 
-    public MajorDTO(Integer majorId, String name) {
+    public MajorDto(Integer majorId, String name) {
         this.majorId = majorId;
         this.name = name;
     }

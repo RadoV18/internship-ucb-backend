@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ucb.internship.backend.services.impl.InternshipServiceImpl;
-import ucb.internship.backend.dtos.InternshipDTO;
+import ucb.internship.backend.dtos.InternshipDto;
 import ucb.internship.backend.models.Internship;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class InternshipController {
         this.internshipService = internshipService;
     }
     @PostMapping("/internship")
-    public ResponseEntity<String> createInternship(@RequestBody InternshipDTO internshipDto){
+    public ResponseEntity<String> createInternship(@RequestBody InternshipDto internshipDto){
         LOGGER.info("Creating internship {}", internshipDto);
         String response = internshipService.createInternship(internshipDto);
         if(response.equals("Error creating internship")){

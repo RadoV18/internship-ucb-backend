@@ -2,7 +2,7 @@ package ucb.internship.backend.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ucb.internship.backend.dtos.CityDTO;
+import ucb.internship.backend.dtos.CityDto;
 import ucb.internship.backend.models.City;
 import ucb.internship.backend.repositories.CityRepository;
 import ucb.internship.backend.services.CityService;
@@ -21,11 +21,11 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public List<CityDTO> findAllCities() {
+    public List<CityDto> findAllCities() {
         List<City> cities = cityRepository.findAll();
 
         return cities.stream().map(city -> {
-            CityDTO cityDTO = new CityDTO();
+            CityDto cityDTO = new CityDto();
             cityDTO.setCityId(city.getCityId());
             cityDTO.setName(city.getName());
             return cityDTO;

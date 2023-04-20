@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ucb.internship.backend.dtos.CityDTO;
+import ucb.internship.backend.dtos.CityDto;
 import ucb.internship.backend.services.impl.CityServiceImpl;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class CityController {
     public Logger LOGGER = LoggerFactory.getLogger(CityController.class);
 
     @GetMapping("/city")
-    public ResponseEntity<List<CityDTO>> findAllCities() {
+    public ResponseEntity<List<CityDto>> findAllCities() {
         try{
             return new ResponseEntity<>(cityService.findAllCities(), HttpStatus.OK);
         }catch(Exception e){
