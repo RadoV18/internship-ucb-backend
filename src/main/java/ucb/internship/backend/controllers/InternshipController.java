@@ -3,6 +3,8 @@ package ucb.internship.backend.controllers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ucb.internship.backend.services.impl.InternshipServiceImpl;
 import ucb.internship.backend.dtos.InternshipDTO;
@@ -20,9 +22,13 @@ public class InternshipController {
         this.internshipService = internshipService;
     }
     @PostMapping("/internship")
-    public String createInternship(@RequestBody InternshipDTO internshipDto){
+    public ResponseEntity<String> createInternship(@RequestBody InternshipDTO internshipDto){
         LOGGER.info("Creating internship {}", internshipDto);
-        return internshipService.createInternship(internshipDto);
+        String response = internshipService.createInternship(internshipDto);
+        if(response.equals("Error creating internship")){
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
     @GetMapping("/internship/{id}")
     public List<Internship> getInternship(@PathVariable Integer id){

@@ -18,7 +18,7 @@ public class InternshipBenefit {
 
     private Internship internship;
     private String description;
-    private Integer status;
+    private boolean status;
 
     public Integer getBenefitId() {
         return BenefitId;
@@ -48,11 +48,11 @@ public class InternshipBenefit {
         this.description = description;
     }
 
-    public Integer getStatus() {
+    public boolean isStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 

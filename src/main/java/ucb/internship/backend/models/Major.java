@@ -10,7 +10,7 @@ public class Major {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer majorId;
     private String name;
-    private Integer status;
+    private boolean status;
 
     public Major() {
     }
@@ -31,11 +31,11 @@ public class Major {
         this.name = name;
     }
 
-    public Integer getStatus() {
+    public boolean isStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 

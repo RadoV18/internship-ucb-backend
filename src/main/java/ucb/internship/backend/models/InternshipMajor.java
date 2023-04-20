@@ -19,9 +19,9 @@ public class InternshipMajor {
     @ManyToOne
     @JoinColumn(name = "major_id")
     private Major major;
-    private Integer status;
+    private boolean status;
 
-    public InternshipMajor(Internship internship, Major major, Integer status) {
+    public InternshipMajor(Internship internship, Major major, boolean status) {
         this.internship = internship;
         this.major = major;
         this.status = status;
@@ -54,11 +54,11 @@ public class InternshipMajor {
         this.major = major;
     }
 
-    public Integer getStatus() {
+    public boolean isStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 
