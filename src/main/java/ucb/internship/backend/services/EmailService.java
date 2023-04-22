@@ -1,13 +1,17 @@
 package ucb.internship.backend.services;
 
-import ucb.internship.backend.exceptions.MailServiceException;
+import ucb.internship.backend.mailing.Recipient;
+import ucb.internship.backend.mailing.Template;
+
+import java.util.Hashtable;
 
 public interface EmailService {
     /**
-     * Sends a verification code to the user
-     * 
-     * @param email the user to send the verification code to.
-     * @param code  the verification code.
+     * Sends an email to the recipient with the given template and variables.
+     * @param recipient     the recipient of the email.
+     * @param mailVariables the pair of variables/values to be used in the template.
+     * @param template      the template to be used.
      */
-    public void sendVerificationCode(String email, String code) throws MailServiceException;
+    void sendEmail(Recipient recipient, Hashtable<String, String> mailVariables, Template template);
+
 }

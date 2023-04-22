@@ -1,7 +1,6 @@
 package ucb.internship.backend.services.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,6 +10,9 @@ import ucb.internship.backend.dtos.InstitutionSignUpDto;
 import ucb.internship.backend.dtos.StudentDto;
 import ucb.internship.backend.dtos.VerificationCodeDto;
 import ucb.internship.backend.exceptions.FileStorageException;
+import ucb.internship.backend.mailing.EmailVariables;
+import ucb.internship.backend.mailing.Recipient;
+import ucb.internship.backend.mailing.Template;
 import ucb.internship.backend.models.Graduate;
 import ucb.internship.backend.models.Institution;
 import ucb.internship.backend.models.Person;
@@ -24,10 +26,11 @@ import ucb.internship.backend.repositories.PersonRepository;
 import ucb.internship.backend.repositories.StudentRepository;
 import ucb.internship.backend.services.*;
 
+import java.util.Hashtable;
+
 @Service
 public class SignUpServiceImpl implements SignUpService {
 
-    private final Logger logger = LoggerFactory.getLogger(SignUpServiceImpl.class);
     @Autowired
     private UserService userService;
     @Autowired
@@ -65,17 +68,11 @@ public class SignUpServiceImpl implements SignUpService {
         institutionRepository.save(institution);
         // generate the verification code
         VerificationCode verificationCode = verificationCodeService.createVerificationCode(savedUser.getUserId());
-        // send verification code to the email
-        Thread mailThread = new Thread(() -> {
-            try {
-                emailService.sendVerificationCode(savedUser.getEmail(),
-                        verificationCode.getCode());
-            } catch (Exception e) {
-                e.printStackTrace();
-                logger.error("Error sending verification code.");
-            }
-        });
-        mailThread.start();
+
+        var recipient = new Recipient(savedUser.getEmail(), institution.getName());
+
+        sendVerificationCode(recipient, verificationCode.getCode());
+
         return new VerificationCodeDto(verificationCode.getUuid(), savedUser.getEmail());
     }
 
@@ -92,28 +89,23 @@ public class SignUpServiceImpl implements SignUpService {
             S3Object savedS3Object = fileStorageService.createObject(cvFile);
             s3ObjectId = savedS3Object.getS3ObjectId();
         }
-        System.out.println(s3ObjectId);
+
         // TODO: save the person in the database using cv_id from cv
         // TODO: save the graduate in the database using person_id
         Person person = personRepository.save(new Person(null, savedUser.getUserId(),
                 studentDto.getPersonDto().getFirstName(), studentDto.getPersonDto().getLastName(),
                 studentDto.getPersonDto().getCi(), studentDto.getPersonDto().getPhoneNumber(), s3ObjectId));
-        Student student = studentRepository.save(new Student(null, person.getPersonId(), studentDto.getCampusMajorId(),
+
+        studentRepository.save(new Student(null, person.getPersonId(), studentDto.getCampusMajorId(),
                 studentDto.getSemester()));
 
         // generate the verification code
         VerificationCode verificationCode = verificationCodeService.createVerificationCode(savedUser.getUserId());
-        // send verification code to the email
-        Thread mailThread = new Thread(() -> {
-            try {
-                emailService.sendVerificationCode(savedUser.getEmail(),
-                        verificationCode.getCode());
-            } catch (Exception e) {
-                e.printStackTrace();
-                logger.error("Error sending verification code.");
-            }
-        });
-        mailThread.start();
+
+        var recipient = new Recipient(savedUser.getEmail(), person.getFullName());
+
+        sendVerificationCode(recipient, verificationCode.getCode());
+
         return new VerificationCodeDto(verificationCode.getUuid(), savedUser.getEmail());
     }
 
@@ -130,29 +122,30 @@ public class SignUpServiceImpl implements SignUpService {
             S3Object savedS3Object = fileStorageService.createObject(cvFile);
             s3ObjectId = savedS3Object.getS3ObjectId();
         }
-        System.out.println(s3ObjectId);
+
         // TODO: save the person in the database using cv_id from cv
         // TODO: save the graduate in the database using person_id
         Person person = personRepository.save(new Person(null, savedUser.getUserId(),
                 graduateDto.getPersonDto().getFirstName(), graduateDto.getPersonDto().getLastName(),
                 graduateDto.getPersonDto().getCi(), graduateDto.getPersonDto().getPhoneNumber(), s3ObjectId));
-        Graduate graduate = graduateRepository.save(new Graduate(null, person.getPersonId(),
+
+        graduateRepository.save(new Graduate(null, person.getPersonId(),
                 graduateDto.getGraduationDate(), graduateDto.getCampusMajorId()));
 
         // generate the verification code
         VerificationCode verificationCode = verificationCodeService.createVerificationCode(savedUser.getUserId());
-        // send verification code to the email
-        Thread mailThread = new Thread(() -> {
-            try {
-                emailService.sendVerificationCode(savedUser.getEmail(),
-                        verificationCode.getCode());
-            } catch (Exception e) {
-                e.printStackTrace();
-                logger.error("Error sending verification code.");
-            }
-        });
-        mailThread.start();
-        return new VerificationCodeDto(verificationCode.getUuid(), savedUser.getEmail());
 
+        var recipient = new Recipient(savedUser.getEmail(), person.getFullName());
+
+        sendVerificationCode(recipient, verificationCode.getCode());
+
+        return new VerificationCodeDto(verificationCode.getUuid(), savedUser.getEmail());
+    }
+
+    private void sendVerificationCode(Recipient recipient ,String verificationCode) {
+        var mailVariables = new Hashtable<String, String>();
+        mailVariables.put(EmailVariables.VERIFICATION_CODE.get(), verificationCode);
+
+        emailService.sendEmail(recipient, mailVariables , Template.VERIFICATION_CODE);
     }
 }
