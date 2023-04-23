@@ -88,6 +88,10 @@ public class Person {
         this.phoneNumber = phoneNumber;
     }
 
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
     public Long getS3Cv() {
         return s3Cv;
     }
