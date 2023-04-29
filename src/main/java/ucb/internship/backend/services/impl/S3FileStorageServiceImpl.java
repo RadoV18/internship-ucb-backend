@@ -39,22 +39,24 @@ public class S3FileStorageServiceImpl implements FileStorageService {
     }
 
     private String upload(MultipartFile file) throws FileStorageException {
-        try {
-            // file metadata
-            ObjectMetadata objectMetadata = new ObjectMetadata();
-            objectMetadata.setContentType(file.getContentType());
-            objectMetadata.setContentLength(file.getSize());
+        return "";
+        // try {
+        // // file metadata
+        // ObjectMetadata objectMetadata = new ObjectMetadata();
+        // objectMetadata.setContentType(file.getContentType());
+        // objectMetadata.setContentLength(file.getSize());
 
-            // file name
-            UUID uuid = UUID.randomUUID();
-            String fileName = uuid.toString();
+        // // file name
+        // UUID uuid = UUID.randomUUID();
+        // String fileName = uuid.toString();
 
-            // upload file
-            amazonS3.putObject(bucketName, fileName, file.getInputStream(), objectMetadata);
-            return amazonS3.getUrl(bucketName, fileName).toString();
-        } catch (IOException ex) {
-            throw new FileStorageException("Error al guardar la imagen.", ex);
-        }
+        // // upload file
+        // amazonS3.putObject(bucketName, fileName, file.getInputStream(),
+        // objectMetadata);
+        // return amazonS3.getUrl(bucketName, fileName).toString();
+        // } catch (IOException ex) {
+        // throw new FileStorageException("Error al guardar la imagen.", ex);
+        // }
     }
 
     @Override

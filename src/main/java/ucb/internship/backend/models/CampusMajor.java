@@ -15,17 +15,20 @@ public class CampusMajor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long campusMajorId;
-    private Long majorId;
     private Boolean status = true;
 
     @JoinColumn(name = "campusId", referencedColumnName = "campusId")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Campus campus;
 
-    public CampusMajor(Long campusMajorId, Long majorId, Campus campus) {
+    @JoinColumn(name = "majorId", referencedColumnName = "major_id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Major major;
+
+    public CampusMajor(Long campusMajorId, Campus campus, Major major) {
         this.campusMajorId = campusMajorId;
-        this.majorId = majorId;
         this.campus = campus;
+        this.major = major;
     }
 
     public CampusMajor(Long campusMajorId) {
@@ -41,14 +44,6 @@ public class CampusMajor {
 
     public void setCampusMajorId(Long campusMajorId) {
         this.campusMajorId = campusMajorId;
-    }
-
-    public Long getMajorId() {
-        return majorId;
-    }
-
-    public void setMajorId(Long majorId) {
-        this.majorId = majorId;
     }
 
     public Boolean getStatus() {
@@ -67,10 +62,18 @@ public class CampusMajor {
         this.campus = campus;
     }
 
+    public Major getMajor() {
+        return major;
+    }
+
+    public void setMajor(Major major) {
+        this.major = major;
+    }
+
     @Override
     public String toString() {
-        return "CampusMajor [campusMajorId=" + campusMajorId + ", majorId=" + majorId + ", status=" + status
-                + ", campus=" + campus + "]";
+        return "CampusMajor [campusMajorId=" + campusMajorId + ", status=" + status + ", campus=" + campus + ", major="
+                + major + "]";
     }
 
 }

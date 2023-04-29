@@ -69,8 +69,17 @@ public class Campus {
         this.status = status;
     }
 
+    public List<CampusMajor> getCampusMajors() {
+        return campusMajors;
+    }
+
+    public void setCampusMajors(List<CampusMajor> campusMajors) {
+        this.campusMajors = campusMajors;
+    }
+
     @Override
     public String toString() {
-        return "Campus [campusId=" + campusId + ", cityId=" + cityId + ", name=" + name + ", status=" + status + "]";
+        return "Campus [campusId=" + campusId + ", cityId=" + cityId + ", name=" + name + ", status=" + status
+                + ", campusMajors=" + campusMajors + "]";
     }
 }
