@@ -3,13 +3,20 @@ package ucb.internship.backend.services.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ucb.internship.backend.dtos.InternshipDto;
+import ucb.internship.backend.dtos.InternshipListDto;
+import ucb.internship.backend.mappers.InternshipListMapper;
 import ucb.internship.backend.models.Internship;
 import ucb.internship.backend.models.InternshipMajor;
 import ucb.internship.backend.repositories.InternshipRepository;
 import ucb.internship.backend.services.InternshipService;
 
+import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -21,7 +28,6 @@ public class InternshipServiceImpl implements InternshipService{
     public InternshipServiceImpl(InternshipRepository internshipRepository) {
         this.internshipRepository = internshipRepository;
     }
-
 
     @Override
     public String createInternship(InternshipDto internshipDto) {
@@ -61,6 +67,26 @@ public class InternshipServiceImpl implements InternshipService{
         }
         return "Internship created successfully";
     }
+    @Override
+    public Page<InternshipListDto> filterInternships(String city , Timestamp startingDate, Timestamp endingDate, Collection<Integer> majorList, Integer page, Integer size) {
+        if(city == null)
+            city = "%";
+        if(startingDate == null)
+            startingDate = Timestamp.valueOf("2019-11-1 00:00:00");
+        if(endingDate == null)
+            endingDate = new Timestamp(System.currentTimeMillis());
+        if(majorList == null)
+            majorList = List.of(1,2,3,4,5,6,7,8,9,10);
+        if(page == null)
+            page = 0;
+        if(size == null)
+            size = 10;
+        Page<Object[]> objectList= internshipRepository.findInternshipList(city,startingDate,endingDate,majorList,PageRequest.of(page,size));
+        return objectList.map(InternshipListMapper::objectToDto);
+
+    }
+
+
     public List<Internship> getInternshipById(Integer id){
      return  internshipRepository.findByInternshipId(id);
     }
