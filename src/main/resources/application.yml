@@ -15,3 +15,7 @@ server:
   error:
     include-message: always
     include-binding-errors: always
+
+mailjet:
+  key: ${MAILJET_API_KEY:}
+  secret: ${MAILJET_API_SECRET:}
