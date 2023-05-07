@@ -47,14 +47,17 @@ public class Persons {
     private String ci;
     @Column(name = "phone_number", length = 20)
     private String phoneNumber;
-    @CreationTimestamp
-    private LocalDateTime creatioDateTime;
-    @UpdateTimestamp
-    private LocalDateTime updatDateTime;
+    // @CreationTimestamp
+    // private LocalDateTime creatioDateTime;
+    // @UpdateTimestamp
+    // private LocalDateTime updatDateTime;
     @OneToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "person_id", referencedColumnName = "user_id")
-    private User user;
+    private User userUcb;
     @JsonIgnore
     @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
     private Graduate graduateENTITY;
+    @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Student student;
 }

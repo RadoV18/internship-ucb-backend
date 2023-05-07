@@ -16,7 +16,7 @@ public class InstitutionsMAPPER {
         institucionsDTO.setContactLastName(institution.getContactLastName());
         institucionsDTO.setContactEmail(institution.getContactEmail());
         institucionsDTO.setContactPhone(institution.getContactPhone());
-        institucionsDTO.setUser(user);
+        institucionsDTO.setUserUcb(user);
         return institucionsDTO;
     }
 

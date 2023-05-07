@@ -4,6 +4,8 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 import lombok.ToString;
 
@@ -24,13 +26,17 @@ public class User {
 
     private boolean status;
     @JsonBackReference
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "userUcb", cascade = CascadeType.ALL)
     @ToString.Exclude
     private Institution institutions;
     @JsonIgnore
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "userUcb", cascade = CascadeType.ALL)
     @ToString.Exclude
     private Persons personsENTITY;
+    @JsonManagedReference
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "s3_object_id", referencedColumnName = "s3_object_id")
+    private S3Object s3Object;
 
     public User() {
     }

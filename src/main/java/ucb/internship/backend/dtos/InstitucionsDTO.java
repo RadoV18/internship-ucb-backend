@@ -15,5 +15,5 @@ public class InstitucionsDTO {
         private String contactLastName;
         private String contactEmail;
         private String contactPhone;
-        private User user;
+        private User userUcb;
 }

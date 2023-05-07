@@ -27,7 +27,7 @@ public class Institution {
     @OneToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     @JsonManagedReference
-    private User user;
+    private User userUcb;
     
     public Institution() {
     }
@@ -46,7 +46,7 @@ public class Institution {
         this.contactEmail = contactEmail;
         this.contactPhone = contactPhone;
         this.contactPosition = contactPosition;
-        this.user = user;
+        this.userUcb = user;
     }
     
 
@@ -159,15 +159,15 @@ public class Institution {
 
 
     
-    public User getUser() {
-        return user;
+    public User getUserUcb() {
+        return userUcb;
     }
 
 
 
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserUcb(User user) {
+        this.userUcb = user;
     }
         
 

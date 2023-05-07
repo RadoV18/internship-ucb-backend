@@ -36,7 +36,7 @@ public class InstitutionsService {
         List<Institution> result = this.institutionsREPOSITORY.findAll();
         List<InstitucionsDTO> resultDTO = new ArrayList<>();
         result.stream().forEach(institution ->{
-            User usuario = this.userREPOSITORY.findById(institution.getUser().getUserId()).orElseThrow();
+            User usuario = this.userREPOSITORY.findById(institution.getUserUcb().getUserId()).orElseThrow();
             InstitucionsDTO institucionsDTO = new InstitucionsDTO();
             institucionsDTO = InstitutionsMAPPER.entityToDto(institution, usuario);
             resultDTO.add(institucionsDTO);
@@ -45,6 +45,12 @@ public class InstitutionsService {
         return resultDTO;
     }
 
-    
+    public void requestApproved(Long id) {
+        User user = this.userREPOSITORY.findById(id).orElseThrow();
+        user.setApproved(true);
+        User updateUser = user;
+        System.out.println("El usuario es"+ updateUser.isApproved());
+        this.userREPOSITORY.save(updateUser);
+    }
     
 }
