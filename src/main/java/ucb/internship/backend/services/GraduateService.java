@@ -41,6 +41,13 @@ public class GraduateService {
         LOGGER.info("BUSINESS-LOGIC: EL resultado de la cosnulta es {}",result);
         return resultDTO;
     }
+
+    public GraduateDTO getGraduateById(Integer id){
+        Graduate graduate = this.graduateREPOSITORY.findById(id).orElseThrow();
+        Persons person = this.personsREPOSITORY.findById(graduate.getGraduateId()).orElseThrow();
+        GraduateDTO graduateDTO = GraduateMAPPER.entityToDto(graduate, person);
+        return graduateDTO;
+    }
     
 
 

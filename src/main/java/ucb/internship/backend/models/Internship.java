@@ -25,8 +25,6 @@ public class Internship {
     @Column(name = "ending_date")
     private Timestamp endingDate;
     private Integer status;
-    public Internship() {
-    }
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "internship")
     private List<InternshipBenefit> internshipBenefits;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,orphanRemoval = true, mappedBy = "internship")
@@ -35,7 +33,10 @@ public class Internship {
     private List<InternshipRole> internshipRoles;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "internship")
     private List<InternshipMajor> majorList;
-
+    
+    public Internship() {
+    }
+    
     public Long getInternshipId() {
         return internshipId;
     }
