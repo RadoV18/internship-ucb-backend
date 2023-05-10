@@ -27,7 +27,7 @@ public interface InternshipRepository  extends JpaRepository<Internship, Integer
             "    left join s3_object s3 on uu.s3_profile_picture = s3.s3_object_id\n" +
             "    where c.name LIKE :city and i.starting_date >= :startingDate and i.ending_date <= :endingDate\n" +
             "    and im.major_id in :majors" +
-            "    and i.status = true and i.is_approved = true " +
+            "    and i.status = true and i.is_approved = 1 " +
             "order by i.internship_id  asc\n" , nativeQuery = true)
     Page<Object[]> findInternshipList(@Param("city") String city,
                                       @Param("startingDate") Timestamp startingDate,

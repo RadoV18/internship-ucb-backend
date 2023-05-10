@@ -69,7 +69,7 @@ public class InternshipServiceImpl implements InternshipService{
     }
     @Override
     public Page<InternshipListDto> filterInternships(String city , Timestamp startingDate, Timestamp endingDate, Collection<Integer> majorList, Integer page, Integer size) {
-        if(city == null)
+        if(city == null || city.isEmpty())
             city = "%";
         if(startingDate == null)
             startingDate = Timestamp.valueOf("2019-11-1 00:00:00");
