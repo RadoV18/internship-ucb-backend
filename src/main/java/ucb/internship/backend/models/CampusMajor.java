@@ -75,5 +75,4 @@ public class CampusMajor {
         return "CampusMajor [campusMajorId=" + campusMajorId + ", status=" + status + ", campus=" + campus + ", major="
                 + major + "]";
     }
-
 }
