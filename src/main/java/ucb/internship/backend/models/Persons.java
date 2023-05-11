@@ -47,10 +47,6 @@ public class Persons {
     private String ci;
     @Column(name = "phone_number", length = 20)
     private String phoneNumber;
-    // @CreationTimestamp
-    // private LocalDateTime creatioDateTime;
-    // @UpdateTimestamp
-    // private LocalDateTime updatDateTime;
     @OneToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "person_id", referencedColumnName = "user_id")
     private User userUcb;
