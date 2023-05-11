@@ -1,5 +1,7 @@
 package ucb.internship.backend.models;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -11,6 +13,9 @@ public class Major {
     private Integer majorId;
     private String name;
     private Integer status;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "major", fetch = FetchType.LAZY)
+    private List<CampusMajor> campusMajors;
 
     public Major() {
     }
