@@ -24,7 +24,7 @@ public class Internship {
     private Timestamp startingDate;
     @Column(name = "ending_date")
     private Timestamp endingDate;
-    private Integer status;
+    private Boolean status;
     public Internship() {
     }
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "internship")
@@ -100,11 +100,11 @@ public class Internship {
         this.endingDate = endingDate;
     }
 
-    public Integer getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 

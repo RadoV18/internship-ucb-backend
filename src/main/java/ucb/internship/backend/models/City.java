@@ -8,9 +8,10 @@ public class City {
     @Column(name = "city_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer cityId;
+    @Column(name = "country_id")
     private Integer countryId;
     private String name;
-    private Integer status;
+    private Boolean status;
 
     public City() {
     }
@@ -39,11 +40,11 @@ public class City {
         this.name = name;
     }
 
-    public Integer getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 
