@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 
+import org.hibernate.annotations.Cascade;
+
 @Entity
 @Table(name = "internship")
 public class Internship {
@@ -12,10 +14,14 @@ public class Internship {
     @Column(name = "internship_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long internshipId;
-    @Column(name = "institution_id")
-    private Integer institutionId;
-    @Column(name = "city_id")
-    private Integer cityId;
+    @ManyToOne
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @JoinColumn(name = "institution_id")
+    private Institution institutionId;
+    @ManyToOne
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @JoinColumn(name = "city_id")
+    private City cityId;
     private String title;
     private String description;
     @Column(name = "is_approved")
@@ -44,19 +50,19 @@ public class Internship {
         this.internshipId = internshipId;
     }
 
-    public Integer getInstitutionId() {
+    public Institution getInstitutionId() {
         return institutionId;
     }
 
-    public void setInstitutionId(Integer institutionId) {
+    public void setInstitutionId(Institution institutionId) {
         this.institutionId = institutionId;
     }
 
-    public Integer getCityId() {
+    public City getCityId() {
         return cityId;
     }
 
-    public void setCityId(Integer cityId) {
+    public void setCityId(City cityId) {
         this.cityId = cityId;
     }
 

@@ -15,8 +15,8 @@ public class InternshipBenefit {
     @ManyToOne
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @JoinColumn(name = "internship_id")
-
     private Internship internship;
+
     private String description;
     private Integer status;
 

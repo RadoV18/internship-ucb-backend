@@ -10,7 +10,7 @@ import java.util.List;
 
 public class InternshipDTO {
     private Integer internshipId;
-    private Integer institutionId;
+    private Long institutionId;
     private String title;
     private String description;
 
@@ -39,11 +39,11 @@ public class InternshipDTO {
         this.title = title;
     }
 
-    public Integer getInstitutionId() {
+    public Long getInstitutionId() {
         return institutionId;
     }
 
-    public void setInstitutionId(Integer institutionId) {
+    public void setInstitutionId(Long institutionId) {
         this.institutionId = institutionId;
     }
 

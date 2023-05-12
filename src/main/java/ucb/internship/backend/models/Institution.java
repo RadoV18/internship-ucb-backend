@@ -1,5 +1,7 @@
 package ucb.internship.backend.models;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -24,6 +26,8 @@ public class Institution {
     private String contactPhone;
     @Column(name = "contact_position")
     private String contactPosition;
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "institutionId")
+    private List<Internship> internships;
 
     public Institution() {
     }

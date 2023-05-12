@@ -1,5 +1,9 @@
 package ucb.internship.backend.models;
 
+import java.util.List;
+
+import org.hibernate.annotations.Cascade;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -11,6 +15,8 @@ public class City {
     private Integer countryId;
     private String name;
     private Integer status;
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "cityId")
+    private List<Internship> internship;
 
     public City() {
     }
