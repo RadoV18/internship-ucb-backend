@@ -20,10 +20,7 @@ public class MajorController {
     private MajorService majorService;
 
     @GetMapping
-    public ResponseEntity<ResponseDto<List<MajorDto>>> getAllMajors(@RequestParam String sort) {
-        if(sort == null) {
-            sort = "majorId";
-        }
+    public ResponseEntity<ResponseDto<List<MajorDto>>> getAllMajors(@RequestParam(required = false, defaultValue = "majorId") String sort) {
         if(!(sort.equals("majorId") || sort.equals("name"))) {
             return ResponseEntity.badRequest().body(new ResponseDto<>(null, "Invalid sort parameter", false));
         }
