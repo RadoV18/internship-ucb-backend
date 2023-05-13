@@ -10,7 +10,7 @@ import ucb.internship.backend.dtos.ActiveInternshipDto;
 import ucb.internship.backend.dtos.ApplicantDto;
 import ucb.internship.backend.dtos.ResponseDto;
 import ucb.internship.backend.services.InternshipService;
-import ucb.internship.backend.dtos.InternshipDTO;
+import ucb.internship.backend.dtos.InternshipDto;
 import ucb.internship.backend.models.Internship;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class InternshiController {
     public static final Logger LOGGER = LoggerFactory.getLogger(InternshiController.class);
 
     @PostMapping
-    public String createInternship(@RequestBody InternshipDTO internshipDto){
+    public String createInternship(@RequestBody InternshipDto internshipDto){
         LOGGER.info("Creating internship {}", internshipDto);
         return internshipService.createInternship(internshipDto);
     }
