@@ -17,19 +17,38 @@ import ucb.internship.backend.services.InternshipService;
 
 import java.sql.Timestamp;
 import java.util.Collection;
+import org.springframework.stereotype.Service;
+import ucb.internship.backend.dtos.ActiveInternshipDto;
+import ucb.internship.backend.dtos.ApplicantDto;
+import ucb.internship.backend.dtos.ApplicantSummaryDto;
+import ucb.internship.backend.dtos.InternshipDto;
+import ucb.internship.backend.models.City;
+import ucb.internship.backend.models.Internship;
+import ucb.internship.backend.models.InternshipMajor;
+import ucb.internship.backend.repositories.CityRepository;
+import ucb.internship.backend.repositories.InternshipApplicationRepository;
+import ucb.internship.backend.repositories.InternshipRepository;
+import ucb.internship.backend.services.InternshipService;
+import java.util.ArrayList;
 import java.util.List;
 
 
 @Service
-public class InternshipServiceImpl implements InternshipService{
+public class InternshipServiceImpl implements InternshipService {
     private final InternshipRepository internshipRepository;
+    private final InternshipApplicationRepository internshipApplicationRepository;
+    private final CityRepository cityRepository;
     public static final Logger LOGGER = LoggerFactory.getLogger(InternshipServiceImpl.class.getName());
+
     @Autowired
-    public InternshipServiceImpl(InternshipRepository internshipRepository) {
+    public InternshipServiceImpl(InternshipRepository internshipRepository,
+        InternshipApplicationRepository internshipApplicationRepository, CityRepository cityRepository
+    ) {
         this.internshipRepository = internshipRepository;
+        this.internshipApplicationRepository = internshipApplicationRepository;
+        this.cityRepository = cityRepository;
     }
 
-    @Override
     public String createInternship(InternshipDto internshipDto) {
         try {
             Internship newInternship = new Internship();
@@ -85,7 +104,24 @@ public class InternshipServiceImpl implements InternshipService{
         return objectList.map(InternshipListMapper::objectToDto);
 
     }
-
+    @Override
+    public List<ApplicantDto> getApplicantsByInternshipId(Integer id) {
+        return internshipApplicationRepository.getApplicantsByInternshipId(id);
+    }
+    @Override
+    public List<ActiveInternshipDto> getActiveInternshipsByInstitutionId(Integer id) {
+        List<ActiveInternshipDto> result = new ArrayList<>();
+        List<Internship> internships = internshipRepository.findAllByInstitutionIdAndIsApprovedIs(id, 1);
+        for (Internship internship : internships) {
+            Integer applicantCount = internshipApplicationRepository.countAllByInternshipId(internship.getInternshipId());
+            List<String> profilePictures = internshipApplicationRepository.getProfilePicturesByInternshipId(internship.getInternshipId());
+            ApplicantSummaryDto applicationSummary = new ApplicantSummaryDto(applicantCount, profilePictures);
+            City city = cityRepository.findByCityId(internship.getCityId());
+            result.add(new ActiveInternshipDto(internship.getInternshipId(), internship.getTitle(),
+                    internship.getStartingDate(), internship.getEndingDate(), city.getName(), applicationSummary));
+        }
+        return result;
+    }
 
     public List<Internship> getInternshipById(Integer id){
      return  internshipRepository.findByInternshipId(id);

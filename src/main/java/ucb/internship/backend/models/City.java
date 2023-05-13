@@ -11,7 +11,7 @@ public class City {
     @Column(name = "country_id")
     private Integer countryId;
     private String name;
-    private boolean status;
+    private Boolean status;
 
     public City() {
     }
@@ -40,11 +40,11 @@ public class City {
         this.name = name;
     }
 
-    public boolean isStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 

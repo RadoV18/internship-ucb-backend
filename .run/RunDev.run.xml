@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="RunDev" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="ucb.internship.backend.BackendApplication" />
+    <module name="backend" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

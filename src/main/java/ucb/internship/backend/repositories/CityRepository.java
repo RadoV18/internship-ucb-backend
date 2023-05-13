@@ -6,6 +6,6 @@ import org.springframework.stereotype.Service;
 import ucb.internship.backend.models.City;
 
 @Repository
-@Service
-public interface CityRepository extends JpaRepository<City, Integer> {
+public interface CityRepository extends JpaRepository<City, Long> {
+    City findByCityId(Integer cityId);
 }
