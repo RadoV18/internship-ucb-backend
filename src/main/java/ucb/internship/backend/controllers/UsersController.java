@@ -41,8 +41,8 @@ public class UsersController
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    @PutMapping(value = "/request/{id}")
-    public void aprobado(@PathVariable Long id) {
+    @PutMapping(value = "/{id}/approval")
+    public void approveUserRequest(@PathVariable Long id) {
         userService.requestApproved(id);
     }
     
