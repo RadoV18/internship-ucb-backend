@@ -10,9 +10,9 @@ public class InternshipListMapper {
         internshipList.setDescription((String) object[2]);
         internshipList.setStartingDate((java.sql.Timestamp) object[3]);
         internshipList.setEndingDate((java.sql.Timestamp) object[4]);
-        internshipList.setInstitution((String) object[5]);
+        internshipList.setInstitution((String) object[6]);
         internshipList.setUrl((String) object[7]);
-        internshipList.setCity((String) object[6]);
+        internshipList.setCity((String) object[5]);
         return internshipList;
     }
 }
