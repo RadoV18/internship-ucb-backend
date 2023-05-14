@@ -25,16 +25,20 @@ public class Internship {
     @Column(name = "ending_date")
     private Timestamp endingDate;
     private Boolean status;
+
     public Internship() {
     }
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "internship")
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "internship")
     private List<InternshipBenefit> internshipBenefits;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,orphanRemoval = true, mappedBy = "internship")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "internship")
     private List<InternshipRequirement> internshipRequirements;
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "internship")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "internship")
     private List<InternshipRole> internshipRoles;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "internship")
     private List<InternshipMajor> majorList;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "internship")
+    private List<InternshipQuestion> internshipQuestions;
 
     public Long getInternshipId() {
         return internshipId;
@@ -156,5 +160,13 @@ public class Internship {
                 ", internshipRequirements=" + internshipRequirements +
                 ", internshipRoles=" + internshipRoles +
                 '}';
+    }
+
+    public List<InternshipQuestion> getInternshipQuestions() {
+        return internshipQuestions;
+    }
+
+    public void setInternshipQuestions(List<InternshipQuestion> internshipQuestions) {
+        this.internshipQuestions = internshipQuestions;
     }
 }
