@@ -1,5 +1,7 @@
 package ucb.internship.backend.services;
 
+import ucb.internship.backend.dtos.NotificationDto;
+
 public interface PushNotificationsService {
-    void push(String text, String to);
+    void push(NotificationDto<?> notificationDto, String to);
 }
