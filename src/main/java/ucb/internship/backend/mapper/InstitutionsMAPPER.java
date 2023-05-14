@@ -4,7 +4,7 @@ import ucb.internship.backend.dtos.InstitucionsDTO;
 import ucb.internship.backend.models.Institution;
 import ucb.internship.backend.models.User;
 
-public class InstitutionsMAPPER {
+public class InstitutionsMapper {
 
     public static InstitucionsDTO entityToDto(Institution institution, User user) {
         InstitucionsDTO institucionsDTO = new InstitucionsDTO();
@@ -19,9 +19,5 @@ public class InstitutionsMAPPER {
         institucionsDTO.setUserUcb(user);
         return institucionsDTO;
     }
-
-    // public static InstitutionsENTITY dtoToEntity(InstitucionsDTO institucionsDTO) {
-        
-    // }
     
 }

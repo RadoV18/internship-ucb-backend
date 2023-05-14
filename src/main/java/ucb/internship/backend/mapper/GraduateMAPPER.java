@@ -4,7 +4,7 @@ import ucb.internship.backend.models.Graduate;
 import ucb.internship.backend.models.Persons;
 import ucb.internship.backend.dtos.GraduateDTO;
 
-public class GraduateMAPPER {
+public class GraduateMapper {
     
     public static GraduateDTO entityToDto(Graduate graduateENTITY, Persons personsENTITY) {
         GraduateDTO graduateDTO = new GraduateDTO();

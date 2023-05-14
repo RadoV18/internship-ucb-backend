@@ -9,7 +9,7 @@ import ucb.internship.backend.models.User;
 @JsonIdentityInfo(
   generator = ObjectIdGenerators.PropertyGenerator.class, 
   property = "id")
-public class UserMAPPER {
+public class UserMapper {
     
     public static UserDTO entityToDto(User user) {
         UserDTO userDTO = new UserDTO();
