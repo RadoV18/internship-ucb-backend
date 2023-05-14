@@ -86,13 +86,13 @@ public class InternshipServiceImpl implements InternshipService {
         else
             city = "%"+city+"%";
         if(startingDate == null)
-            startDate = new Timestamp(System.currentTimeMillis());
+            startDate = Timestamp.valueOf("1970-01-01 00:00:00");
         else
-            startDate = new Timestamp(startingDate.getTime());
+            startDate = new Timestamp(startingDate.getTime()+47*60*60*1000);
         if(endingDate == null)
-            endDate = new Timestamp(System.currentTimeMillis());
+            endDate = Timestamp.valueOf("2100-01-01 00:00:00");
         else
-            endDate = new Timestamp(endingDate.getTime());
+            endDate = new Timestamp(endingDate.getTime()+47*60*60*1000);
         if(major == null || major.isEmpty())
             major = "%";
         else
