@@ -14,7 +14,6 @@ import ucb.internship.backend.models.InternshipMajor;
 import ucb.internship.backend.repositories.InternshipRepository;
 import ucb.internship.backend.services.InternshipService;
 import java.sql.Timestamp;
-import java.util.Collection;
 import ucb.internship.backend.dtos.ActiveInternshipDto;
 import ucb.internship.backend.dtos.ApplicantDto;
 import ucb.internship.backend.dtos.ApplicantSummaryDto;
@@ -22,6 +21,7 @@ import ucb.internship.backend.models.City;
 import ucb.internship.backend.repositories.CityRepository;
 import ucb.internship.backend.repositories.InternshipApplicationRepository;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 
 
@@ -79,15 +79,20 @@ public class InternshipServiceImpl implements InternshipService {
         return "Internship created successfully";
     }
     @Override
-    public Page<InternshipListDto> filterInternships(String city , Timestamp startingDate, Timestamp endingDate, String major, Integer page, Integer size) {
+    public Page<InternshipListDto> filterInternships(String city , Date startingDate, Date endingDate, String major, Integer page, Integer size) {
+        Timestamp startDate = null, endDate = null;
         if(city == null || city.isEmpty())
             city = "%";
         else
             city = "%"+city+"%";
         if(startingDate == null)
-            startingDate = Timestamp.valueOf("2019-11-1 00:00:00");
+            startDate = new Timestamp(System.currentTimeMillis());
+        else
+            startDate = new Timestamp(startingDate.getTime());
         if(endingDate == null)
-            endingDate = new Timestamp(System.currentTimeMillis());
+            endDate = new Timestamp(System.currentTimeMillis());
+        else
+            endDate = new Timestamp(endingDate.getTime());
         if(major == null || major.isEmpty())
             major = "%";
         else
@@ -96,7 +101,8 @@ public class InternshipServiceImpl implements InternshipService {
             page = 0;
         if(size == null)
             size = 10;
-        Page<Object[]> objectList= internshipRepository.findInternshipList(city,startingDate,endingDate,major,PageRequest.of(page,size));
+        LOGGER.info("city: {}, startDate: {}, endDate: {}, major: {}, page: {}, size: {}", city, startDate, endDate, major, page, size);
+        Page<Object[]> objectList= internshipRepository.findInternshipList(city,startDate,endDate,major,PageRequest.of(page,size));
         return objectList.map(InternshipListMapper::objectToDto);
 
     }

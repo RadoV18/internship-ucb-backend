@@ -27,7 +27,7 @@ public interface InternshipRepository  extends JpaRepository<Internship, Integer
             "                and i.city_id = c.city_id and i.institution_id = i2.institution_id\n" +
             "                and i2.user_id = u.user_id and s3.s3_object_id = u.s3_profile_picture\n" +
             "                and c.name like :city and i.starting_date >= :startingDate and i.ending_date <= :endingDate \n" +
-            "                and m.name like :major " +
+            "                and m.name like :major  and i.status = true and i.is_approved = 1" +
             "                order by i.internship_id \n" , nativeQuery = true)
     Page<Object[]> findInternshipList(@Param("city") String city,
                                       @Param("startingDate") Timestamp startingDate,

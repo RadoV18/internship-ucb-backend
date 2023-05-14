@@ -13,7 +13,7 @@ import ucb.internship.backend.services.impl.InternshipServiceImpl;
 import ucb.internship.backend.dtos.InternshipDto;
 import ucb.internship.backend.models.Internship;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 import java.util.List;
 
 @RestController
@@ -42,8 +42,8 @@ public class InternshipController {
     public ResponseEntity<ResponseDto<Page<InternshipListDto>>> getInternship(
             @RequestParam(required = false) String city,
             @RequestParam(required = false) String major,
-            @RequestParam(required = false) Timestamp startingDate,
-            @RequestParam(required = false) Timestamp endingDate,
+            @RequestParam(required = false) Date startingDate,
+            @RequestParam(required = false) Date endingDate,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer size){
        try{

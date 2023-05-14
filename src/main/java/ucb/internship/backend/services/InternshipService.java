@@ -1,5 +1,6 @@
 package ucb.internship.backend.services;
 
+import java.sql.Date;
 import java.util.List;
 
 import ucb.internship.backend.dtos.ActiveInternshipDto;
@@ -21,5 +22,5 @@ public interface InternshipService {
 
     List<ApplicantDto> getApplicantsByInternshipId(Integer id);
 
-    Page<InternshipListDto> filterInternships(String city , Timestamp startingDate, Timestamp endingDate, String major, Integer page, Integer size);
+    Page<InternshipListDto> filterInternships(String city , Date startingDate, Date endingDate, String major, Integer page, Integer size);
 }
