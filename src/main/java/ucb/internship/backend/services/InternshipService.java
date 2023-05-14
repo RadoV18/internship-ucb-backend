@@ -21,5 +21,5 @@ public interface InternshipService {
 
     List<ApplicantDto> getApplicantsByInternshipId(Integer id);
 
-    Page<InternshipListDto> filterInternships(String city , Timestamp startingDate, Timestamp endingDate, Collection<Integer> majors, Integer page, Integer size);
+    Page<InternshipListDto> filterInternships(String city , Timestamp startingDate, Timestamp endingDate, String major, Integer page, Integer size);
 }

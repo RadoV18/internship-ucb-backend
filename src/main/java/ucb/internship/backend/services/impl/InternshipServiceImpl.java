@@ -79,20 +79,24 @@ public class InternshipServiceImpl implements InternshipService {
         return "Internship created successfully";
     }
     @Override
-    public Page<InternshipListDto> filterInternships(String city , Timestamp startingDate, Timestamp endingDate, Collection<Integer> majorList, Integer page, Integer size) {
+    public Page<InternshipListDto> filterInternships(String city , Timestamp startingDate, Timestamp endingDate, String major, Integer page, Integer size) {
         if(city == null || city.isEmpty())
             city = "%";
+        else
+            city = "%"+city+"%";
         if(startingDate == null)
             startingDate = Timestamp.valueOf("2019-11-1 00:00:00");
         if(endingDate == null)
             endingDate = new Timestamp(System.currentTimeMillis());
-        if(majorList == null)
-            majorList = List.of(1,2,3,4,5,6,7,8,9,10);
+        if(major == null || major.isEmpty())
+            major = "%";
+        else
+            major = "%"+major+"%";
         if(page == null)
             page = 0;
         if(size == null)
             size = 10;
-        Page<Object[]> objectList= internshipRepository.findInternshipList(city,startingDate,endingDate,majorList,PageRequest.of(page,size));
+        Page<Object[]> objectList= internshipRepository.findInternshipList(city,startingDate,endingDate,major,PageRequest.of(page,size));
         return objectList.map(InternshipListMapper::objectToDto);
 
     }

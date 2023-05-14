@@ -21,19 +21,17 @@ public interface InternshipRepository  extends JpaRepository<Internship, Integer
     List<Internship> findAllByInstitutionIdAndIsApprovedIs(Integer institutionId, Integer isApproved);
 
     @Query(value = "Select distinct i.internship_id , i.title,i.description,  i.starting_date,i.ending_date, c.name as city\n" +
-            ", i2.name as institution, s3.url\n" +
-            "from internship i join city c on i.city_id = c.city_id\n" +
-            "    left join internship_major im on i.internship_id = im.internship_id\n" +
-            "    left join institution i2 on i.institution_id = i2.institution_id\n" +
-            "    left join ucb_user uu on i2.user_id = uu.user_id\n" +
-            "    left join s3_object s3 on uu.s3_profile_picture = s3.s3_object_id\n" +
-            "    where c.name LIKE :city and i.starting_date >= :startingDate and i.ending_date <= :endingDate\n" +
-            "    and im.major_id in :majors" +
-            "    and i.status = true and i.is_approved = 1 " +
-            "order by i.internship_id  asc\n" , nativeQuery = true)
+            "              , i2.name as institution, s3.url\n" +
+            "                from internship i, city c , internship_major im , major m, institution i2 , s3_object s3, ucb_user u\n" +
+            "                where i.internship_id = im.internship_id and im.major_id = m.major_id\n" +
+            "                and i.city_id = c.city_id and i.institution_id = i2.institution_id\n" +
+            "                and i2.user_id = u.user_id and s3.s3_object_id = u.s3_profile_picture\n" +
+            "                and c.name like :city and i.starting_date >= :startingDate and i.ending_date <= :endingDate \n" +
+            "                and m.name like :major " +
+            "                order by i.internship_id \n" , nativeQuery = true)
     Page<Object[]> findInternshipList(@Param("city") String city,
                                       @Param("startingDate") Timestamp startingDate,
                                       @Param("endingDate") Timestamp endingDate,
-                                      @Param("majors") Collection<Integer> majorIds,
+                                      @Param("major") String major,
                                       Pageable pageable);
 }
