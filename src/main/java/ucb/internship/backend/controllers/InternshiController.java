@@ -23,9 +23,10 @@ public class InternshiController {
     public static final Logger LOGGER = LoggerFactory.getLogger(InternshiController.class);
 
     @PostMapping
-    public String createInternship(@RequestBody InternshipDTO internshipDto){
+    public ResponseEntity<ResponseDto<Void>> createInternship(@RequestBody InternshipDTO internshipDto){
         LOGGER.info("Creating internship {}", internshipDto);
-        return internshipService.createInternship(internshipDto);
+        internshipService.createInternship(internshipDto);
+        return ResponseEntity.ok(new ResponseDto<>(null, "Convocatoria creada exitosamente.", true));
     }
 
     @GetMapping("/{id}")
