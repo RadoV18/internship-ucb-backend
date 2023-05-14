@@ -11,4 +11,6 @@ import java.util.List;
 @Service
 public interface InternshipRepository  extends JpaRepository<Internship, Integer> {
     public List<Internship> findByInternshipId(Integer InternshipId);
+
+    public List<Internship> findByIsApproved(Integer isApproved);
 }

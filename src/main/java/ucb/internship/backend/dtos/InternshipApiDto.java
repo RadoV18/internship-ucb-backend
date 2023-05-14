@@ -10,8 +10,8 @@ public class InternshipApiDto {
     private String description;
     private String city;
     private Integer isApproved;
-    private Timestamp startingDate;
-    private Timestamp endingDate;
+    private String startingDate;
+    private String endingDate;
     private List<String> internshipBenefits;
     private List<String> internshipRequirements;
     private List<String> internshipRoles;
@@ -47,16 +47,16 @@ public class InternshipApiDto {
     public void setApproved(Integer isApproved) {
         this.isApproved = isApproved;
     }
-    public Timestamp getStartingDate() {
+    public String getStartingDate() {
         return startingDate;
     }
-    public void setStartingDate(Timestamp startingDate) {
+    public void setStartingDate(String startingDate) {
         this.startingDate = startingDate;
     }
-    public Timestamp getEndingDate() {
+    public String getEndingDate() {
         return endingDate;
     }
-    public void setEndingDate(Timestamp endingDate) {
+    public void setEndingDate(String endingDate) {
         this.endingDate = endingDate;
     }
     public List<String> getInternshipBenefits() {

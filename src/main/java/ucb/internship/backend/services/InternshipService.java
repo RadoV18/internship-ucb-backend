@@ -8,9 +8,11 @@ import java.util.List;
 
 public interface InternshipService {
     
-    public String createInternship(InternshipDTO internshipDto);
+    String createInternship(InternshipDTO internshipDto);
 
-    public InternshipApiDto getInternshipApiById(Integer id);
+    InternshipApiDto getInternshipApiById(Integer id);
 
-    public List<InternshipApiDto> getInternshipAll();
+    List<InternshipApiDto> getInternshipAll();
+
+    void internShipChangeAprovedState(Integer id, Integer state);
 }

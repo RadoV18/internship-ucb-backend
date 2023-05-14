@@ -35,6 +35,7 @@ public class InternshipServiceImpl implements InternshipService{
         this.institutionRepository = institutionRepository;
     }
 
+    @Override
     public String createInternship(InternshipDTO internshipDto) {
         try {
             City city = cityRepository.findById(internshipDto.getCityId()).orElseThrow();
@@ -76,20 +77,29 @@ public class InternshipServiceImpl implements InternshipService{
         return "Internship created successfully";
     }
 
+    @Override
     public InternshipApiDto getInternshipApiById(Integer id){
         Internship gInternship = internshipRepository.findById(id).orElseThrow();
         InternshipApiDto newInternshipApiDto = InternshipMapper.entityToApiDto(gInternship);
         return  newInternshipApiDto;
     }
 
+    @Override
     public List<InternshipApiDto> getInternshipAll(){
         List<InternshipApiDto> listInternship = new ArrayList<>();
-        LOGGER.info("Los datos de la convocatoria es {}", internshipRepository.findAll());
-        List<Internship> list = internshipRepository.findAll();
+        List<Internship> list = internshipRepository.findByIsApproved(0);
         for (Internship convocatory : list) {
             InternshipApiDto internshipApiDto = InternshipMapper.entityToApiDto(convocatory);
             listInternship.add(internshipApiDto);
         }
         return  listInternship;
+    }
+
+    @Override
+    public void internShipChangeAprovedState(Integer id, Integer state) {
+        Internship internship = internshipRepository.findById(id).orElseThrow();
+        internship.setIsApproved(state);
+        internshipRepository.save(internship);
+        LOGGER.info("data {}", internship);
     }
 }

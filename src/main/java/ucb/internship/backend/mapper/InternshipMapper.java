@@ -1,6 +1,7 @@
 package ucb.internship.backend.mapper;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import ucb.internship.backend.dtos.InternshipApiDto;
@@ -17,6 +18,12 @@ public class InternshipMapper {
         List<String> listRoles = new ArrayList<>();
         List<String> listRequeriments = new ArrayList<>();
         List<String> listMajors = new ArrayList<>();
+        String date = gInternship.getStartingDate().toString();
+        String dateEnd = gInternship.getEndingDate().toString();
+        String[] fecha = date.split(" ");
+        String fechaInit = fecha[0];
+        String[] fechafin = dateEnd.split(" ");
+        String fechaEnd = fechafin[0];
         InternshipApiDto internshipApiDto = new InternshipApiDto();
         internshipApiDto.setInternshipId(gInternship.getInternshipId());
         internshipApiDto.setInstitutionId(gInternship.getInstitutionId().getName());
@@ -25,8 +32,8 @@ public class InternshipMapper {
         internshipApiDto.setTitle(gInternship.getTitle());
         internshipApiDto.setDescription(gInternship.getDescription());
         internshipApiDto.setApproved(gInternship.getIsApproved());
-        internshipApiDto.setStartingDate(gInternship.getStartingDate());
-        internshipApiDto.setEndingDate(gInternship.getEndingDate());
+        internshipApiDto.setStartingDate(fechaInit);
+        internshipApiDto.setEndingDate(fechaEnd);
         
         for (InternshipBenefit beneficios : gInternship.getInternshipBenefits()) {
             listBenefit.add(beneficios.getDescription());

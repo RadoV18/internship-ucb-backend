@@ -9,6 +9,10 @@ import ucb.internship.backend.dtos.InternshipApiDto;
 import ucb.internship.backend.dtos.InternshipDTO;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -32,6 +36,11 @@ public class InternshiController {
     @GetMapping("/internship")
     public List<InternshipApiDto> getInternshipAll(){
         return internshipService.getInternshipAll();
+    }
+
+    @PutMapping("/internship/{state}/{id}")
+    public void internshipAcepted(@PathVariable Integer id,@PathVariable Integer state) {
+        internshipService.internShipChangeAprovedState(id, state);
     }
 
 }
