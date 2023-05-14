@@ -46,9 +46,4 @@ public class InternshiController {
         List<ApplicantDto> applicants = internshipService.getApplicantsByInternshipId(id);
         return ResponseEntity.ok(new ResponseDto<>(applicants, null, true));
     }
-
-    @GetMapping()
-    public List<Internship> getInternships() {
-        return internshipService.getInternships();
-    }
 }
