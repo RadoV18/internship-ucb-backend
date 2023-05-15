@@ -16,8 +16,8 @@ public class CityDto {
         return cityId;
     }
 
-    public void setCityId(Integer id) {
-        this.cityId = id;
+    public void setCityId(Integer cityId) {
+        this.cityId = cityId;
     }
 
     public String getName() {

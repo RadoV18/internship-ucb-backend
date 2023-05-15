@@ -15,8 +15,8 @@ public class MajorDto {
         return majorId;
     }
 
-    public void setMajorId(Integer id) {
-        this.majorId = id;
+    public void setMajorId(Integer majorId) {
+        this.majorId = majorId;
     }
 
     public String getName() {

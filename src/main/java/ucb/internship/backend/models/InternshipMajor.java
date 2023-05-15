@@ -54,6 +54,7 @@ public class InternshipMajor {
         this.major = major;
     }
 
+
     public Boolean getStatus() {
         return status;
     }

@@ -1,9 +1,9 @@
 package ucb.internship.backend.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ucb.internship.backend.dtos.MajorDto;
+import org.springframework.data.domain.Sort;
 import ucb.internship.backend.mappers.MajorMapper;
 import ucb.internship.backend.models.Major;
 import ucb.internship.backend.repositories.MajorRepository;

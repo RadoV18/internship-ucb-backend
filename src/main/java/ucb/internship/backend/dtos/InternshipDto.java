@@ -5,13 +5,13 @@ import ucb.internship.backend.models.*;
 import java.sql.Timestamp;
 import java.util.List;
 
-public class InternshipDTO {
-    private Integer internshipId;
+public class InternshipDto {
+    private Long internshipId;
     private Integer institutionId;
     private String title;
     private String description;
 
-    private boolean isApproved;
+    private Integer isApproved;
     private Timestamp startingDate;
     private Timestamp endingDate;
     private List<InternshipBenefit> internshipBenefits;
@@ -21,11 +21,11 @@ public class InternshipDTO {
     private Integer cityId;
     private List<Major> majorList;
 
-    public Integer getInternshipId() {
+    public Long getInternshipId() {
         return internshipId;
     }
 
-    public void setInternshipId(Integer internshipId) {
+    public void setInternshipId(Long internshipId) {
         this.internshipId = internshipId;
     }
 
@@ -53,12 +53,12 @@ public class InternshipDTO {
         this.description = description;
     }
 
-    public boolean isApproved() {
+    public Integer getIsApproved() {
         return isApproved;
     }
 
-    public void setApproved(boolean approved) {
-        this.isApproved = approved;
+    public void setIsApproved(Integer isApproved) {
+        this.isApproved = isApproved;
     }
 
     public Timestamp getStartingDate() {
