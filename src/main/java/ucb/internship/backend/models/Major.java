@@ -12,7 +12,7 @@ public class Major {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer majorId;
     private String name;
-    private boolean status;
+    private Boolean status;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "major", fetch = FetchType.LAZY)
     private List<CampusMajor> campusMajors;
@@ -36,11 +36,11 @@ public class Major {
         this.name = name;
     }
 
-    public boolean isStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 

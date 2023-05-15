@@ -70,6 +70,11 @@ public class InternshipServiceImpl implements InternshipService {
                 role.setStatus(true);
                 return role;
             }).toList());
+            newInternship.setInternshipQuestions(internshipDto.getInternshipQuestions().stream().map(question -> {
+                question.setInternship(newInternship);
+                question.setStatus(true);
+                return question;
+            }).toList());
             newInternship.setMajorList(internshipDto.getMajorList().stream().map(
                     major -> new InternshipMajor(newInternship, major, true)).toList());
             LOGGER.info("Internship {}", newInternship);

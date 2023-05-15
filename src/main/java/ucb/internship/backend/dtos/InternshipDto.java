@@ -1,9 +1,6 @@
 package ucb.internship.backend.dtos;
 
-import ucb.internship.backend.models.InternshipBenefit;
-import ucb.internship.backend.models.InternshipRequirement;
-import ucb.internship.backend.models.InternshipRole;
-import ucb.internship.backend.models.Major;
+import ucb.internship.backend.models.*;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -20,6 +17,7 @@ public class InternshipDto {
     private List<InternshipBenefit> internshipBenefits;
     private List<InternshipRequirement> internshipRequirements;
     private List<InternshipRole> internshipRoles;
+    private List<InternshipQuestion> internshipQuestions;
     private Integer cityId;
     private List<Major> majorList;
 
@@ -119,9 +117,17 @@ public class InternshipDto {
         this.internshipRoles = internshipRoles;
     }
 
+    public List<InternshipQuestion> getInternshipQuestions() {
+        return internshipQuestions;
+    }
+
+    public void setInternshipQuestions(List<InternshipQuestion> internshipQuestions) {
+        this.internshipQuestions = internshipQuestions;
+    }
+
     @Override
     public String toString() {
-        return "InternshipDto{" +
+        return "InternshipDTO{" +
                 "internshipId=" + internshipId +
                 ", institutionId=" + institutionId +
                 ", title='" + title + '\'' +
@@ -129,9 +135,12 @@ public class InternshipDto {
                 ", isApproved=" + isApproved +
                 ", startingDate=" + startingDate +
                 ", endingDate=" + endingDate +
-                ", internship_benefits=" + internshipBenefits +
-                ", internship_requirements=" + internshipRequirements +
-                ", internship_roles=" + internshipRoles +
+                ", internshipBenefits=" + internshipBenefits +
+                ", internshipRequirements=" + internshipRequirements +
+                ", internshipRoles=" + internshipRoles +
+                ", internshipQuestions=" + internshipQuestions +
+                ", cityId=" + cityId +
+                ", majorList=" + majorList +
                 '}';
     }
 }

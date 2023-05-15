@@ -32,6 +32,8 @@ public class Internship {
     private List<InternshipRequirement> internshipRequirements;
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "internship")
     private List<InternshipRole> internshipRoles;
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "internship")
+    private List<InternshipQuestion> internshipQuestions;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "internship")
     private List<InternshipMajor> majorList;
     public Internship() {
@@ -132,6 +134,14 @@ public class Internship {
         this.internshipRoles = internshipRoles;
     }
 
+    public List<InternshipQuestion> getInternshipQuestions() {
+        return internshipQuestions;
+    }
+
+    public void setInternshipQuestions(List<InternshipQuestion> internshipQuestions) {
+        this.internshipQuestions = internshipQuestions;
+    }
+
     public List<InternshipMajor> getMajorList() {
         return majorList;
     }
@@ -155,6 +165,8 @@ public class Internship {
                 ", internshipBenefits=" + internshipBenefits +
                 ", internshipRequirements=" + internshipRequirements +
                 ", internshipRoles=" + internshipRoles +
+                ", internshipQuestions=" + internshipQuestions +
+                ", majorList=" + majorList +
                 '}';
     }
 }

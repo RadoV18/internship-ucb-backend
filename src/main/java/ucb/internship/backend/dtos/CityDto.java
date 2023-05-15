@@ -4,6 +4,14 @@ public class CityDto {
     private Integer cityId;
     private String name;
 
+    public CityDto() {
+    }
+
+    public CityDto(Integer cityId, String name) {
+        this.cityId = cityId;
+        this.name = name;
+    }
+
     public Integer getCityId() {
         return cityId;
     }
@@ -22,9 +30,9 @@ public class CityDto {
 
     @Override
     public String toString() {
-        return "CityDTO{" +
-                "cityId=" + cityId +
-                ", name='" + name + '\'' +
-                '}';
+        return "CityDto{" +
+            "cityId=" + cityId +
+            ", name='" + name + '\'' +
+            '}';
     }
 }

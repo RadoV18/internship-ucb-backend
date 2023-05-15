@@ -3,33 +3,27 @@ package ucb.internship.backend.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ucb.internship.backend.dtos.CityDto;
+import ucb.internship.backend.mappers.CityMapper;
 import ucb.internship.backend.models.City;
 import ucb.internship.backend.repositories.CityRepository;
 import ucb.internship.backend.services.CityService;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CityServiceImpl implements CityService {
 
-    private CityRepository cityRepository;
-
     @Autowired
-    public CityServiceImpl(CityRepository cityRepository) {
-        this.cityRepository = cityRepository;
-    }
+    public CityRepository cityRepository;
 
     @Override
-    public List<CityDto> findAllCities() {
+    public List<CityDto> getAllCities() {
+        ArrayList<CityDto> result = new ArrayList<>();
         List<City> cities = cityRepository.findAll();
-
-        return cities.stream().map(city -> {
-            CityDto cityDTO = new CityDto();
-            cityDTO.setCityId(city.getCityId());
-            cityDTO.setName(city.getName());
-            return cityDTO;
-
-        }).collect(Collectors.toList());
+        for(City city : cities) {
+            result.add(CityMapper.entityToDto(city));
+        }
+        return result;
     }
 }

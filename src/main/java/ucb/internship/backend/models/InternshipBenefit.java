@@ -1,6 +1,5 @@
 package ucb.internship.backend.models;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Cascade;
@@ -18,7 +17,7 @@ public class InternshipBenefit {
 
     private Internship internship;
     private String description;
-    private boolean status;
+    private Boolean status;
 
     public Integer getBenefitId() {
         return BenefitId;
@@ -48,11 +47,11 @@ public class InternshipBenefit {
         this.description = description;
     }
 
-    public boolean isStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 
