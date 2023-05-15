@@ -31,7 +31,9 @@ public class InternshipServiceImpl implements InternshipService {
     private final InternshipApplicationRepository internshipApplicationRepository;
     private final CityRepository cityRepository;
     public static final Logger LOGGER = LoggerFactory.getLogger(InternshipServiceImpl.class.getName());
-
+    private static final Integer dayInMilis = 86400000;
+    private static final Integer hourInMilis = 3600000;
+    private static final Integer minuteInMilis = 60000;
     @Autowired
     public InternshipServiceImpl(InternshipRepository internshipRepository,
         InternshipApplicationRepository internshipApplicationRepository, CityRepository cityRepository
@@ -88,11 +90,11 @@ public class InternshipServiceImpl implements InternshipService {
         if(startingDate == null)
             startDate = Timestamp.valueOf("1970-01-01 00:00:00");
         else
-            startDate = new Timestamp(startingDate.getTime()+47*60*60*1000);
+            startDate = new Timestamp(startingDate.getTime()+dayInMilis);
         if(endingDate == null)
             endDate = Timestamp.valueOf("2100-01-01 00:00:00");
         else
-            endDate = new Timestamp(endingDate.getTime()+47*60*60*1000);
+            endDate = new Timestamp(endingDate.getTime()+dayInMilis+hourInMilis* 23L +minuteInMilis* 59L);
         if(major == null || major.isEmpty())
             major = "%";
         else
