@@ -37,21 +37,23 @@ public class InstitutionsServiceImpl implements InstitutionsService{
         List<Institution> result = this.institutionsREPOSITORY.findAll();
         List<InstitucionsDTO> resultDTO = new ArrayList<>();
         result.stream().forEach(institution ->{
-            User usuario = this.userREPOSITORY.findById(institution.getUserUcb().getUserId()).orElseThrow();
-            InstitucionsDTO institucionsDTO = new InstitucionsDTO();
-            institucionsDTO = InstitutionsMapper.entityToDto(institution, usuario);
-            resultDTO.add(institucionsDTO);
+            if (institution.getUserUcb().getApproved() ==0) {
+                User usuario = this.userREPOSITORY.findById(institution.getUserUcb().getUserId()).orElseThrow();
+                InstitucionsDTO institucionsDTO = new InstitucionsDTO();
+                institucionsDTO = InstitutionsMapper.entityToDto(institution, usuario);
+                resultDTO.add(institucionsDTO);
+            }
         });
         LOGGER.info("BUSINESS-LOGIC: EL resultado de la cosnulta es {}",resultDTO);
         return resultDTO;
     }
 
     @Override
-    public void requestApproved(Long id) {
+    public void requestApproved(Long id, Integer state) {
         User user = this.userREPOSITORY.findById(id).orElseThrow();
-        user.setApproved(true);
+        user.setApproved(state);
         User updateUser = user;
-        System.out.println("El usuario es"+ updateUser.isApproved());
+        System.out.println("El usuario es"+ updateUser.getApproved());
         this.userREPOSITORY.save(updateUser);
     }
     

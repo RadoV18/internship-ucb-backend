@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
                 email,
                 hashedPassword,
                 s3ObjectId,
-                false,
+                0,
                 true
         );
         return repository.save(user);
@@ -77,11 +77,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void requestApproved(Long id) {
+    public void requestApproved(Long id, Integer state) {
         User user = this.repository.findById(id).orElseThrow();
-        user.setApproved(true);
+        user.setApproved(state);
         User updateUser = user;
-        System.out.println("El usuario es"+ updateUser.isApproved());
+        System.out.println("El usuario es"+ updateUser.getApproved());
         this.repository.save(updateUser);
     }
 }

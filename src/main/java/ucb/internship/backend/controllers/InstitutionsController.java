@@ -35,4 +35,5 @@ public class InstitutionsController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
     
+    
 }

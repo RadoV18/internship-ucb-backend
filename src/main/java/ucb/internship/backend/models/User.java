@@ -22,7 +22,7 @@ public class User {
     @Column(name = "s3_profile_picture")
     private Long s3ProfilePicture;
     @Column(name = "is_approved")
-    private boolean isApproved;
+    private Integer isApproved;
 
     private boolean status;
     @JsonBackReference
@@ -41,7 +41,7 @@ public class User {
     public User() {
     }
 
-    public User(String email, String password, Long s3ProfilePicture, boolean isApproved, boolean status) {
+    public User(String email, String password, Long s3ProfilePicture, Integer isApproved, boolean status) {
         this.email = email;
         this.password = password;
         this.s3ProfilePicture = s3ProfilePicture;
@@ -51,7 +51,7 @@ public class User {
 
     
 
-    public User(Long userId, String email, String password, Long s3ProfilePicture, boolean isApproved, boolean status,
+    public User(Long userId, String email, String password, Long s3ProfilePicture, Integer isApproved, boolean status,
     Institution institutions, Persons personsENTITY) {
         this.userId = userId;
         this.email = email;
@@ -95,11 +95,11 @@ public class User {
         this.s3ProfilePicture = s3ProfilePicture;
     }
 
-    public boolean isApproved() {
+    public Integer getApproved() {
         return isApproved;
     }
 
-    public void setApproved(boolean isApproved) {
+    public void setApproved(Integer isApproved) {
         this.isApproved = isApproved;
     }
 

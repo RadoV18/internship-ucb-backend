@@ -8,5 +8,5 @@ public interface InstitutionsService {
     
     List<InstitucionsDTO> getInstitutions();
 
-    void requestApproved(Long id);
+    void requestApproved(Long id, Integer state);
 }

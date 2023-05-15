@@ -36,9 +36,11 @@ public class GraduateServiceImpl implements GraduateService{
         List<Graduate> result = this.graduateREPOSITORY.findAll();
         List<GraduateDTO> resultDTO = new ArrayList<>();
         result.stream().forEach(graduate ->{
-            Persons personsENTITY = this.personsREPOSITORY.findById(graduate.getGraduateId()).orElseThrow();
-            GraduateDTO graduateDTO = GraduateMapper.entityToDto(graduate, personsENTITY);
-            resultDTO.add(graduateDTO);
+            if (graduate.getPerson().getUserUcb().getApproved() == 0) {
+                Persons personsENTITY = this.personsREPOSITORY.findById(graduate.getGraduateId()).orElseThrow();
+                GraduateDTO graduateDTO = GraduateMapper.entityToDto(graduate, personsENTITY);
+                resultDTO.add(graduateDTO);
+            }
         });
         LOGGER.info("BUSINESS-LOGIC: EL resultado de la cosnulta es {}",result);
         return resultDTO;
