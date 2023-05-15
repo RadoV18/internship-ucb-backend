@@ -128,6 +128,6 @@ public class InternshipServiceImpl implements InternshipService {
     }
 
     public List<Internship> getInternshipById(Integer id){
-     return  internshipRepository.findByInternshipId(id);
+        return  internshipRepository.findByInternshipId(id);
     }
 }
