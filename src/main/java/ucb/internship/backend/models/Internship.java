@@ -1,6 +1,7 @@
 package ucb.internship.backend.models;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -12,18 +13,18 @@ public class Internship {
     @Column(name = "internship_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long internshipId;
-    @Column(name = "institution_id")
-    private Integer institutionId;
-    @Column(name = "city_id")
-    private Integer cityId;
+
     private String title;
     private String description;
     @Column(name = "is_approved")
     private Integer isApproved;
+
     @Column(name = "starting_date")
     private Timestamp startingDate;
+
     @Column(name = "ending_date")
     private Timestamp endingDate;
+
     private Boolean status;
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "internship")
@@ -36,6 +37,14 @@ public class Internship {
     private List<InternshipQuestion> internshipQuestions;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "internship")
     private List<InternshipMajor> majorList;
+    @ManyToOne
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @JoinColumn(name = "institution_id")
+    private Institution institution;
+    @ManyToOne
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @JoinColumn(name = "city_id")
+    private City city;
     public Internship() {
     }
     public Long getInternshipId() {
@@ -44,22 +53,6 @@ public class Internship {
 
     public void setInternshipId(Long internshipId) {
         this.internshipId = internshipId;
-    }
-
-    public Integer getInstitutionId() {
-        return institutionId;
-    }
-
-    public void setInstitutionId(Integer institutionId) {
-        this.institutionId = institutionId;
-    }
-
-    public Integer getCityId() {
-        return cityId;
-    }
-
-    public void setCityId(Integer cityId) {
-        this.cityId = cityId;
     }
 
     public String getTitle() {
@@ -150,12 +143,26 @@ public class Internship {
         this.majorList = majorList;
     }
 
+    public Institution getInstitution() {
+        return institution;
+    }
+
+    public void setInstitution(Institution institution) {
+        this.institution = institution;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
     @Override
     public String toString() {
         return "Internship{" +
                 "internshipId=" + internshipId +
-                ", institutionId=" + institutionId +
-                ", cityId=" + cityId +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", isApproved=" + isApproved +

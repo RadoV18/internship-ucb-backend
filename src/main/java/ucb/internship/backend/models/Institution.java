@@ -2,6 +2,8 @@ package ucb.internship.backend.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "institution")
 public class Institution {
@@ -24,6 +26,9 @@ public class Institution {
     private String contactPhone;
     @Column(name = "contact_position")
     private String contactPosition;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "institution")
+    private List<Internship> internships;
 
     private Boolean status;
 

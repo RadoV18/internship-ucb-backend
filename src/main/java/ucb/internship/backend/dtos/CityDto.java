@@ -1,22 +1,22 @@
 package ucb.internship.backend.dtos;
 
 public class CityDto {
-    private Integer cityId;
+    private Long cityId;
     private String name;
 
     public CityDto() {
     }
 
-    public CityDto(Integer cityId, String name) {
+    public CityDto(Long cityId, String name) {
         this.cityId = cityId;
         this.name = name;
     }
 
-    public Integer getCityId() {
+    public Long getCityId() {
         return cityId;
     }
 
-    public void setCityId(Integer cityId) {
+    public void setCityId(Long cityId) {
         this.cityId = cityId;
     }
 
