@@ -7,7 +7,7 @@ import java.util.List;
 
 public class InternshipDto {
     private Long internshipId;
-    private Integer institutionId;
+    private Long institutionId;
     private String title;
     private String description;
 
@@ -18,7 +18,7 @@ public class InternshipDto {
     private List<InternshipRequirement> internshipRequirements;
     private List<InternshipRole> internshipRoles;
     private List<InternshipQuestion> internshipQuestions;
-    private Integer cityId;
+    private Long cityId;
     private List<Major> majorList;
 
     public Long getInternshipId() {
@@ -37,11 +37,11 @@ public class InternshipDto {
         this.title = title;
     }
 
-    public Integer getInstitutionId() {
+    public Long getInstitutionId() {
         return institutionId;
     }
 
-    public void setInstitutionId(Integer institutionId) {
+    public void setInstitutionId(Long institutionId) {
         this.institutionId = institutionId;
     }
 
@@ -93,11 +93,11 @@ public class InternshipDto {
         this.internshipRequirements = internshipRequirements;
     }
 
-    public Integer getCityId() {
+    public Long getCityId() {
         return cityId;
     }
 
-    public void setCityId(Integer cityId) {
+    public void setCityId(Long cityId) {
         this.cityId = cityId;
     }
 

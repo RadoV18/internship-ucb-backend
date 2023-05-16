@@ -6,11 +6,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ucb.internship.backend.dtos.ActiveInternshipDto;
-import ucb.internship.backend.dtos.ApplicantDto;
-import ucb.internship.backend.dtos.ResponseDto;
+import ucb.internship.backend.dtos.*;
 import ucb.internship.backend.services.InternshipService;
-import ucb.internship.backend.dtos.InternshipDto;
 import ucb.internship.backend.models.Internship;
 
 import java.util.List;
@@ -30,14 +27,9 @@ public class InternshiController {
         return ResponseEntity.ok(new ResponseDto<>(null, "Convocatoria creada exitosamente.", true));
     }
 
-    @GetMapping("/{id}")
-    public List<Internship> getInternship(@PathVariable Integer id){
-        return internshipService.getInternshipById(id);
-    }
-
     @GetMapping("/institution/{id}/active")
     public ResponseEntity<ResponseDto<List<ActiveInternshipDto>>> getActiveInternshipsByInstitutionId(
-        @PathVariable Integer id
+        @PathVariable Long id
     ) {
         List<ActiveInternshipDto> internships = internshipService.getActiveInternshipsByInstitutionId(id);
         return ResponseEntity.ok(new ResponseDto<>(internships, null, true));
@@ -49,6 +41,24 @@ public class InternshiController {
     ) {
         List<ApplicantDto> applicants = internshipService.getApplicantsByInternshipId(id);
         return ResponseEntity.ok(new ResponseDto<>(applicants, null, true));
+    }
+
+    @GetMapping("/internship/{id}")
+    // TODO: Change return type to ResponseEntity<ResponseDto<InternshipApiDto>>
+    public InternshipApiDto getInternship(@PathVariable Integer id) {
+        return internshipService.getInternshipApiById(id);
+    }
+
+    @GetMapping("/internship")
+    // TODO: Change return type to ResponseEntity<ResponseDto<List<InternshipApiDto>>>
+    public List<InternshipApiDto> getInternshipAll() {
+        return internshipService.getInternshipAll();
+    }
+
+    @PutMapping("/internship/{state}/{id}")
+    // TODO: Change return type to ResponseEntity<ResponseDto<Void>>
+    public void internshipAccepted(@PathVariable Integer id, @PathVariable Integer state) {
+        internshipService.internShipChangeAprovedState(id, state);
     }
 
 }
