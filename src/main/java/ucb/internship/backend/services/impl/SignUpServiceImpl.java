@@ -64,7 +64,9 @@ public class SignUpServiceImpl implements SignUpService {
                 institutionSignUpDto.getContactLastName(),
                 institutionSignUpDto.getContactEmail(),
                 institutionSignUpDto.getContactPhone(),
-                institutionSignUpDto.getContactPosition());
+                institutionSignUpDto.getContactPosition(),
+                true
+        );
         institutionRepository.save(institution);
         // generate the verification code
         VerificationCode verificationCode = verificationCodeService.createVerificationCode(savedUser.getUserId());

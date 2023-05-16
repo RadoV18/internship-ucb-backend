@@ -3,7 +3,7 @@ package ucb.internship.backend.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "institution", schema = "public")
+@Table(name = "institution")
 public class Institution {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,10 +25,12 @@ public class Institution {
     @Column(name = "contact_position")
     private String contactPosition;
 
+    private Boolean status;
+
     public Institution() {
     }
 
-    public Institution(Long userId, String name, String description, String area, String contactFirstName, String contactLastName, String contactEmail, String contactPhone, String contactPosition) {
+    public Institution(Long userId, String name, String description, String area, String contactFirstName, String contactLastName, String contactEmail, String contactPhone, String contactPosition, Boolean status) {
         this.userId = userId;
         this.name = name;
         this.description = description;
@@ -38,6 +40,7 @@ public class Institution {
         this.contactEmail = contactEmail;
         this.contactPhone = contactPhone;
         this.contactPosition = contactPosition;
+        this.status = status;
     }
 
     public Long getInstitutionId() {
@@ -120,10 +123,19 @@ public class Institution {
         this.contactPosition = contactPosition;
     }
 
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "Institution{" +
                 "institutionId=" + institutionId +
+                ", userId=" + userId +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", area='" + area + '\'' +
@@ -132,6 +144,7 @@ public class Institution {
                 ", contactEmail='" + contactEmail + '\'' +
                 ", contactPhone='" + contactPhone + '\'' +
                 ", contactPosition='" + contactPosition + '\'' +
+                ", status=" + status +
                 '}';
     }
 }
