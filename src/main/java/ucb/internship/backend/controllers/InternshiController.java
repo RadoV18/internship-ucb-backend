@@ -44,21 +44,19 @@ public class InternshiController {
     }
 
     @GetMapping("/internship/{id}")
-    // TODO: Change return type to ResponseEntity<ResponseDto<InternshipApiDto>>
-    public InternshipApiDto getInternship(@PathVariable Integer id) {
-        return internshipService.getInternshipApiById(id);
+    public ResponseEntity<ResponseDto<InternshipApiDto>> getInternship(@PathVariable Integer id) {
+        return ResponseEntity.ok(new ResponseDto<>(internshipService.getInternshipApiById(id), null, true));
     }
 
     @GetMapping("/internship")
-    // TODO: Change return type to ResponseEntity<ResponseDto<List<InternshipApiDto>>>
-    public List<InternshipApiDto> getInternshipAll() {
-        return internshipService.getInternshipAll();
+    public ResponseEntity<ResponseDto<List<InternshipApiDto>>> getInternshipAll() {
+        return ResponseEntity.ok(new ResponseDto<>(internshipService.getInternshipAll(), null, true));
     }
 
     @PutMapping("/internship/{state}/{id}")
-    // TODO: Change return type to ResponseEntity<ResponseDto<Void>>
-    public void internshipAccepted(@PathVariable Integer id, @PathVariable Integer state) {
+    public ResponseEntity<ResponseDto<InternshipApiDto>> internshipAccepted(@PathVariable Integer id, @PathVariable Integer state) {
         internshipService.internShipChangeAprovedState(id, state);
+        return ResponseEntity.ok(new ResponseDto<>(internshipService.getInternshipApiById(id), null, true));
     }
 
 }
