@@ -19,3 +19,10 @@ server:
 mailjet:
   key: ${MAILJET_API_KEY:}
   secret: ${MAILJET_API_SECRET:}
+
+aws:
+  s3:
+    accessKey: ${AWS_ACCESS_KEY:}
+    secret: ${AWS_SECRET:}
+    region: ${AWS_REGION:us-east-1}
+    bucket: ${AWS_BUCKET:internship-by-cato}
