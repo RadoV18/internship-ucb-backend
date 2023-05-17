@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import ucb.internship.backend.dtos.InstitucionsDTO;
+import ucb.internship.backend.dtos.InstitucionsDto;
 import ucb.internship.backend.mapper.InstitutionsMapper;
 import ucb.internship.backend.models.Institution;
 import ucb.internship.backend.models.User;
@@ -32,14 +32,14 @@ public class InstitutionsServiceImpl implements InstitutionsService{
     }
 
     @Override
-    public List<InstitucionsDTO> getInstitutions() {
+    public List<InstitucionsDto> getInstitutions() {
         LOGGER.info("BUSINESS-LOGIC: Iniciando petición para obtener el listado de personas");
         List<Institution> result = this.institutionsREPOSITORY.findAll();
-        List<InstitucionsDTO> resultDTO = new ArrayList<>();
+        List<InstitucionsDto> resultDTO = new ArrayList<>();
         result.stream().forEach(institution ->{
             if (institution.getUserUcb().getApproved() ==0) {
                 User usuario = this.userREPOSITORY.findById(institution.getUserUcb().getUserId()).orElseThrow();
-                InstitucionsDTO institucionsDTO = new InstitucionsDTO();
+                InstitucionsDto institucionsDTO = new InstitucionsDto();
                 institucionsDTO = InstitutionsMapper.entityToDto(institution, usuario);
                 resultDTO.add(institucionsDTO);
             }

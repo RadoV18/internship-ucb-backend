@@ -31,9 +31,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @Table(name = "persons")
-@JsonIdentityInfo(
-  generator = ObjectIdGenerators.PropertyGenerator.class, 
-  property = "personId")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "personId")
 public class Persons {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,7 +50,7 @@ public class Persons {
     private User userUcb;
     @JsonIgnore
     @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
-    private Graduate graduateENTITY;
+    private Graduate graduate;
     @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
     @JsonIgnore
     private Student student;

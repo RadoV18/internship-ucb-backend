@@ -1,12 +1,12 @@
 package ucb.internship.backend.services;
 
 import java.util.List;
-import ucb.internship.backend.dtos.InstitucionsDTO;
+import ucb.internship.backend.dtos.InstitucionsDto;
 
 
 public interface InstitutionsService {
     
-    List<InstitucionsDTO> getInstitutions();
+    List<InstitucionsDto> getInstitutions();
 
     void requestApproved(Long id, Integer state);
 }

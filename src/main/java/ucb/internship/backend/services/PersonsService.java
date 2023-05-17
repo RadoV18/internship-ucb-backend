@@ -1,13 +1,12 @@
 package ucb.internship.backend.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import ucb.internship.backend.dtos.PersonsDTO;
+import ucb.internship.backend.dtos.PersonsDto;
 
 
 public interface PersonsService {
 
-    List<PersonsDTO> getPersons();
+    List<PersonsDto> getPersons();
     
 }

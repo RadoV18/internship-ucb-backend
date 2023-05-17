@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import ucb.internship.backend.models.Persons;
 import ucb.internship.backend.models.User;
-import ucb.internship.backend.dtos.PersonsDTO;
+import ucb.internship.backend.dtos.PersonsDto;
 import ucb.internship.backend.mapper.PersonsMapper;
 import ucb.internship.backend.repositories.PersonsRepository;
 import ucb.internship.backend.repositories.UserRepository;
@@ -32,13 +32,13 @@ public class PersonsServiceImpl implements PersonsService{
     }
 
     @Override
-    public List<PersonsDTO> getPersons() {
+    public List<PersonsDto> getPersons() {
         LOGGER.info("BUSINESS-LOGIC: Iniciando petición para obtener el listado de instituciones");
         List<Persons> result = this.personsREPOSITORY.findAll();
-        List<PersonsDTO> resultDTO = new ArrayList<>();
+        List<PersonsDto> resultDTO = new ArrayList<>();
         result.stream().forEach(person ->{
             User usuario = this.userREPOSITORY.findById(person.getUserUcb().getUserId()).orElseThrow();
-            PersonsDTO personsDTO = PersonsMapper.entitytoDto(person, usuario);
+            PersonsDto personsDTO = PersonsMapper.entitytoDto(person, usuario);
             resultDTO.add(personsDTO);
         });
         LOGGER.info("BUSINESS-LOGIC: EL resultado de la cosnulta es {}",resultDTO);

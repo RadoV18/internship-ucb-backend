@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ucb.internship.backend.services.InternshipService;
-import ucb.internship.backend.dtos.InternshipDTO;
+import ucb.internship.backend.dtos.InternshipDto;
 import ucb.internship.backend.models.Internship;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public class InternshiController {
         this.internshipService = internshipService;
     }
     @PostMapping("/internship")
-    public String createInternship(@RequestBody InternshipDTO internshipDto){
+    public String createInternship(@RequestBody InternshipDto internshipDto){
         LOGGER.info("Creating internship {}", internshipDto);
         return internshipService.createInternship(internshipDto);
     }

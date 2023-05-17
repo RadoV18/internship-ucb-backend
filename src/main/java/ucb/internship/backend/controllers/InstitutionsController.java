@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import ucb.internship.backend.dtos.InstitucionsDTO;
+import ucb.internship.backend.dtos.InstitucionsDto;
 import ucb.internship.backend.services.InstitutionsService;
 
 @RestController
@@ -28,9 +28,9 @@ public class InstitutionsController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<InstitucionsDTO>> get_institutions() {
+    public ResponseEntity<List<InstitucionsDto>> get_institutions() {
         LOGGER.info("REQUEST: Iniciando petición para obtener el listado de instituciones");
-        List<InstitucionsDTO> result = institutionsBL.getInstitutions();
+        List<InstitucionsDto> result = institutionsBL.getInstitutions();
         LOGGER.info("REQUEST: El resultado de la consulta es {}", result);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

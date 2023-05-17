@@ -47,6 +47,4 @@ public class Graduate {
     @JoinColumn(name = "person_id", referencedColumnName = "person_id")
     @ToString.Exclude
     private Persons person;
-
-    
 }

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import ucb.internship.backend.models.Graduate;
 import ucb.internship.backend.models.Persons;
-import ucb.internship.backend.dtos.GraduateDTO;
+import ucb.internship.backend.dtos.GraduateDto;
 import ucb.internship.backend.mapper.GraduateMapper;
 import ucb.internship.backend.repositories.GraduateRepository;
 import ucb.internship.backend.repositories.PersonsRepository;
@@ -31,14 +31,14 @@ public class GraduateServiceImpl implements GraduateService{
     }
 
     @Override
-    public List<GraduateDTO> getGraduates() {
+    public List<GraduateDto> getGraduates() {
         LOGGER.info("BUSINESS-LOGIC: Iniciando petición para obtener el listado de instituciones");
         List<Graduate> result = this.graduateREPOSITORY.findAll();
-        List<GraduateDTO> resultDTO = new ArrayList<>();
+        List<GraduateDto> resultDTO = new ArrayList<>();
         result.stream().forEach(graduate ->{
             if (graduate.getPerson().getUserUcb().getApproved() == 0) {
                 Persons personsENTITY = this.personsREPOSITORY.findById(graduate.getGraduateId()).orElseThrow();
-                GraduateDTO graduateDTO = GraduateMapper.entityToDto(graduate, personsENTITY);
+                GraduateDto graduateDTO = GraduateMapper.entityToDto(graduate, personsENTITY);
                 resultDTO.add(graduateDTO);
             }
         });
@@ -47,10 +47,10 @@ public class GraduateServiceImpl implements GraduateService{
     }
 
     @Override
-    public GraduateDTO getGraduateById(Integer id){
+    public GraduateDto getGraduateById(Integer id){
         Graduate graduate = this.graduateREPOSITORY.findById(id).orElseThrow();
         Persons person = this.personsREPOSITORY.findById(graduate.getGraduateId()).orElseThrow();
-        GraduateDTO graduateDTO = GraduateMapper.entityToDto(graduate, person);
+        GraduateDto graduateDTO = GraduateMapper.entityToDto(graduate, person);
         return graduateDTO;
     }
     

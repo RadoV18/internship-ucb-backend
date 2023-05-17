@@ -5,7 +5,7 @@ import ucb.internship.backend.models.User;
 
 @Data
 @NoArgsConstructor
-public class InstitucionsDTO {
+public class InstitucionsDto {
 
         private Long institutionId;     
         private String name;

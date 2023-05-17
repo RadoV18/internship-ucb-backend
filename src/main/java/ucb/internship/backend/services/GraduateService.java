@@ -1,13 +1,13 @@
 package ucb.internship.backend.services;
 
 import java.util.List;
-import ucb.internship.backend.dtos.GraduateDTO;
+import ucb.internship.backend.dtos.GraduateDto;
 
 
 public interface GraduateService {
     
-    List<GraduateDTO> getGraduates();
+    List<GraduateDto> getGraduates();
 
-    GraduateDTO getGraduateById(Integer id);
+    GraduateDto getGraduateById(Integer id);
 
 }

@@ -2,12 +2,12 @@ package ucb.internship.backend.mapper;
 
 import ucb.internship.backend.models.Persons;
 import ucb.internship.backend.models.User;
-import ucb.internship.backend.dtos.PersonsDTO;
+import ucb.internship.backend.dtos.PersonsDto;
 
 public class PersonsMapper {
 
-    public static PersonsDTO entitytoDto(Persons personsENTITY, User user) {
-        PersonsDTO personsDTO = new PersonsDTO();
+    public static PersonsDto entitytoDto(Persons personsENTITY, User user) {
+        PersonsDto personsDTO = new PersonsDto();
         personsDTO.setPersonId(personsENTITY.getPersonId());
         personsDTO.setFirstName(personsENTITY.getFirstName());
         personsDTO.setLastName(personsENTITY.getLastName());

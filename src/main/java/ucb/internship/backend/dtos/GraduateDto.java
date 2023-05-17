@@ -7,7 +7,7 @@ import ucb.internship.backend.models.Persons;
 
 
 @Data
-public class GraduateDTO {
+public class GraduateDto {
     private Integer graduateId;
     private Date graduationDate;
     private Integer campusMajorId;

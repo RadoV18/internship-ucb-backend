@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import ucb.internship.backend.dtos.PersonsDTO;
+import ucb.internship.backend.dtos.PersonsDto;
 import ucb.internship.backend.services.PersonsService;
 
 @RestController
@@ -29,9 +29,9 @@ public class PersonsController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<PersonsDTO>> get_institutions() {
+    public ResponseEntity<List<PersonsDto>> get_institutions() {
         LOGGER.info("REQUEST: Iniciando petición para obtener el listado de instituciones");
-        List<PersonsDTO> result = personsBL.getPersons();
+        List<PersonsDto> result = personsBL.getPersons();
         LOGGER.info("REQUEST: El resultado de la consulta es {}", result);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

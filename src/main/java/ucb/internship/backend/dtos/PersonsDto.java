@@ -5,7 +5,7 @@ import ucb.internship.backend.models.User;
 
 
 @Data
-public class PersonsDTO {
+public class PersonsDto {
     
     private Integer personId;
     private String firstName;

@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ucb.internship.backend.dtos.InternshipDTO;
+import ucb.internship.backend.dtos.InternshipDto;
 import ucb.internship.backend.models.Internship;
 import ucb.internship.backend.models.InternshipMajor;
 import ucb.internship.backend.repositories.InternshipRepository;
@@ -21,7 +21,7 @@ public class InternshipService {
         this.internshipRepository = internshipRepository;
     }
 
-    public String createInternship(InternshipDTO internshipDto) {
+    public String createInternship(InternshipDto internshipDto) {
         try {
             Internship newInternship = new Internship();
             newInternship.setTitle(internshipDto.getTitle());

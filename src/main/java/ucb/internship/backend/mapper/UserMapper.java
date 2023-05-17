@@ -3,7 +3,7 @@ package ucb.internship.backend.mapper;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import ucb.internship.backend.dtos.UserDTO;
+import ucb.internship.backend.dtos.UserDto;
 import ucb.internship.backend.models.User;
 
 @JsonIdentityInfo(
@@ -11,16 +11,15 @@ import ucb.internship.backend.models.User;
   property = "id")
 public class UserMapper {
     
-    public static UserDTO entityToDto(User user) {
-        UserDTO userDTO = new UserDTO();
+    public static UserDto entityToDto(User user) {
+        UserDto userDTO = new UserDto();
         userDTO.setUserId(user.getUserId());
         userDTO.setEmail(user.getEmail());
-        userDTO.setApproved(user.isApproved());
+        userDTO.setIsApproved(user.getApproved());
         userDTO.setPassword(user.getPassword());
         userDTO.setS3ProfilePicture(user.getS3ProfilePicture());
         userDTO.setStatus(user.getStatus());
         return userDTO;
     }
-    
 
 }

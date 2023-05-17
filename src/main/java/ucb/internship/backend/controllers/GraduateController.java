@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import ucb.internship.backend.dtos.GraduateDTO;
-import ucb.internship.backend.models.Graduate;
+import ucb.internship.backend.dtos.GraduateDto;
 import ucb.internship.backend.services.GraduateService;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
@@ -34,17 +32,17 @@ public class GraduateController {
 
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<GraduateDTO>> get_graduates() {
+    public ResponseEntity<List<GraduateDto>> get_graduates() {
         LOGGER.info("REQUEST: Iniciando petición para obtener el listado de graduados");
-        List<GraduateDTO> result = graduateBL.getGraduates();
+        List<GraduateDto> result = graduateBL.getGraduates();
         LOGGER.info("REQUEST: El resultado de la consulta es {}", result);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
-    public ResponseEntity<GraduateDTO> requestMethodName(@PathVariable Integer id) {
+    public ResponseEntity<GraduateDto> requestMethodName(@PathVariable Integer id) {
         LOGGER.info("REQUEST: Iniciando petición para obtener el Graduado por id");
-        GraduateDTO result = graduateBL.getGraduateById(id);
+        GraduateDto result = graduateBL.getGraduateById(id);
         LOGGER.info("REQUEST: El resultado de la consulta es {}", result);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

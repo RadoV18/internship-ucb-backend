@@ -2,12 +2,9 @@ package ucb.internship.backend.services.impl;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
-import java.io.Console;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
-import ucb.internship.backend.dtos.UserDTO;
 import ucb.internship.backend.exceptions.FileStorageException;
 import ucb.internship.backend.models.S3Object;
 import ucb.internship.backend.models.User;

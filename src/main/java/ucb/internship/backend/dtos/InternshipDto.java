@@ -8,7 +8,7 @@ import ucb.internship.backend.models.Major;
 import java.sql.Timestamp;
 import java.util.List;
 
-public class InternshipDTO {
+public class InternshipDto {
     private Integer internshipId;
     private Integer institutionId;
     private String title;

@@ -49,8 +49,6 @@ public class User {
         this.status = status;
     }
 
-    
-
     public User(Long userId, String email, String password, Long s3ProfilePicture, Integer isApproved, boolean status,
     Institution institutions, Persons personsENTITY) {
         this.userId = userId;
