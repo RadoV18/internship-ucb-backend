@@ -8,6 +8,6 @@ public interface GraduateService {
     
     List<GraduateDto> getGraduates();
 
-    GraduateDto getGraduateById(Integer id);
+    GraduateDto getGraduateById(Long id);
 
 }

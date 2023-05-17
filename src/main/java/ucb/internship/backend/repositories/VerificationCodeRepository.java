@@ -1,12 +1,10 @@
 package ucb.internship.backend.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import ucb.internship.backend.models.VerificationCode;
 
-import java.util.Optional;
-
+@Repository
 public interface VerificationCodeRepository extends JpaRepository<VerificationCode, Long> {
     /**
      * Stores a verification code in the database

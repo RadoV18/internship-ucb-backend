@@ -1,5 +1,7 @@
 package ucb.internship.backend.models;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -10,7 +12,10 @@ public class Major {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer majorId;
     private String name;
-    private Integer status;
+    private Boolean status;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "major", fetch = FetchType.LAZY)
+    private List<CampusMajor> campusMajors;
 
     public Major() {
     }
@@ -31,11 +36,11 @@ public class Major {
         this.name = name;
     }
 
-    public Integer getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 

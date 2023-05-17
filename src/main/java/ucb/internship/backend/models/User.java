@@ -23,16 +23,15 @@ public class User {
     private Long s3ProfilePicture;
     @Column(name = "is_approved")
     private Integer isApproved;
-
-    private boolean status;
+    private Boolean status;
     @JsonBackReference
     @OneToOne(mappedBy = "userUcb", cascade = CascadeType.ALL)
     @ToString.Exclude
-    private Institution institutions;
+    private Institution institution;
     @JsonIgnore
     @OneToOne(mappedBy = "userUcb", cascade = CascadeType.ALL)
     @ToString.Exclude
-    private Persons personsENTITY;
+    private Person person;
     @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "s3_object_id", referencedColumnName = "s3_object_id")
@@ -41,7 +40,7 @@ public class User {
     public User() {
     }
 
-    public User(String email, String password, Long s3ProfilePicture, Integer isApproved, boolean status) {
+    public User(String email, String password, Long s3ProfilePicture, Integer isApproved, Boolean status) {
         this.email = email;
         this.password = password;
         this.s3ProfilePicture = s3ProfilePicture;
@@ -49,16 +48,16 @@ public class User {
         this.status = status;
     }
 
-    public User(Long userId, String email, String password, Long s3ProfilePicture, Integer isApproved, boolean status,
-    Institution institutions, Persons personsENTITY) {
+    public User(Long userId, String email, String password, Long s3ProfilePicture, Integer isApproved, Boolean status,
+    Institution institutions, Person person) {
         this.userId = userId;
         this.email = email;
         this.password = password;
         this.s3ProfilePicture = s3ProfilePicture;
         this.isApproved = isApproved;
         this.status = status;
-        this.institutions = institutions;
-        this.personsENTITY = personsENTITY;
+        this.institution = institutions;
+        this.person = person;
     }
 
     public String getEmail() {
@@ -113,24 +112,42 @@ public class User {
         this.userId = userId;
     }
 
-    
-    public Persons getPersonsENTITY() {
-        return personsENTITY;
+
+    public Integer getIsApproved() {
+        return this.isApproved;
     }
 
-    public void setPersonsENTITY(Persons personsENTITY) {
-        this.personsENTITY = personsENTITY;
-    }
-    
-
-    public Institution getInstitutions() {
-        return institutions;
+    public void setIsApproved(Integer isApproved) {
+        this.isApproved = isApproved;
     }
 
-    public void setInstitutions(Institution institutions) {
-        this.institutions = institutions;
+    public Boolean isStatus() {
+        return this.status;
     }
-    
+
+    public Institution getInstitution() {
+        return this.institution;
+    }
+
+    public void setInstitution(Institution institution) {
+        this.institution = institution;
+    }
+
+    public Person getPerson() {
+        return this.person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public S3Object getS3Object() {
+        return this.s3Object;
+    }
+
+    public void setS3Object(S3Object s3Object) {
+        this.s3Object = s3Object;
+    }
 
     /**
      * @param password The password to be checked
@@ -140,8 +157,4 @@ public class User {
         BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), this.password);
         return result.verified;
     }
-
-    
-
-
 }

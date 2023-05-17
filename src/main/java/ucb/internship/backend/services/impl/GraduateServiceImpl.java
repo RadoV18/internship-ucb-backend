@@ -9,36 +9,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ucb.internship.backend.models.Graduate;
-import ucb.internship.backend.models.Persons;
+import ucb.internship.backend.models.Person;
 import ucb.internship.backend.dtos.GraduateDto;
 import ucb.internship.backend.mapper.GraduateMapper;
 import ucb.internship.backend.repositories.GraduateRepository;
-import ucb.internship.backend.repositories.PersonsRepository;
+import ucb.internship.backend.repositories.PersonRepository;
 import ucb.internship.backend.services.GraduateService;
 
 @Service
 public class GraduateServiceImpl implements GraduateService{
     
     private Logger LOGGER = LoggerFactory.getLogger(GraduateServiceImpl.class);
-    private GraduateRepository graduateREPOSITORY;
-    private PersonsRepository personsREPOSITORY;
+    private GraduateRepository graduateRepository;
+    private PersonRepository personRepository;
 
     
     @Autowired
-    public GraduateServiceImpl(GraduateRepository graduateREPOSITORY, PersonsRepository personsREPOSITORY) {
-        this.graduateREPOSITORY = graduateREPOSITORY;
-        this.personsREPOSITORY = personsREPOSITORY;
+    public GraduateServiceImpl(GraduateRepository graduateRepository, PersonRepository personsRepository) {
+        this.graduateRepository = graduateRepository;
+        this.personRepository = personsRepository;
     }
 
     @Override
     public List<GraduateDto> getGraduates() {
         LOGGER.info("BUSINESS-LOGIC: Iniciando petición para obtener el listado de instituciones");
-        List<Graduate> result = this.graduateREPOSITORY.findAll();
+        List<Graduate> result = this.graduateRepository.findAll();
         List<GraduateDto> resultDTO = new ArrayList<>();
         result.stream().forEach(graduate ->{
             if (graduate.getPerson().getUserUcb().getApproved() == 0) {
-                Persons personsENTITY = this.personsREPOSITORY.findById(graduate.getGraduateId()).orElseThrow();
-                GraduateDto graduateDTO = GraduateMapper.entityToDto(graduate, personsENTITY);
+                Person person = this.personRepository.findById(graduate.getGraduateId()).orElseThrow();
+                GraduateDto graduateDTO = GraduateMapper.entityToDto(graduate, person);
                 resultDTO.add(graduateDTO);
             }
         });
@@ -47,13 +47,10 @@ public class GraduateServiceImpl implements GraduateService{
     }
 
     @Override
-    public GraduateDto getGraduateById(Integer id){
-        Graduate graduate = this.graduateREPOSITORY.findById(id).orElseThrow();
-        Persons person = this.personsREPOSITORY.findById(graduate.getGraduateId()).orElseThrow();
+    public GraduateDto getGraduateById(Long id){
+        Graduate graduate = this.graduateRepository.findById(id).orElseThrow();
+        Person person = this.personRepository.findById(graduate.getGraduateId()).orElseThrow();
         GraduateDto graduateDTO = GraduateMapper.entityToDto(graduate, person);
         return graduateDTO;
     }
-    
-
-
 }

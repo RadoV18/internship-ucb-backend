@@ -12,14 +12,14 @@ import ucb.internship.backend.models.User;
 public class UserMapper {
     
     public static UserDto entityToDto(User user) {
-        UserDto userDTO = new UserDto();
-        userDTO.setUserId(user.getUserId());
-        userDTO.setEmail(user.getEmail());
-        userDTO.setIsApproved(user.getApproved());
-        userDTO.setPassword(user.getPassword());
-        userDTO.setS3ProfilePicture(user.getS3ProfilePicture());
-        userDTO.setStatus(user.getStatus());
-        return userDTO;
+        UserDto userDto = new UserDto();
+        userDto.setUserId(user.getUserId());
+        userDto.setEmail(user.getEmail());
+        userDto.setIsApproved(user.getApproved());
+        userDto.setPassword(user.getPassword());
+        userDto.setS3ProfilePicture(user.getS3ProfilePicture());
+        userDto.setStatus(user.getStatus());
+        return userDto;
     }
 
 }

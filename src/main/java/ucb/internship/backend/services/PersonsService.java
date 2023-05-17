@@ -2,11 +2,11 @@ package ucb.internship.backend.services;
 
 import java.util.List;
 
-import ucb.internship.backend.dtos.PersonsDto;
+import ucb.internship.backend.dtos.PersonDto;
 
 
 public interface PersonsService {
 
-    List<PersonsDto> getPersons();
+    List<PersonDto> getPersons();
     
 }

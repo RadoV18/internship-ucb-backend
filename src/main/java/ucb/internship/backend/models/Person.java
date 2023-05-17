@@ -1,10 +1,5 @@
 package ucb.internship.backend.models;
 
-import java.time.LocalDateTime;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -30,13 +25,13 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Table(name = "persons")
+@Table(name = "person")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "personId")
-public class Persons {
+public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "person_id")
-    private Integer personId;
+    private Long personId;
     @Column(name = "first_name",length = 50)
     private String firstName;
     @Column(name = "last_name", length = 50)
@@ -45,6 +40,9 @@ public class Persons {
     private String ci;
     @Column(name = "phone_number", length = 20)
     private String phoneNumber;
+    @Column(name = "s3_cv")
+    private Long s3Cv;
+    private Boolean status;
     @OneToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "person_id", referencedColumnName = "user_id")
     private User userUcb;

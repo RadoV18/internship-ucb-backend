@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -21,7 +22,6 @@ import lombok.Setter;
 @Setter
 @Getter
 public class Student {
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "student_id")
@@ -29,9 +29,10 @@ public class Student {
     @Column(name = "semester")
     private Integer semester;
     @Column(name = "status")
-    private Integer status;
+    private Boolean status;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "person_id")
-    private Persons person;
-
+    private Person person;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private CampusMajor campusMajor;
 }

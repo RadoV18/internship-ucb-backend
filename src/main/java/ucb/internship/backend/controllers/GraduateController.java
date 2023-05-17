@@ -40,13 +40,10 @@ public class GraduateController {
     }
 
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
-    public ResponseEntity<GraduateDto> requestMethodName(@PathVariable Integer id) {
+    public ResponseEntity<GraduateDto> requestMethodName(@PathVariable Long id) {
         LOGGER.info("REQUEST: Iniciando petición para obtener el Graduado por id");
         GraduateDto result = graduateBL.getGraduateById(id);
         LOGGER.info("REQUEST: El resultado de la consulta es {}", result);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-    
-
-    
 }

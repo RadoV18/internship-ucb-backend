@@ -12,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -34,17 +35,17 @@ public class Graduate {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer graduateId;
+    private Long graduateId;
 
     @Column(name = "graduation_date")
     private Date graduationDate;
-    @Column(name = "campus_major_id")
-    private Integer campusMajorId;
     @Column(name = "status")
-    private Integer status;
+    private Boolean status;
 
     @OneToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "person_id", referencedColumnName = "person_id")
     @ToString.Exclude
-    private Persons person;
+    private Person person;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private CampusMajor campusMajor;
 }

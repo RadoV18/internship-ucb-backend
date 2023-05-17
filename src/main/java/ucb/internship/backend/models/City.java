@@ -2,32 +2,38 @@ package ucb.internship.backend.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class City {
     @Id
     @Column(name = "city_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer cityId;
-    private Integer countryId;
+    private Long cityId;
+    @Column(name = "country_id")
+    private Long countryId;
     private String name;
-    private Integer status;
+    private Boolean status;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "city")
+    private List<Internship> internships;
 
     public City() {
     }
 
-    public Integer getCityId() {
+    public Long getCityId() {
         return cityId;
     }
 
-    public void setCityId(Integer cityId) {
+    public void setCityId(Long cityId) {
         this.cityId = cityId;
     }
 
-    public Integer getCountryId() {
+    public Long getCountryId() {
         return countryId;
     }
 
-    public void setCountryId(Integer countryId) {
+    public void setCountryId(Long countryId) {
         this.countryId = countryId;
     }
 
@@ -39,12 +45,20 @@ public class City {
         this.name = name;
     }
 
-    public Integer getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public List<Internship> getInternships() {
+        return internships;
+    }
+
+    public void setInternships(List<Internship> internships) {
+        this.internships = internships;
     }
 
     @Override

@@ -9,11 +9,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ucb.internship.backend.models.Persons;
+import ucb.internship.backend.models.Person;
 import ucb.internship.backend.models.User;
-import ucb.internship.backend.dtos.PersonsDto;
-import ucb.internship.backend.mapper.PersonsMapper;
-import ucb.internship.backend.repositories.PersonsRepository;
+import ucb.internship.backend.dtos.PersonDto;
+import ucb.internship.backend.mapper.PersonMapper;
+import ucb.internship.backend.repositories.PersonRepository;
 import ucb.internship.backend.repositories.UserRepository;
 import ucb.internship.backend.services.PersonsService;
 
@@ -21,24 +21,24 @@ import ucb.internship.backend.services.PersonsService;
 public class PersonsServiceImpl implements PersonsService{
 
     private Logger LOGGER = LoggerFactory.getLogger(PersonsServiceImpl.class);
-    private PersonsRepository personsREPOSITORY;
-    private UserRepository userREPOSITORY;
+    private PersonRepository personRepository;
+    private UserRepository userRepository;
 
     
     @Autowired
-    public PersonsServiceImpl(PersonsRepository personsREPOSITORY, UserRepository userREPOSITORY) {
-        this.personsREPOSITORY = personsREPOSITORY;
-        this.userREPOSITORY = userREPOSITORY;
+    public PersonsServiceImpl(PersonRepository personRepository, UserRepository userRepository) {
+        this.personRepository = personRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
-    public List<PersonsDto> getPersons() {
+    public List<PersonDto> getPersons() {
         LOGGER.info("BUSINESS-LOGIC: Iniciando petición para obtener el listado de instituciones");
-        List<Persons> result = this.personsREPOSITORY.findAll();
-        List<PersonsDto> resultDTO = new ArrayList<>();
+        List<Person> result = this.personRepository.findAll();
+        List<PersonDto> resultDTO = new ArrayList<>();
         result.stream().forEach(person ->{
-            User usuario = this.userREPOSITORY.findById(person.getUserUcb().getUserId()).orElseThrow();
-            PersonsDto personsDTO = PersonsMapper.entitytoDto(person, usuario);
+            User usuario = this.userRepository.findById(person.getUserUcb().getUserId()).orElseThrow();
+            PersonDto personsDTO = PersonMapper.entitytoDto(person, usuario);
             resultDTO.add(personsDTO);
         });
         LOGGER.info("BUSINESS-LOGIC: EL resultado de la cosnulta es {}",resultDTO);
