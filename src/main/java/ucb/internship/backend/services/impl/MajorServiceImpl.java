@@ -3,27 +3,28 @@ package ucb.internship.backend.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ucb.internship.backend.dtos.MajorDto;
+import org.springframework.data.domain.Sort;
+import ucb.internship.backend.mappers.MajorMapper;
 import ucb.internship.backend.models.Major;
 import ucb.internship.backend.repositories.MajorRepository;
 import ucb.internship.backend.services.MajorService;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Service
 public class MajorServiceImpl implements MajorService {
-    private MajorRepository majorRepository;
-    @Autowired
-    public MajorServiceImpl(MajorRepository majorRepository) {
-        this.majorRepository = majorRepository;
-    }
 
-    @Override
-    public List<MajorDto> findAllMajors() {
-        List<Major> majors = majorRepository.findAll();
-        List<MajorDto> majorDtos = new ArrayList<>();
-        for (Major major : majors) {
-            majorDtos.add(new MajorDto(major.getMajorId(), major.getName()));
+    @Autowired
+    private MajorRepository majorRepository;
+
+    public List<MajorDto> getAllMajors(String sort) {
+        ArrayList<MajorDto> result = new ArrayList<>();
+        Sort sortProperty = Sort.by(Sort.Direction.ASC, sort);
+        List<Major> majors = majorRepository.findAll(sortProperty);
+        for(Major major : majors) {
+            result.add(MajorMapper.entityToDto(major));
         }
-        return majorDtos;
+        return result;
     }
 }

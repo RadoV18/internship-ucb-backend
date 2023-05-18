@@ -46,14 +46,14 @@ public class InternshipController {
             @RequestParam(required = false) Date endingDate,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer size){
-       try{
-           LOGGER.info("starting get internship list with parameters city: {}, major: {}, startingDate: {}, endingDate: {}, page: {}, size: {}", city, major, startingDate, endingDate, page, size);
-           Page<InternshipListDto> internshipList = internshipService.filterInternships(city, startingDate, endingDate, major, page, size);
-           return ResponseEntity.ok(new ResponseDto<>( internshipList,"List Obtained",true));
-       } catch (Exception e){
-           LOGGER.error("Error getting internship list {}", e.getMessage());
-           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-       }
+        try{
+            LOGGER.info("starting get internship list with parameters city: {}, major: {}, startingDate: {}, endingDate: {}, page: {}, size: {}", city, major, startingDate, endingDate, page, size);
+            Page<InternshipListDto> internshipList = internshipService.filterInternships(city, startingDate, endingDate, major, page, size);
+            return ResponseEntity.ok(new ResponseDto<>( internshipList,"List Obtained",true));
+        } catch (Exception e){
+            LOGGER.error("Error getting internship list {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
 
     }
 

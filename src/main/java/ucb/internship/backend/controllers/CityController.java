@@ -1,36 +1,26 @@
 package ucb.internship.backend.controllers;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ucb.internship.backend.dtos.CityDto;
-import ucb.internship.backend.services.impl.CityServiceImpl;
+import ucb.internship.backend.dtos.ResponseDto;
+import ucb.internship.backend.services.CityService;
 
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*")
+@RequestMapping("/api/cities")
 public class CityController {
-    public CityServiceImpl cityService;
+
     @Autowired
-    private CityController(CityServiceImpl cityService) {
-        this.cityService = cityService;
-    }
-    public Logger LOGGER = LoggerFactory.getLogger(CityController.class);
+    private CityService cityService;
 
-    @GetMapping("/city")
-    public ResponseEntity<List<CityDto>> findAllCities() {
-        try{
-            return new ResponseEntity<>(cityService.findAllCities(), HttpStatus.OK);
-        }catch(Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
+    @GetMapping
+    public ResponseEntity<ResponseDto<List<CityDto>>> getCities() {
+        List<CityDto> cities = cityService.getAllCities();
+        return ResponseEntity.ok(new ResponseDto<>(cities, null, true));
     }
 }

@@ -1,14 +1,22 @@
 package ucb.internship.backend.dtos;
 
 public class CityDto {
-    private Integer cityId;
+    private Long cityId;
     private String name;
 
-    public Integer getCityId() {
+    public CityDto() {
+    }
+
+    public CityDto(Long cityId, String name) {
+        this.cityId = cityId;
+        this.name = name;
+    }
+
+    public Long getCityId() {
         return cityId;
     }
 
-    public void setCityId(Integer cityId) {
+    public void setCityId(Long cityId) {
         this.cityId = cityId;
     }
 
@@ -22,9 +30,9 @@ public class CityDto {
 
     @Override
     public String toString() {
-        return "CityDTO{" +
-                "cityId=" + cityId +
-                ", name='" + name + '\'' +
-                '}';
+        return "CityDto{" +
+            "cityId=" + cityId +
+            ", name='" + name + '\'' +
+            '}';
     }
 }

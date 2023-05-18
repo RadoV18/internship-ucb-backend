@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
+import ucb.internship.backend.models.Institution;
 import ucb.internship.backend.models.Internship;
 
 import java.sql.Timestamp;
@@ -14,11 +14,12 @@ import java.util.Collection;
 import java.util.List;
 
 @Repository
-@Service
 public interface InternshipRepository  extends JpaRepository<Internship, Integer> {
     List<Internship> findByInternshipId(Integer InternshipId);
 
-    List<Internship> findAllByInstitutionIdAndIsApprovedIs(Integer institutionId, Integer isApproved);
+    List<Internship> findAllByInstitutionAndIsApprovedIs(Institution institution, Integer isApproved);
+
+    List<Internship> findByIsApproved(Integer isApproved);
 
     @Query(value = "Select distinct i.internship_id , i.title,i.description,  i.starting_date,i.ending_date, c.name as city\n" +
             "              , i2.name as institution, s3.url\n" +

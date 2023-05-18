@@ -4,6 +4,8 @@ public class MajorDto {
     private Integer majorId;
     private String name;
 
+    public MajorDto() {}
+
     public MajorDto(Integer majorId, String name) {
         this.majorId = majorId;
         this.name = name;
@@ -27,8 +29,8 @@ public class MajorDto {
 
     @Override
     public String toString() {
-        return "MajorDTO{" +
-                "majorId=" + majorId +
+        return "MajorDto{" +
+                "id=" + majorId +
                 ", name='" + name + '\'' +
                 '}';
     }

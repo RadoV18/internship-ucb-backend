@@ -1,29 +1,30 @@
 package ucb.internship.backend.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ucb.internship.backend.dtos.MajorDto;
-import ucb.internship.backend.services.impl.MajorServiceImpl;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import ucb.internship.backend.dtos.ResponseDto;
+import ucb.internship.backend.services.MajorService;
+
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*")
+@RequestMapping("/api/majors")
 public class MajorController {
-    private MajorServiceImpl majorService;
+
     @Autowired
-    public MajorController(MajorServiceImpl majorService) {
-        this.majorService = majorService;
-    }
-    @GetMapping("/major")
-    public ResponseEntity<List<MajorDto>> findAllMajors() {
-        try{
-            return new ResponseEntity<List<MajorDto>>(majorService.findAllMajors(), HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    private MajorService majorService;
+
+    @GetMapping
+    public ResponseEntity<ResponseDto<List<MajorDto>>> getAllMajors(@RequestParam(required = false, defaultValue = "majorId") String sort) {
+        if (!(sort.equals("majorId") || sort.equals("name"))) {
+            return ResponseEntity.badRequest().body(new ResponseDto<>(null, "Invalid sort parameter", false));
         }
+        List<MajorDto> majors = majorService.getAllMajors(sort);
+        return ResponseEntity.ok(new ResponseDto<>(majors, null, true));
     }
 }

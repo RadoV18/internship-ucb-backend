@@ -15,7 +15,7 @@ public class InternshipRequirement {
     @JsonIgnore
     private Internship internship;
     private String description;
-    private boolean status;
+    private Boolean status;
 
     public Integer getRequirementId() {
         return requirementId;
@@ -45,11 +45,11 @@ public class InternshipRequirement {
     public InternshipRequirement() {
     }
 
-    public boolean isStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 
