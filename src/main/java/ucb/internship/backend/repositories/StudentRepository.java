@@ -7,5 +7,6 @@ import ucb.internship.backend.models.Student;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
+    Student findStudentByPersonId(Long personId);
 
 }
