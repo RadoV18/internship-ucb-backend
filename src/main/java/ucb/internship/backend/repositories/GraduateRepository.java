@@ -7,5 +7,5 @@ import ucb.internship.backend.models.Graduate;
 
 @Repository
 public interface GraduateRepository extends JpaRepository<Graduate, Long> {
-
+    Graduate findGraduateByPersonId(Long personId);
 }
