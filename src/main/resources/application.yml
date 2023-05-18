@@ -4,6 +4,10 @@ spring:
   datasource:
     type: org.postgresql.jdbc2.optional.SimpleDataSource
     username: ${DB_USER:postgres}
+<<<<<<< HEAD
+=======
+    #password: ${DB_PASSWORD:root}
+>>>>>>> 31ba564 (fix conflicts after merge)
     password: ${DB_PASSWORD:password}
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_DATABASE:internship}
   jpa:
