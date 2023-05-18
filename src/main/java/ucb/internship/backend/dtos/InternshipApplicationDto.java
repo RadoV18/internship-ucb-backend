@@ -1,38 +1,27 @@
-package ucb.internship.backend.models;
+package ucb.internship.backend.dtos;
 
-import jakarta.persistence.*;
+import java.util.Date;
+import java.util.List;
 
-import java.sql.Date;
-
-@Entity
-@Table(name = "internship_application")
-public class InternshipApplication {
-    @Id
-    @Column(name = "internship_application_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class InternshipApplicationDto {
     private Long internshipApplicationId;
-    @Column(name = "internship_id")
     private Long internshipId;
-    @Column(name = "person_id")
     private Long personId;
-    @Column(name = "submitted_on")
     private Date submittedOn;
-    @Column(name = "admitted")
     private Integer admitted;
-    @Column(name = "status")
     private Boolean status;
+    private List<InternshipApplicationQuestionDto> internshipApplicationQuestionDtos;
 
-    public InternshipApplication(Long internshipApplicationId, Long internshipId, Long personId, Date submittedOn,
-            Integer admitted, Boolean status) {
+    public InternshipApplicationDto(Long internshipApplicationId, Long internshipId, Long personId, Date submittedOn,
+            Integer admitted, Boolean status,
+            List<InternshipApplicationQuestionDto> internshipApplicationQuestionDtos) {
         this.internshipApplicationId = internshipApplicationId;
         this.internshipId = internshipId;
         this.personId = personId;
         this.submittedOn = submittedOn;
         this.admitted = admitted;
         this.status = status;
-    }
-
-    public InternshipApplication() {
+        this.internshipApplicationQuestionDtos = internshipApplicationQuestionDtos;
     }
 
     public Long getInternshipApplicationId() {
@@ -83,15 +72,20 @@ public class InternshipApplication {
         this.status = status;
     }
 
+    public List<InternshipApplicationQuestionDto> getInternshipApplicationQuestionDtos() {
+        return internshipApplicationQuestionDtos;
+    }
+
+    public void setInternshipApplicationQuestionDtos(
+            List<InternshipApplicationQuestionDto> internshipApplicationQuestionDtos) {
+        this.internshipApplicationQuestionDtos = internshipApplicationQuestionDtos;
+    }
+
     @Override
     public String toString() {
-        return "InternshipApplication{" +
-                "internshipApplicationId=" + internshipApplicationId +
-                ", internshipId=" + internshipId +
-                ", personId=" + personId +
-                ", submittedOn=" + submittedOn +
-                ", admitted=" + admitted +
-                ", status=" + status +
-                '}';
+        return "InternshipApplicationDto [internshipApplicationId=" + internshipApplicationId + ", internshipId="
+                + internshipId + ", personId=" + personId + ", submittedOn=" + submittedOn + ", admitted=" + admitted
+                + ", status=" + status + ", internshipApplicationQuestionDtos=" + internshipApplicationQuestionDtos
+                + "]";
     }
 }
