@@ -3,20 +3,25 @@ package ucb.internship.backend.services.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import ucb.internship.backend.dtos.ActiveInternshipDto;
-import ucb.internship.backend.dtos.ApplicantDto;
-import ucb.internship.backend.dtos.ApplicantSummaryDto;
-import ucb.internship.backend.dtos.InternshipDTO;
-import ucb.internship.backend.models.City;
+import ucb.internship.backend.dtos.*;
+import ucb.internship.backend.mappers.InternshipListMapper;
+import ucb.internship.backend.mappers.InternshipMapper;
+import ucb.internship.backend.models.Institution;
 import ucb.internship.backend.models.Internship;
 import ucb.internship.backend.models.InternshipMajor;
-import ucb.internship.backend.repositories.CityRepository;
-import ucb.internship.backend.repositories.InternshipApplicationRepository;
+import ucb.internship.backend.repositories.InstitutionRepository;
 import ucb.internship.backend.repositories.InternshipRepository;
 import ucb.internship.backend.services.InternshipService;
+import java.sql.Timestamp;
 
+import ucb.internship.backend.models.City;
+import ucb.internship.backend.repositories.CityRepository;
+import ucb.internship.backend.repositories.InternshipApplicationRepository;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 
 
@@ -25,76 +30,143 @@ public class InternshipServiceImpl implements InternshipService {
     private final InternshipRepository internshipRepository;
     private final InternshipApplicationRepository internshipApplicationRepository;
     private final CityRepository cityRepository;
+    private final InstitutionRepository institutionRepository;
     public static final Logger LOGGER = LoggerFactory.getLogger(InternshipServiceImpl.class.getName());
-
+    private static final Integer dayInMilis = 86400000;
+    private static final Integer hourInMilis = 3600000;
+    private static final Integer minuteInMilis = 60000;
     @Autowired
-    public InternshipServiceImpl(InternshipRepository internshipRepository,
-        InternshipApplicationRepository internshipApplicationRepository, CityRepository cityRepository
+    public InternshipServiceImpl(
+        InternshipRepository internshipRepository,
+        InternshipApplicationRepository internshipApplicationRepository,
+        CityRepository cityRepository,
+        InstitutionRepository institutionRepository
     ) {
         this.internshipRepository = internshipRepository;
         this.internshipApplicationRepository = internshipApplicationRepository;
         this.cityRepository = cityRepository;
+        this.institutionRepository = institutionRepository;
     }
 
-    public String createInternship(InternshipDTO internshipDto) {
+    public String createInternship(InternshipDto internshipDto) {
         try {
+            City city = cityRepository.findById(internshipDto.getCityId()).orElseThrow(() -> new RuntimeException("City not found"));
+            Institution institution = institutionRepository.findById(internshipDto.getInstitutionId()).orElseThrow(() -> new RuntimeException("Institution not found"));
             Internship newInternship = new Internship();
             newInternship.setTitle(internshipDto.getTitle());
             newInternship.setDescription(internshipDto.getDescription());
             newInternship.setIsApproved(0);
-            newInternship.setInstitutionId(internshipDto.getInstitutionId());
+            newInternship.setInstitution(institution);
             newInternship.setStatus(true);
             newInternship.setStartingDate(internshipDto.getStartingDate());
             newInternship.setEndingDate(internshipDto.getEndingDate());
-            newInternship.setCityId(internshipDto.getCityId());
+            newInternship.setCity(city);
             newInternship.setInternshipBenefits(internshipDto.getInternshipBenefits().stream().map(benefit -> {
                 benefit.setInternship(newInternship);
-                benefit.setStatus(1);
+                benefit.setStatus(true);
                 return benefit;
             }).toList());
 
             newInternship.setInternshipRequirements(internshipDto.getInternshipRequirements().stream().map(requirement -> {
                 requirement.setInternship(newInternship);
-                requirement.setStatus(1);
+                requirement.setStatus(true);
                 return requirement;
             }).toList());
             newInternship.setInternshipRoles(internshipDto.getInternshipRoles().stream().map(role -> {
                 role.setInternship(newInternship);
-                role.setStatus(1);
+                role.setStatus(true);
                 return role;
             }).toList());
+            newInternship.setInternshipQuestions(internshipDto.getInternshipQuestions().stream().map(question -> {
+                question.setInternship(newInternship);
+                question.setStatus(true);
+                return question;
+            }).toList());
             newInternship.setMajorList(internshipDto.getMajorList().stream().map(
-                    major -> new InternshipMajor(newInternship, major, 1)).toList());
+                    major -> new InternshipMajor(newInternship, major, true)).toList());
             LOGGER.info("Internship {}", newInternship);
             internshipRepository.save(newInternship);
         } catch (Exception e) {
             e.printStackTrace();
             return "Error creating internship";
-
         }
         return "Internship created successfully";
     }
-    public List<Internship> getInternshipById(Integer id){
-     return  internshipRepository.findByInternshipId(id);
-    }
-
     @Override
-    public List<ActiveInternshipDto> getActiveInternshipsByInstitutionId(Integer id) {
+    public Page<InternshipListDto> filterInternships(String city , Date startingDate, Date endingDate, String major, Integer page, Integer size) {
+        Timestamp startDate = null, endDate = null;
+        if(city == null || city.isEmpty())
+            city = "%";
+        else
+            city = "%"+city+"%";
+        if(startingDate == null)
+            startDate = Timestamp.valueOf("1970-01-01 00:00:00");
+        else
+            startDate = new Timestamp(startingDate.getTime()+dayInMilis);
+        if(endingDate == null)
+            endDate = Timestamp.valueOf("2100-01-01 00:00:00");
+        else
+            endDate = new Timestamp(endingDate.getTime()+dayInMilis+hourInMilis* 23L +minuteInMilis* 59L);
+        if(major == null || major.isEmpty())
+            major = "%";
+        else
+            major = "%"+major+"%";
+        if(page == null)
+            page = 0;
+        if(size == null)
+            size = 10;
+        LOGGER.info("city: {}, startDate: {}, endDate: {}, major: {}, page: {}, size: {}", city, startDate, endDate, major, page, size);
+        Page<Object[]> objectList= internshipRepository.findInternshipList(city,startDate,endDate,major,PageRequest.of(page,size));
+        return objectList.map(InternshipListMapper::objectToDto);
+
+    }
+    @Override
+    public List<ApplicantDto> getApplicantsByInternshipId(Integer id) {
+        return internshipApplicationRepository.getApplicantsByInternshipId(id);
+    }
+    @Override
+    public List<ActiveInternshipDto> getActiveInternshipsByInstitutionId(Long id) {
         List<ActiveInternshipDto> result = new ArrayList<>();
-        List<Internship> internships = internshipRepository.findAllByInstitutionIdAndIsApprovedIs(id, 1);
+        Institution institution = institutionRepository.findById(id).orElseThrow(() -> new RuntimeException("Institution not found"));
+        List<Internship> internships = internshipRepository.findAllByInstitutionAndIsApprovedIs(institution, 1);
         for (Internship internship : internships) {
             Integer applicantCount = internshipApplicationRepository.countAllByInternshipId(internship.getInternshipId());
             List<String> profilePictures = internshipApplicationRepository.getProfilePicturesByInternshipId(internship.getInternshipId());
             ApplicantSummaryDto applicationSummary = new ApplicantSummaryDto(applicantCount, profilePictures);
-            City city = cityRepository.findByCityId(internship.getCityId());
+            City city = cityRepository.findByCityId(internship.getCity().getCityId());
             result.add(new ActiveInternshipDto(internship.getInternshipId(), internship.getTitle(),
-                internship.getStartingDate(), internship.getEndingDate(), city.getName(), applicationSummary));
+                    internship.getStartingDate(), internship.getEndingDate(), city.getName(), applicationSummary));
         }
         return result;
     }
 
+    public List<Internship> getInternshipById(Integer id){
+        return  internshipRepository.findByInternshipId(id);
+    }
+
     @Override
-    public List<ApplicantDto> getApplicantsByInternshipId(Integer id) {
-        return internshipApplicationRepository.getApplicantsByInternshipId(id);
+    public InternshipApiDto getInternshipApiById(Integer id){
+        Internship gInternship = internshipRepository.findById(id).orElseThrow();
+        InternshipApiDto newInternshipApiDto = InternshipMapper.entityToApiDto(gInternship);
+        return newInternshipApiDto;
+    }
+
+    @Override
+    public List<InternshipApiDto> getInternshipAll(){
+        List<InternshipApiDto> listInternship = new ArrayList<>();
+        List<Internship> list = internshipRepository.findByIsApproved(0);
+        for (Internship convocatory : list) {
+            InternshipApiDto internshipApiDto = InternshipMapper.entityToApiDto(convocatory);
+            listInternship.add(internshipApiDto);
+        }
+        return listInternship;
+    }
+
+    @Override
+    public void internShipChangeAprovedState(Integer id, Integer state) {
+        Internship internship = internshipRepository.findById(id).orElseThrow();
+        internship.setIsApproved(state);
+        internshipRepository.save(internship);
+        LOGGER.info("data {}", internship);
     }
 }

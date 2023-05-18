@@ -1,0 +1,105 @@
+{
+  "data": {
+    "campuses": [
+      {
+        "id": 1,
+        "name": "La Paz",
+        "majors": [
+          {
+            "id": 1,
+            "name": "Ingenieria de Sistemas",
+            "campusMajorId": 1
+          },
+          {
+            "id": 2,
+            "name": "Ingenieria Industrial",
+            "campusMajorId": 2
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Cochabamba",
+        "majors": [
+          {
+            "id": 1,
+            "name": "Ingenieria de Sistemas",
+            "campusMajorId": 3
+          },
+          {
+            "id": 2,
+            "name": "Ingenieria Industrial",
+            "campusMajorId": 4
+          }
+        ]
+      }
+    ]
+  },
+  "message": null,
+  "success": true
+}
+
+// homepage
+{
+  "data": 99,
+  "message": null,
+  "success": true
+}
+
+// internships
+// /api/internships/institution/:id/active
+{
+  "data": [
+    {
+      "id": 1,
+      "title": "Practica 1",
+      "dateFrom": "2021-01-01T00:00:00.000Z",
+      "dateTo": "2021-01-01T00:00:00.000Z",
+      "city": "La Paz",
+      "applicants": {
+        "count": 99,
+        "pictures": [
+          "https://www.w3schools.com/howto/img_avatar.png",
+          "https://www.w3schools.com/howto/img_avatar.png",
+          "https://www.w3schools.com/howto/img_avatar.png",
+          "https://www.w3schools.com/howto/img_avatar.png"
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "title": "Practica 2",
+      "dateFrom": "2021-01-01T00:00:00.000Z",
+      "dateTo": "2021-01-01T00:00:00.000Z",
+      "city": "La Paz",
+      "applicants": {
+        "count": 99,
+        "pictures": [
+          "https://www.w3schools.com/howto/img_avatar.png",
+          "https://www.w3schools.com/howto/img_avatar.png",
+          "https://www.w3schools.com/howto/img_avatar.png",
+          "https://www.w3schools.com/howto/img_avatar.png"
+        ]
+      }
+    }
+  ],
+  "message": null,
+  "success": true
+}
+
+// /api/internships/:id/applicants
+{
+  "data": [
+    {
+      "userId": 1,
+      "firstName": "Radomir",
+      "lastName": "Vladislavic",
+      "major": "Ingenieria de Sistemas",
+      "email": "radomir.vladislavic@ucb.edu.bo",
+      "submittedOn": "2021-01-01T00:00:00.000Z",
+      "status": "pendiente",
+      "cvUrl": "https://link.com",
+      "profilePictureUrl": "/assets/images/ucb-background.png",
+    }
+  ]
+}

@@ -4,7 +4,8 @@ spring:
   datasource:
     type: org.postgresql.jdbc2.optional.SimpleDataSource
     username: ${DB_USER:postgres}
-    password: ${DB_PASSWORD:password}
+    password: ${DB_PASSWORD:root}
+    # password: ${DB_PASSWORD:password}
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_DATABASE:internship}
   jpa:
     hibernate:
@@ -19,3 +20,10 @@ server:
 mailjet:
   key: ${MAILJET_API_KEY:}
   secret: ${MAILJET_API_SECRET:}
+
+aws:
+  s3:
+    accessKey: ${AWS_ACCESS_KEY:}
+    secret: ${AWS_SECRET:}
+    region: ${AWS_REGION:us-east-1}
+    bucket: ${AWS_BUCKET:internship-by-cato}

@@ -1,5 +1,6 @@
 package ucb.internship.backend.models;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
@@ -10,10 +11,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+
 @Entity
 @Table(name = "internship_question")
 public class InternshipQuestion {
     @Id
+    @Column(name = "internship_questions_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer internshipQuestionId;
     private String question;
@@ -22,12 +25,19 @@ public class InternshipQuestion {
     @JsonIgnore
     private Internship internship;
     private Boolean status;
+  
+    public InternshipQuestion() {
+    }
 
     public InternshipQuestion(Integer internshipQuestionId) {
         this.internshipQuestionId = internshipQuestionId;
     }
 
-    public InternshipQuestion() {
+    public InternshipQuestion(Integer internshipQuestionId, Internship internship, String question, Boolean status) {
+        this.internshipQuestionId = internshipQuestionId;
+        this.internship = internship;
+        this.question = question;
+        this.status = status;
     }
 
     public Integer getInternshipQuestionId() {
