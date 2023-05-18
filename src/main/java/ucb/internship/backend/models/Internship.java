@@ -180,11 +180,4 @@ public class Internship {
                 '}';
     }
 
-    public List<InternshipQuestion> getInternshipQuestions() {
-        return internshipQuestions;
-    }
-
-    public void setInternshipQuestions(List<InternshipQuestion> internshipQuestions) {
-        this.internshipQuestions = internshipQuestions;
-    }
 }

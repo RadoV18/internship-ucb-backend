@@ -21,13 +21,6 @@ public class InternshiController {
     public static final Logger LOGGER = LoggerFactory.getLogger(InternshiController.class);
 
     @PostMapping
-
-
-    @GetMapping("/{id}")
-    public List<Internship> getInternship(@PathVariable Integer id) {
-        return internshipService.getInternshipById(id);
-    }
-
     public ResponseEntity<ResponseDto<Void>> createInternship(@RequestBody InternshipDto internshipDto){
         LOGGER.info("Creating internship {}", internshipDto);
         internshipService.createInternship(internshipDto);
