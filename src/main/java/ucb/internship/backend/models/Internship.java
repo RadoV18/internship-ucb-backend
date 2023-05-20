@@ -27,17 +27,16 @@ public class Internship {
 
     private Boolean status;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "internship")
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "internship")
     private List<InternshipBenefit> internshipBenefits;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "internship")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,orphanRemoval = true, mappedBy = "internship")
     private List<InternshipRequirement> internshipRequirements;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "internship")
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "internship")
     private List<InternshipRole> internshipRoles;
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "internship")
     private List<InternshipQuestion> internshipQuestions;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "internship")
     private List<InternshipMajor> majorList;
-
     @ManyToOne
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @JoinColumn(name = "institution_id")
@@ -46,10 +45,8 @@ public class Internship {
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @JoinColumn(name = "city_id")
     private City city;
-  
     public Internship() {
     }
-  
     public Long getInternshipId() {
         return internshipId;
     }
@@ -178,13 +175,5 @@ public class Internship {
                 ", internshipQuestions=" + internshipQuestions +
                 ", majorList=" + majorList +
                 '}';
-    }
-
-    public List<InternshipQuestion> getInternshipQuestions() {
-        return internshipQuestions;
-    }
-
-    public void setInternshipQuestions(List<InternshipQuestion> internshipQuestions) {
-        this.internshipQuestions = internshipQuestions;
     }
 }
