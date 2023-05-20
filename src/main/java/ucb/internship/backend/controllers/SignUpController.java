@@ -28,7 +28,6 @@ public class SignUpController {
     @PostMapping("/verification-code")
     public ResponseEntity<ResponseDto<Boolean>> verifyCode(
             @RequestBody VerificationCodeReqDto verificationCodeReqDto) {
-        System.out.println(verificationCodeReqDto);
         ArrayList<Boolean> result = verificationCodeService.verifyCode(verificationCodeReqDto);
         if (result.get(0)) {
             return ResponseEntity.ok(new ResponseDto<>(result.get(1), null, true));
