@@ -43,6 +43,6 @@ public interface UserService
     /**
      * @param id The user ID to approve the request
      */
-    void requestApproved(Long id,Integer state);
+    void setRequestStatus(Long id,Integer state);
 
 }

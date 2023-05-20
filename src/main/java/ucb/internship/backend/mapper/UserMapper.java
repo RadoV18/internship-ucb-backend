@@ -15,10 +15,7 @@ public class UserMapper {
         UserDto userDto = new UserDto();
         userDto.setUserId(user.getUserId());
         userDto.setEmail(user.getEmail());
-        userDto.setIsApproved(user.getApproved());
-        userDto.setPassword(user.getPassword());
-        userDto.setS3ProfilePicture(user.getS3ProfilePicture());
-        userDto.setStatus(user.getStatus());
+        userDto.setS3ProfilePicture(user.getS3ProfilePicture().getUrl());
         return userDto;
     }
 

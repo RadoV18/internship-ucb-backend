@@ -4,9 +4,15 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Table(name = "s3_object", schema = "public")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
 public class S3Object {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,49 +22,14 @@ public class S3Object {
     private String url;
     @JsonIgnore
     private boolean status;
+
     @JsonBackReference
-    @OneToOne(mappedBy = "s3Object", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @OneToOne(mappedBy = "s3ProfilePicture", cascade = CascadeType.ALL)
     private User userUcb;
 
-
-    public S3Object() {
-    }
-
-    public S3Object(String url, boolean status) {
-        this.url = url;
-        this.status = status;
-    }
-
-    public Long getS3ObjectId() {
-        return s3ObjectId;
-    }
-
-    public void setS3ObjectId(Long s3ObjectId) {
-        this.s3ObjectId = s3ObjectId;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-    @Override
-    public String toString() {
-        return "S3Object{" +
-                "s3ObjectId=" + s3ObjectId +
-                ", url='" + url + '\'' +
-                ", status=" + status +
-                '}';
-    }
+    @JsonBackReference
+    @ToString.Exclude
+    @OneToOne(mappedBy = "s3Cv", cascade = CascadeType.ALL)
+    private Person person;
 }

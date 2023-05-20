@@ -3,6 +3,7 @@ package ucb.internship.backend.models;
 import java.util.List;
 
 import jakarta.persistence.*;
+import lombok.ToString;
 
 @Entity
 @Table(name = "major")
@@ -15,6 +16,7 @@ public class Major {
     private Boolean status;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "major", fetch = FetchType.LAZY)
+    @ToString.Exclude
     private List<CampusMajor> campusMajors;
 
     public Major() {

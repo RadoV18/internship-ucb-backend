@@ -32,25 +32,23 @@ public class GraduateServiceImpl implements GraduateService{
 
     @Override
     public List<GraduateDto> getGraduates() {
-        LOGGER.info("BUSINESS-LOGIC: Iniciando petición para obtener el listado de instituciones");
+        LOGGER.info("BUSINESS-LOGIC: Iniciando petición para obtener el listado de graduados con aprobacion pendiente");
         List<Graduate> result = this.graduateRepository.findAll();
         List<GraduateDto> resultDTO = new ArrayList<>();
         result.stream().forEach(graduate ->{
-            if (graduate.getPerson().getUserUcb().getApproved() == 0) {
-                Person person = this.personRepository.findById(graduate.getGraduateId()).orElseThrow();
+            if (graduate.getPerson().getUserUcb().getIsApproved() == 0) {
+                Person person = this.personRepository.findById(graduate.getPerson().getPersonId()).orElseThrow();
                 GraduateDto graduateDTO = GraduateMapper.entityToDto(graduate, person);
                 resultDTO.add(graduateDTO);
             }
         });
-        LOGGER.info("BUSINESS-LOGIC: EL resultado de la cosnulta es {}",result);
         return resultDTO;
     }
 
     @Override
     public GraduateDto getGraduateById(Long id){
         Graduate graduate = this.graduateRepository.findById(id).orElseThrow();
-        Person person = this.personRepository.findById(graduate.getGraduateId()).orElseThrow();
-        GraduateDto graduateDTO = GraduateMapper.entityToDto(graduate, person);
-        return graduateDTO;
+        Person person = this.personRepository.findById(graduate.getPerson().getPersonId()).orElseThrow();
+        return GraduateMapper.entityToDto(graduate, person);
     }
 }

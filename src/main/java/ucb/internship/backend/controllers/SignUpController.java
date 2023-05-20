@@ -7,18 +7,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import ucb.internship.backend.dtos.GraduateDto;
-import ucb.internship.backend.dtos.InstitutionSignUpDto;
-import ucb.internship.backend.dtos.ResponseDto;
-import ucb.internship.backend.dtos.StudentDto;
-import ucb.internship.backend.dtos.VerificationCodeDto;
-import ucb.internship.backend.dtos.VerificationCodeReqDto;
+import ucb.internship.backend.dtos.*;
 import ucb.internship.backend.exceptions.FileStorageException;
 import ucb.internship.backend.services.SignUpService;
 import ucb.internship.backend.services.VerificationCodeService;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/sign-up")
@@ -82,5 +78,4 @@ public class SignUpController {
             return ResponseEntity.ok(new ResponseDto<>(null, "Datos inválidos", false));
         }
     }
-
 }

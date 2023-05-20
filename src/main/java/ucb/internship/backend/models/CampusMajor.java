@@ -11,6 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.ToString;
 
 @Entity
 @Table(name = "campus_major")
@@ -29,9 +30,11 @@ public class CampusMajor {
     private Major major;
 
     @OneToMany(mappedBy = "campusMajor")
+    @ToString.Exclude
     private List<Student> students;
 
     @OneToMany(mappedBy = "campusMajor")
+    @ToString.Exclude
     private List<Graduate> graduates;
 
     public CampusMajor(Long campusMajorId, Campus campus, Major major) {

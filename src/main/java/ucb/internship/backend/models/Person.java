@@ -18,6 +18,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.validator.constraints.Range;
 
 @Entity
 @Getter
@@ -32,24 +33,38 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "person_id")
     private Long personId;
+
     @Column(name = "first_name",length = 50)
     private String firstName;
+
     @Column(name = "last_name", length = 50)
     private String lastName;
+
     @Column(name = "ci", length = 20)
     private String ci;
+
     @Column(name = "phone_number", length = 20)
     private String phoneNumber;
-    @Column(name = "s3_cv")
-    private Long s3Cv;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "s3_cv", referencedColumnName = "s3_object_id")
+    @ToString.Exclude
+    private S3Object s3Cv;
+
     private Boolean status;
+
     @OneToOne(cascade = CascadeType.ALL, optional = false)
-    @JoinColumn(name = "person_id", referencedColumnName = "user_id")
+    @JoinColumn(name = "user_id")
+    @ToString.Exclude
     private User userUcb;
+
     @JsonIgnore
     @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private Graduate graduate;
+
     @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
     @JsonIgnore
+    @ToString.Exclude
     private Student student;
 }

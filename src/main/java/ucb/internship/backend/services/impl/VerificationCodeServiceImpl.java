@@ -60,6 +60,8 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
             if(student != null) {
                 // doesn't need verification
                 result.add(false);
+                student.setIsApproved(1);
+                userRepository.save(student);
             } else {
                 // needs verification
                 result.add(true);

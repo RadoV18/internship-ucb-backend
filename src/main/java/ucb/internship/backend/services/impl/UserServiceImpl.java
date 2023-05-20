@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User authenticate(String email, String password) {
 
-        var user = repository.findByEmail(email).orElse(null);
+        var user = repository.findByEmailAndIsApprovedIs(email, 1).orElse(null);
 
         if (user != null && user.authenticate(password)) {
             return user;
@@ -41,19 +41,18 @@ public class UserServiceImpl implements UserService {
         String hashedPassword = BCrypt
                 .withDefaults()
                 .hashToString(12, password.toCharArray());
-        Long s3ObjectId = null;
+        S3Object savedS3Object = null;
         if(profilePicture != null) {
-            S3Object savedS3Object = fileStorageService.createObject(profilePicture);
-            s3ObjectId = savedS3Object.getS3ObjectId();
+            savedS3Object = fileStorageService.createObject(profilePicture);
         }
         // save the user in the database
-        User user = new User(
-                email,
-                hashedPassword,
-                s3ObjectId,
-                0,
-                true
-        );
+        User user = new User();
+        user.setEmail(email);
+        user.setPassword(hashedPassword);
+        user.setS3ProfilePicture(savedS3Object);
+        user.setIsApproved(0);
+        user.setStatus(true);
+
         return repository.save(user);
     }
 
@@ -74,11 +73,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void requestApproved(Long id, Integer state) {
+    public void setRequestStatus(Long id, Integer state) {
         User user = this.repository.findById(id).orElseThrow();
-        user.setApproved(state);
-        User updateUser = user;
-        System.out.println("El usuario es"+ updateUser.getApproved());
-        this.repository.save(updateUser);
+        user.setIsApproved(state);
+        System.out.println("El usuario es"+ user.getIsApproved());
+        this.repository.save(user);
     }
 }
