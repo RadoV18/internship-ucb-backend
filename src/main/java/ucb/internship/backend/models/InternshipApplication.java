@@ -1,5 +1,6 @@
 package ucb.internship.backend.models;
 
+
 import jakarta.persistence.*;
 
 import java.sql.Date;
@@ -21,16 +22,6 @@ public class InternshipApplication {
     private Integer admitted;
     @Column(name = "status")
     private Boolean status;
-
-    public InternshipApplication(Long internshipApplicationId, Long internshipId, Long personId, Date submittedOn,
-            Integer admitted, Boolean status) {
-        this.internshipApplicationId = internshipApplicationId;
-        this.internshipId = internshipId;
-        this.personId = personId;
-        this.submittedOn = submittedOn;
-        this.admitted = admitted;
-        this.status = status;
-    }
 
     public InternshipApplication() {
     }

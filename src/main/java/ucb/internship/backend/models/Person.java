@@ -1,18 +1,10 @@
 package ucb.internship.backend.models;
 
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -29,11 +21,6 @@ public class Person {
     private String phoneNumber;
     @Column(name = "s3_cv")
     private Long s3Cv;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person", fetch = FetchType.EAGER)
-    @JsonBackReference
-    // @JsonManagedReference
-    private List<PersonSkill> personSkills;
 
     public Person(Long personId) {
         this.personId = personId;
@@ -117,13 +104,5 @@ public class Person {
     public String toString() {
         return "Person [personId=" + personId + ", userId=" + userId + ", firstName=" + firstName + ", lastName="
                 + lastName + ", ci=" + ci + ", phoneNumber=" + phoneNumber + ", s3Cv=" + s3Cv + "]";
-    }
-
-    public List<PersonSkill> getPersonSkills() {
-        return personSkills;
-    }
-
-    public void setPersonSkills(List<PersonSkill> personSkills) {
-        this.personSkills = personSkills;
     }
 }
