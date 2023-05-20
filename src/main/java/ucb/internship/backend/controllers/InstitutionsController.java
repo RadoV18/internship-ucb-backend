@@ -7,16 +7,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ucb.internship.backend.dtos.InstitucionsDto;
 import ucb.internship.backend.services.InstitutionsService;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("admin/institutions")
+@RequestMapping("api/institutions")
 public class InstitutionsController {
 
     private Logger LOGGER = LoggerFactory.getLogger(InstitutionsController.class);
@@ -27,7 +24,7 @@ public class InstitutionsController {
         this.institutionsBL = institutionsBL;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping("/new")
     public ResponseEntity<List<InstitucionsDto>> get_institutions() {
         LOGGER.info("REQUEST: Iniciando petición para obtener el listado de instituciones");
         List<InstitucionsDto> result = institutionsBL.getInstitutions();

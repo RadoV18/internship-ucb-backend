@@ -60,9 +60,9 @@ public class S3FileStorageServiceImpl implements FileStorageService {
         // save the image in the file storage
         String url = upload(file);
         // save the image data in the database
-        S3Object s3Object = new S3Object(
-                url,
-                true);
+        S3Object s3Object = new S3Object();
+        s3Object.setUrl(url);
+        s3Object.setStatus(true);
         return s3ObjectRepository.save(s3Object);
     }
 

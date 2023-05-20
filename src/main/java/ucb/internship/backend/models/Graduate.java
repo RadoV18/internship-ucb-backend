@@ -1,6 +1,6 @@
 package ucb.internship.backend.models;
 
-import java.util.Date;
+import java.sql.Date;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -46,6 +46,8 @@ public class Graduate {
     @JoinColumn(name = "person_id", referencedColumnName = "person_id")
     @ToString.Exclude
     private Person person;
+
     @ManyToOne(cascade = CascadeType.ALL)
+    @ToString.Exclude
     private CampusMajor campusMajor;
 }

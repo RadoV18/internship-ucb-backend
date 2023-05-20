@@ -59,26 +59,23 @@ public class SignUpServiceImpl implements SignUpService {
         User savedUser = userService.createUser(institutionSignUpDto.getEmail(), institutionSignUpDto.getPassword(),
                 image);
         // save the institution in the database
-        Institution institution = new Institution(
-                savedUser.getUserId(),
-                institutionSignUpDto.getName(),
-                institutionSignUpDto.getDescription(),
-                institutionSignUpDto.getArea(),
-                institutionSignUpDto.getContactFirstName(),
-                institutionSignUpDto.getContactLastName(),
-                institutionSignUpDto.getContactEmail(),
-                institutionSignUpDto.getContactPhone(),
-                institutionSignUpDto.getContactPosition(),
-                true
-        );
+        Institution institution = new Institution();
+        institution.setUserUcb(savedUser);
+        institution.setName(institutionSignUpDto.getName());
+        institution.setDescription(institutionSignUpDto.getDescription());
+        institution.setArea(institutionSignUpDto.getArea());
+        institution.setContactFirstName(institutionSignUpDto.getContactFirstName());
+        institution.setContactLastName(institutionSignUpDto.getContactLastName());
+        institution.setContactEmail(institutionSignUpDto.getContactEmail());
+        institution.setContactPhone(institutionSignUpDto.getContactPhone());
+        institution.setContactPosition(institutionSignUpDto.getContactPosition());
+        institution.setStatus(true);
         institutionRepository.save(institution);
+
         // generate the verification code
         VerificationCode verificationCode = verificationCodeService.createVerificationCode(savedUser.getUserId());
-
-        var recipient = new Recipient(savedUser.getEmail(), institution.getName());
-
+        Recipient recipient = new Recipient(savedUser.getEmail(), institution.getName());
         sendVerificationCode(recipient, verificationCode.getCode());
-
         return new VerificationCodeDto(verificationCode.getUuid(), savedUser.getEmail());
     }
 
@@ -86,23 +83,22 @@ public class SignUpServiceImpl implements SignUpService {
     public VerificationCodeDto studentSignUp(StudentDto studentDto, MultipartFile profilePicture, MultipartFile cvFile)
             throws FileStorageException {
         // save the user in the database
-        String email = studentDto.getPersonDto().getUser().getEmail();
-        String password = studentDto.getPersonDto().getUser().getPassword();
+        String email = studentDto.getPerson().getUser().getEmail();
+        String password = studentDto.getPerson().getUser().getPassword();
         User savedUser = userService.createUser(email, password, profilePicture);
 
         // upload the cv
-        Long s3ObjectId = null;
+        S3Object savedS3Object = null;
         if (cvFile != null) {
-            S3Object savedS3Object = fileStorageService.createObject(cvFile);
-            s3ObjectId = savedS3Object.getS3ObjectId();
+            savedS3Object = fileStorageService.createObject(cvFile);
         }
 
         Person newPerson = new Person();
-        newPerson.setFirstName(studentDto.getPersonDto().getFirstName());
-        newPerson.setLastName(studentDto.getPersonDto().getLastName());
-        newPerson.setCi(studentDto.getPersonDto().getCi());
-        newPerson.setPhoneNumber(studentDto.getPersonDto().getPhoneNumber());
-        newPerson.setS3Cv(s3ObjectId);
+        newPerson.setFirstName(studentDto.getPerson().getFirstName());
+        newPerson.setLastName(studentDto.getPerson().getLastName());
+        newPerson.setCi(studentDto.getPerson().getCi());
+        newPerson.setPhoneNumber(studentDto.getPerson().getPhoneNumber());
+        newPerson.setS3Cv(savedS3Object);
         newPerson.setUserUcb(savedUser);
         newPerson.setStatus(true);
         Person savedPerson = personRepository.save(newPerson);
@@ -128,23 +124,22 @@ public class SignUpServiceImpl implements SignUpService {
     public VerificationCodeDto graduateSignUp(GraduateDto graduateDto, MultipartFile profilePicture,
             MultipartFile cvFile) throws FileStorageException {
         // save the user in the database
-        String email = graduateDto.getPersonDto().getUser().getEmail();
-        String password = graduateDto.getPersonDto().getUser().getPassword();
+        String email = graduateDto.getPerson().getUser().getEmail();
+        String password = graduateDto.getPerson().getUser().getPassword();
         User savedUser = userService.createUser(email, password, profilePicture);
 
         // upload the cv
-        Long s3ObjectId = null;
+        S3Object savedS3Object = null;
         if (cvFile != null) {
-            S3Object savedS3Object = fileStorageService.createObject(cvFile);
-            s3ObjectId = savedS3Object.getS3ObjectId();
+            savedS3Object = fileStorageService.createObject(cvFile);
         }
 
         Person newPerson = new Person();
-        newPerson.setFirstName(graduateDto.getPersonDto().getFirstName());
-        newPerson.setLastName(graduateDto.getPersonDto().getLastName());
-        newPerson.setCi(graduateDto.getPersonDto().getCi());
-        newPerson.setPhoneNumber(graduateDto.getPersonDto().getPhoneNumber());
-        newPerson.setS3Cv(s3ObjectId);
+        newPerson.setFirstName(graduateDto.getPerson().getFirstName());
+        newPerson.setLastName(graduateDto.getPerson().getLastName());
+        newPerson.setCi(graduateDto.getPerson().getCi());
+        newPerson.setPhoneNumber(graduateDto.getPerson().getPhoneNumber());
+        newPerson.setS3Cv(savedS3Object);
         newPerson.setUserUcb(savedUser);
         newPerson.setStatus(true);
         Person savedPerson = personRepository.save(newPerson);
@@ -156,6 +151,7 @@ public class SignUpServiceImpl implements SignUpService {
         newGraduate.setCampusMajor(campusMajor);
         newGraduate.setPerson(savedPerson);
         newGraduate.setStatus(true);
+        Graduate savedGraduate = graduateRepository.save(newGraduate);
 
         // generate the verification code
         VerificationCode verificationCode = verificationCodeService.createVerificationCode(savedUser.getUserId());
@@ -167,7 +163,6 @@ public class SignUpServiceImpl implements SignUpService {
     private void sendVerificationCode(Recipient recipient ,String verificationCode) {
         var mailVariables = new Hashtable<String, String>();
         mailVariables.put(EmailVariables.VERIFICATION_CODE.get(), verificationCode);
-
         emailService.sendEmail(recipient, mailVariables , Template.VERIFICATION_CODE);
     }
 }

@@ -16,6 +16,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
 
     /**
+     * @param email The user email to look in the database
+     * @param isApproved the value to check whether the user is approved or not
+     * @return the user if it exists, null otherwise
+     */
+    Optional<User> findByEmailAndIsApprovedIs(String email, Integer isApproved);
+
+    /**
      * saves a user in the database
      * @param user the user to save
      * @return the saved user

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UsersController
 {
     @Autowired
@@ -38,9 +38,9 @@ public class UsersController
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    @PutMapping(value = "/request/{state}/{id}")
+    @PutMapping(value = "/{id}/status/{state}")
     public void aprobado(@PathVariable Long id,@PathVariable Integer state) {
-        userService.requestApproved(id, state);
+        userService.setRequestStatus(id, state);
     }
     
 }

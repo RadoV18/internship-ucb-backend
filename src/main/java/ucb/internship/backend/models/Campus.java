@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.ToString;
 
 @Entity
 @Table(name = "campus")
@@ -22,6 +23,7 @@ public class Campus {
     private Boolean status = true;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "campus", fetch = FetchType.LAZY)
+    @ToString.Exclude
     private List<CampusMajor> campusMajors;
 
     public Campus(Long campusId, Long cityId, String name) {

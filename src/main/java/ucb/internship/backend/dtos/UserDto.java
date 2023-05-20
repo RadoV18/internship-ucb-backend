@@ -1,13 +1,13 @@
 package ucb.internship.backend.dtos;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserDto {
     private Long userId;
     private String email;
-    private Integer isApproved;
     private String password;
-    private Long s3ProfilePicture;
-    private boolean status;
+    private String s3ProfilePicture;
 }

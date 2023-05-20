@@ -1,5 +1,7 @@
 package ucb.internship.backend.mapper;
 
+import ucb.internship.backend.mappers.CampusMapper;
+import ucb.internship.backend.mappers.MajorMapper;
 import ucb.internship.backend.models.Graduate;
 import ucb.internship.backend.models.Person;
 import ucb.internship.backend.dtos.GraduateDto;
@@ -11,7 +13,8 @@ public class GraduateMapper {
         graduateDto.setGraduateId(graduate.getGraduateId());
         graduateDto.setCampusMajorId(graduate.getCampusMajor().getCampusMajorId());
         graduateDto.setGraduationDate(graduate.getGraduationDate());
-        graduateDto.setStatus(graduate.getStatus()); 
+        graduateDto.setStatus(graduate.getStatus());
+
         PersonDto personDto = new PersonDto();
         personDto.setPersonId(person.getPersonId());
         personDto.setUser(UserMapper.entityToDto(person.getUserUcb()));
@@ -19,7 +22,12 @@ public class GraduateMapper {
         personDto.setLastName(person.getLastName());
         personDto.setCi(person.getCi());
         personDto.setPhoneNumber(person.getPhoneNumber());
-        graduateDto.setPersonDto(personDto);
+        personDto.setS3Cv(person.getS3Cv().getUrl());
+
+
+        graduateDto.setPerson(personDto);
+        graduateDto.setMajor(MajorMapper.entityToDto(graduate.getCampusMajor().getMajor()));
+        graduateDto.setCampus(CampusMapper.entityToDto(graduate.getCampusMajor().getCampus()));
         return graduateDto;
     }
 }

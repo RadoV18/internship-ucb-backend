@@ -7,11 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import ucb.internship.backend.dtos.GraduateDto;
 import ucb.internship.backend.services.GraduateService;
@@ -19,7 +15,7 @@ import ucb.internship.backend.services.GraduateService;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("admin/graduates")
+@RequestMapping("api/graduates")
 public class GraduateController {
     
     private Logger LOGGER = LoggerFactory.getLogger(InstitutionsController.class);
@@ -31,8 +27,8 @@ public class GraduateController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<GraduateDto>> get_graduates() {
+    @GetMapping("/new")
+    public ResponseEntity<List<GraduateDto>> getNewGraduates() {
         LOGGER.info("REQUEST: Iniciando petición para obtener el listado de graduados");
         List<GraduateDto> result = graduateBL.getGraduates();
         LOGGER.info("REQUEST: El resultado de la consulta es {}", result);
