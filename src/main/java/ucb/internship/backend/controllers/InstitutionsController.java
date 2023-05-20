@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ucb.internship.backend.dtos.InstitucionsDto;
+import ucb.internship.backend.dtos.InstitutionsDto;
 import ucb.internship.backend.services.InstitutionsService;
 
 @RestController
@@ -25,12 +25,10 @@ public class InstitutionsController {
     }
 
     @GetMapping("/new")
-    public ResponseEntity<List<InstitucionsDto>> get_institutions() {
+    public ResponseEntity<List<InstitutionsDto>> get_institutions() {
         LOGGER.info("REQUEST: Iniciando petición para obtener el listado de instituciones");
-        List<InstitucionsDto> result = institutionsBL.getInstitutions();
+        List<InstitutionsDto> result = institutionsBL.getInstitutions();
         LOGGER.info("REQUEST: El resultado de la consulta es {}", result);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-    
-    
 }
