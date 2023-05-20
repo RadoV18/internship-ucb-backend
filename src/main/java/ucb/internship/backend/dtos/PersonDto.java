@@ -2,7 +2,7 @@ package ucb.internship.backend.dtos;
 
 public class PersonDto {
     private Long personId;
-    private UserDto userDto;
+    private UserDto user;
     private String firstName;
     private String lastName;
     private String ci;
@@ -13,7 +13,7 @@ public class PersonDto {
 
     public PersonDto(Long personId, UserDto userDto, String firstName, String lastName, String ci, String phoneNumber) {
         this.personId = personId;
-        this.userDto = userDto;
+        this.user = userDto;
         this.firstName = firstName;
         this.lastName = lastName;
         this.ci = ci;
@@ -28,12 +28,12 @@ public class PersonDto {
         this.personId = personId;
     }
 
-    public UserDto getUserDto() {
-        return userDto;
+    public UserDto getUser() {
+        return user;
     }
 
-    public void setUserDto(UserDto userDto) {
-        this.userDto = userDto;
+    public void setUser(UserDto userDto) {
+        this.user = userDto;
     }
 
     public String getFirstName() {
@@ -70,7 +70,7 @@ public class PersonDto {
 
     @Override
     public String toString() {
-        return "PersonDto [personId=" + personId + ", userDto=" + userDto + ", firstName=" + firstName + ", lastName="
+        return "PersonDto [personId=" + personId + ", userDto=" + user + ", firstName=" + firstName + ", lastName="
                 + lastName + ", ci=" + ci + ", phoneNumber=" + phoneNumber + "]";
     }
 }

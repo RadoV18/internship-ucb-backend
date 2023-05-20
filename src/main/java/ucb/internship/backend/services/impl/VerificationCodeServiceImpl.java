@@ -12,7 +12,6 @@ import ucb.internship.backend.repositories.VerificationCodeRepository;
 import ucb.internship.backend.services.VerificationCodeService;
 
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
 

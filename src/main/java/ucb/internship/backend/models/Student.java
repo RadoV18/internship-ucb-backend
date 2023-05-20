@@ -1,80 +1,38 @@
 package ucb.internship.backend.models;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "student")
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "student_id")
     private Long studentId;
-
-    private Long personId;
-    private Long campusMajorId;
+    @Column(name = "semester")
     private Integer semester;
-    private Boolean status = false;
-
-    public Student(Long studentId, Long personId, Long campusMajorId, Integer semester) {
-        this.studentId = studentId;
-        this.personId = personId;
-        this.campusMajorId = campusMajorId;
-        this.semester = semester;
-    }
-
-    public Student(Long studentId) {
-        this.studentId = studentId;
-    }
-
-    public Student() {
-    }
-
-    public Long getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(Long studentId) {
-        this.studentId = studentId;
-    }
-
-    public Long getPersonId() {
-        return personId;
-    }
-
-    public void setPersonId(Long personId) {
-        this.personId = personId;
-    }
-
-    public Long getCampusMajorId() {
-        return campusMajorId;
-    }
-
-    public void setCampusMajorId(Long campusMajorId) {
-        this.campusMajorId = campusMajorId;
-    }
-
-    public Integer getSemester() {
-        return semester;
-    }
-
-    public void setSemester(Integer semester) {
-        this.semester = semester;
-    }
-
-    public Boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(Boolean status) {
-        this.status = status;
-    }
-
-    @Override
-    public String toString() {
-        return "Student [studentId=" + studentId + ", personId=" + personId + ", campusMajorId=" + campusMajorId
-                + ", semester=" + semester + ", status=" + status + "]";
-    }
+    @Column(name = "status")
+    private Boolean status;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "person_id")
+    private Person person;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private CampusMajor campusMajor;
 }

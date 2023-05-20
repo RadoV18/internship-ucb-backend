@@ -5,8 +5,12 @@ import ucb.internship.backend.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import ucb.internship.backend.services.UserService;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 @RestController
 @RequestMapping("/users")
@@ -33,4 +37,10 @@ public class UsersController
     {
         return ResponseEntity.ok(userService.getAllUsers());
     }
+
+    @PutMapping(value = "/request/{state}/{id}")
+    public void aprobado(@PathVariable Long id,@PathVariable Integer state) {
+        userService.requestApproved(id, state);
+    }
+    
 }

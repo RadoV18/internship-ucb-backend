@@ -1,7 +1,5 @@
 package ucb.internship.backend.dtos;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.sql.Timestamp;
 
 public class ActiveInternshipDto {

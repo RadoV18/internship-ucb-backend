@@ -6,10 +6,7 @@ import ucb.internship.backend.dtos.GraduateDto;
 import ucb.internship.backend.dtos.InstitutionSignUpDto;
 import ucb.internship.backend.dtos.StudentDto;
 import ucb.internship.backend.dtos.VerificationCodeDto;
-import ucb.internship.backend.dtos.VerificationCodeReqDto;
 import ucb.internship.backend.exceptions.FileStorageException;
-
-import java.util.ArrayList;
 
 public interface SignUpService {
 

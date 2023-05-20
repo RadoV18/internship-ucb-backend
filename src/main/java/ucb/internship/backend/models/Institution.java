@@ -1,5 +1,7 @@
 package ucb.internship.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -11,8 +13,6 @@ public class Institution {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "institution_id")
     private Long institutionId;
-    @Column(name = "user_id")
-    private Long userId;
     private String name;
     private String description;
     private String area;
@@ -26,6 +26,10 @@ public class Institution {
     private String contactPhone;
     @Column(name = "contact_position")
     private String contactPosition;
+    @OneToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    @JsonManagedReference
+    private User userUcb;
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "institution")
     private List<Internship> internships;
@@ -35,8 +39,8 @@ public class Institution {
     public Institution() {
     }
 
-    public Institution(Long userId, String name, String description, String area, String contactFirstName, String contactLastName, String contactEmail, String contactPhone, String contactPosition, Boolean status) {
-        this.userId = userId;
+    public Institution(Long institutionId, String name, String description, String area, String contactFirstName, String contactLastName, String contactEmail, String contactPhone, String contactPosition, Boolean status) {
+        this.institutionId = institutionId;
         this.name = name;
         this.description = description;
         this.area = area;
@@ -54,14 +58,6 @@ public class Institution {
 
     public void setInstitutionId(Long institutionId) {
         this.institutionId = institutionId;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     public String getName() {
@@ -128,6 +124,14 @@ public class Institution {
         this.contactPosition = contactPosition;
     }
 
+    public User getUserUcb() {
+        return userUcb;
+    }
+
+    public void setUserUcb(User user) {
+        this.userUcb = user;
+    }
+
     public Boolean getStatus() {
         return status;
     }
@@ -140,7 +144,6 @@ public class Institution {
     public String toString() {
         return "Institution{" +
                 "institutionId=" + institutionId +
-                ", userId=" + userId +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", area='" + area + '\'' +

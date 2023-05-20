@@ -3,7 +3,7 @@ package ucb.internship.backend.dtos;
 
 import jakarta.validation.constraints.NotNull;
 
-public record PostLoginDTO(
+public record PostLoginDto(
         @NotNull(message = "Email is required")
         String email,
         @NotNull(message = "Password is required")

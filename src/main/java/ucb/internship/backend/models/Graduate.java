@@ -2,81 +2,50 @@ package ucb.internship.backend.models;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
-@Table(name = "graduate")
+@Setter
+@Getter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "graduates")
+@JsonIdentityInfo(
+  generator = ObjectIdGenerators.PropertyGenerator.class, 
+  property = "graduateId")
 public class Graduate {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long graduateId;
 
-    private Long personId;
+    @Column(name = "graduation_date")
     private Date graduationDate;
-    private Long campusMajorId;
-    private Boolean status = false;
+    @Column(name = "status")
+    private Boolean status;
 
-    public Graduate(Long graduateId, Long personId, Date graduationDate, Long campusMajorId) {
-        this.graduateId = graduateId;
-        this.personId = personId;
-        this.graduationDate = graduationDate;
-        this.campusMajorId = campusMajorId;
-    }
-
-    public Graduate(Long graduateId) {
-        this.graduateId = graduateId;
-    }
-
-    public Graduate() {
-    }
-
-    public Long getGraduateId() {
-        return graduateId;
-    }
-
-    public void setGraduateId(Long graduateId) {
-        this.graduateId = graduateId;
-    }
-
-    public Long getPersonId() {
-        return personId;
-    }
-
-    public void setPersonId(Long personId) {
-        this.personId = personId;
-    }
-
-    public Date getGraduationDate() {
-        return graduationDate;
-    }
-
-    public void setGraduationDate(Date graduationDate) {
-        this.graduationDate = graduationDate;
-    }
-
-    public Long getCampusMajorId() {
-        return campusMajorId;
-    }
-
-    public void setCampusMajorId(Long campusMajorId) {
-        this.campusMajorId = campusMajorId;
-    }
-
-    public Boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(Boolean status) {
-        this.status = status;
-    }
-
-    @Override
-    public String toString() {
-        return "Graduate [graduateId=" + graduateId + ", personId=" + personId + ", graduationDate=" + graduationDate
-                + ", campusMajorId=" + campusMajorId + ", status=" + status + "]";
-    }
+    @OneToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "person_id", referencedColumnName = "person_id")
+    @ToString.Exclude
+    private Person person;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private CampusMajor campusMajor;
 }

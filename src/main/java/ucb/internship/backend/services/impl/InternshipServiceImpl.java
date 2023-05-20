@@ -121,7 +121,7 @@ public class InternshipServiceImpl implements InternshipService {
 
     }
     @Override
-    public List<ApplicantDto> getApplicantsByInternshipId(Integer id) {
+    public List<ApplicantDto> getApplicantsByInternshipId(Long id) {
         return internshipApplicationRepository.getApplicantsByInternshipId(id);
     }
     @Override
@@ -146,9 +146,8 @@ public class InternshipServiceImpl implements InternshipService {
 
     @Override
     public InternshipApiDto getInternshipApiById(Integer id){
-        Internship gInternship = internshipRepository.findById(id).orElseThrow();
-        InternshipApiDto newInternshipApiDto = InternshipMapper.entityToApiDto(gInternship);
-        return newInternshipApiDto;
+        Internship internship = internshipRepository.findById(id).orElseThrow();
+        return InternshipMapper.entityToApiDto(internship);
     }
 
     @Override

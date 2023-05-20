@@ -13,6 +13,7 @@ import ucb.internship.backend.exceptions.FileStorageException;
 import ucb.internship.backend.mailing.EmailVariables;
 import ucb.internship.backend.mailing.Recipient;
 import ucb.internship.backend.mailing.Template;
+import ucb.internship.backend.models.CampusMajor;
 import ucb.internship.backend.models.Graduate;
 import ucb.internship.backend.models.Institution;
 import ucb.internship.backend.models.Person;
@@ -20,6 +21,7 @@ import ucb.internship.backend.models.S3Object;
 import ucb.internship.backend.models.Student;
 import ucb.internship.backend.models.User;
 import ucb.internship.backend.models.VerificationCode;
+import ucb.internship.backend.repositories.CampusMajorRepository;
 import ucb.internship.backend.repositories.GraduateRepository;
 import ucb.internship.backend.repositories.InstitutionRepository;
 import ucb.internship.backend.repositories.PersonRepository;
@@ -47,6 +49,8 @@ public class SignUpServiceImpl implements SignUpService {
     private StudentRepository studentRepository;
     @Autowired
     private GraduateRepository graduateRepository;
+    @Autowired
+    private CampusMajorRepository campusMajorRepository;
 
     @Override
     public VerificationCodeDto institutionSignUp(
@@ -82,9 +86,10 @@ public class SignUpServiceImpl implements SignUpService {
     public VerificationCodeDto studentSignUp(StudentDto studentDto, MultipartFile profilePicture, MultipartFile cvFile)
             throws FileStorageException {
         // save the user in the database
-        String email = studentDto.getPersonDto().getUserDto().getEmail();
-        String password = studentDto.getPersonDto().getUserDto().getPassword();
+        String email = studentDto.getPersonDto().getUser().getEmail();
+        String password = studentDto.getPersonDto().getUser().getPassword();
         User savedUser = userService.createUser(email, password, profilePicture);
+
         // upload the cv
         Long s3ObjectId = null;
         if (cvFile != null) {
@@ -92,22 +97,30 @@ public class SignUpServiceImpl implements SignUpService {
             s3ObjectId = savedS3Object.getS3ObjectId();
         }
 
-        // TODO: save the person in the database using cv_id from cv
-        // TODO: save the graduate in the database using person_id
-        Person person = personRepository.save(new Person(null, savedUser.getUserId(),
-                studentDto.getPersonDto().getFirstName(), studentDto.getPersonDto().getLastName(),
-                studentDto.getPersonDto().getCi(), studentDto.getPersonDto().getPhoneNumber(), s3ObjectId));
+        Person newPerson = new Person();
+        newPerson.setFirstName(studentDto.getPersonDto().getFirstName());
+        newPerson.setLastName(studentDto.getPersonDto().getLastName());
+        newPerson.setCi(studentDto.getPersonDto().getCi());
+        newPerson.setPhoneNumber(studentDto.getPersonDto().getPhoneNumber());
+        newPerson.setS3Cv(s3ObjectId);
+        newPerson.setUserUcb(savedUser);
+        newPerson.setStatus(true);
+        Person savedPerson = personRepository.save(newPerson);
 
-        studentRepository.save(new Student(null, person.getPersonId(), studentDto.getCampusMajorId(),
-                studentDto.getSemester()));
+        CampusMajor campusMajor = campusMajorRepository.findById(studentDto.getCampusMajorId()).orElseThrow();
+
+        Student newStudent = new Student();
+        newStudent.setSemester(studentDto.getSemester());
+        newStudent.setCampusMajor(campusMajor);
+        newStudent.setPerson(savedPerson);
+        newStudent.setStatus(true);
+
+        studentRepository.save(newStudent);
 
         // generate the verification code
         VerificationCode verificationCode = verificationCodeService.createVerificationCode(savedUser.getUserId());
-
-        var recipient = new Recipient(savedUser.getEmail(), person.getFullName());
-
+        Recipient recipient = new Recipient(savedUser.getEmail(), savedPerson.getFirstName() + " " + savedPerson.getLastName());
         sendVerificationCode(recipient, verificationCode.getCode());
-
         return new VerificationCodeDto(verificationCode.getUuid(), savedUser.getEmail());
     }
 
@@ -115,9 +128,10 @@ public class SignUpServiceImpl implements SignUpService {
     public VerificationCodeDto graduateSignUp(GraduateDto graduateDto, MultipartFile profilePicture,
             MultipartFile cvFile) throws FileStorageException {
         // save the user in the database
-        String email = graduateDto.getPersonDto().getUserDto().getEmail();
-        String password = graduateDto.getPersonDto().getUserDto().getPassword();
+        String email = graduateDto.getPersonDto().getUser().getEmail();
+        String password = graduateDto.getPersonDto().getUser().getPassword();
         User savedUser = userService.createUser(email, password, profilePicture);
+
         // upload the cv
         Long s3ObjectId = null;
         if (cvFile != null) {
@@ -125,22 +139,28 @@ public class SignUpServiceImpl implements SignUpService {
             s3ObjectId = savedS3Object.getS3ObjectId();
         }
 
-        // TODO: save the person in the database using cv_id from cv
-        // TODO: save the graduate in the database using person_id
-        Person person = personRepository.save(new Person(null, savedUser.getUserId(),
-                graduateDto.getPersonDto().getFirstName(), graduateDto.getPersonDto().getLastName(),
-                graduateDto.getPersonDto().getCi(), graduateDto.getPersonDto().getPhoneNumber(), s3ObjectId));
+        Person newPerson = new Person();
+        newPerson.setFirstName(graduateDto.getPersonDto().getFirstName());
+        newPerson.setLastName(graduateDto.getPersonDto().getLastName());
+        newPerson.setCi(graduateDto.getPersonDto().getCi());
+        newPerson.setPhoneNumber(graduateDto.getPersonDto().getPhoneNumber());
+        newPerson.setS3Cv(s3ObjectId);
+        newPerson.setUserUcb(savedUser);
+        newPerson.setStatus(true);
+        Person savedPerson = personRepository.save(newPerson);
 
-        graduateRepository.save(new Graduate(null, person.getPersonId(),
-                graduateDto.getGraduationDate(), graduateDto.getCampusMajorId()));
+        CampusMajor campusMajor = campusMajorRepository.findById(graduateDto.getCampusMajorId()).orElseThrow();
+
+        Graduate newGraduate = new Graduate();
+        newGraduate.setGraduationDate(graduateDto.getGraduationDate());
+        newGraduate.setCampusMajor(campusMajor);
+        newGraduate.setPerson(savedPerson);
+        newGraduate.setStatus(true);
 
         // generate the verification code
         VerificationCode verificationCode = verificationCodeService.createVerificationCode(savedUser.getUserId());
-
-        var recipient = new Recipient(savedUser.getEmail(), person.getFullName());
-
+        Recipient recipient = new Recipient(savedUser.getEmail(), savedPerson.getFirstName() + " " + savedPerson.getLastName());
         sendVerificationCode(recipient, verificationCode.getCode());
-
         return new VerificationCodeDto(verificationCode.getUuid(), savedUser.getEmail());
     }
 

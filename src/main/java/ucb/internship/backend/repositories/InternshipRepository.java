@@ -10,7 +10,6 @@ import ucb.internship.backend.models.Institution;
 import ucb.internship.backend.models.Internship;
 
 import java.sql.Timestamp;
-import java.util.Collection;
 import java.util.List;
 
 @Repository

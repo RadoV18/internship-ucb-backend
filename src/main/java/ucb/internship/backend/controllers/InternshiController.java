@@ -1,4 +1,3 @@
-
 package ucb.internship.backend.controllers;
 
 import org.slf4j.Logger;
@@ -8,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ucb.internship.backend.dtos.*;
 import ucb.internship.backend.services.InternshipService;
-import ucb.internship.backend.models.Internship;
+import ucb.internship.backend.dtos.InternshipDto;
 
 import java.util.List;
 
@@ -37,7 +36,7 @@ public class InternshiController {
 
     @GetMapping("/{id}/applicants")
     public ResponseEntity<ResponseDto<List<ApplicantDto>>> getApplicantsByInternshipId (
-        @PathVariable Integer id
+        @PathVariable Long id
     ) {
         List<ApplicantDto> applicants = internshipService.getApplicantsByInternshipId(id);
         return ResponseEntity.ok(new ResponseDto<>(applicants, null, true));
@@ -58,5 +57,4 @@ public class InternshiController {
         internshipService.internShipChangeAprovedState(id, state);
         return ResponseEntity.ok(new ResponseDto<>(internshipService.getInternshipApiById(id), null, true));
     }
-
 }

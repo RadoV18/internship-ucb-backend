@@ -1,108 +1,55 @@
 package ucb.internship.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 @Table(name = "person")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "personId")
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "person_id")
     private Long personId;
-
-    private Long userId;
+    @Column(name = "first_name",length = 50)
     private String firstName;
+    @Column(name = "last_name", length = 50)
     private String lastName;
+    @Column(name = "ci", length = 20)
     private String ci;
+    @Column(name = "phone_number", length = 20)
     private String phoneNumber;
     @Column(name = "s3_cv")
     private Long s3Cv;
-
-    public Person(Long personId) {
-        this.personId = personId;
-    }
-
-    public Person() {
-    }
-
-    public Person(Long personId, Long userId, String firstName, String lastName, String ci, String phoneNumber,
-            Long s3Cv) {
-        this.personId = personId;
-        this.userId = userId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.ci = ci;
-        this.phoneNumber = phoneNumber;
-        this.s3Cv = s3Cv;
-    }
-
-    public Long getPersonId() {
-        return personId;
-    }
-
-    public void setPersonId(Long personId) {
-        this.personId = personId;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getCi() {
-        return ci;
-    }
-
-    public void setCi(String ci) {
-        this.ci = ci;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getFullName() {
-        return firstName + " " + lastName;
-    }
-
-    public Long getS3Cv() {
-        return s3Cv;
-    }
-
-    public void setS3Cv(Long s3Cv) {
-        this.s3Cv = s3Cv;
-    }
-
-    @Override
-    public String toString() {
-        return "Person [personId=" + personId + ", userId=" + userId + ", firstName=" + firstName + ", lastName="
-                + lastName + ", ci=" + ci + ", phoneNumber=" + phoneNumber + ", s3Cv=" + s3Cv + "]";
-    }
+    private Boolean status;
+    @OneToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "person_id", referencedColumnName = "user_id")
+    private User userUcb;
+    @JsonIgnore
+    @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
+    private Graduate graduate;
+    @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Student student;
 }

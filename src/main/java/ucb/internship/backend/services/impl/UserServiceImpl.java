@@ -1,8 +1,10 @@
 package ucb.internship.backend.services.impl;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
+
 import ucb.internship.backend.exceptions.FileStorageException;
 import ucb.internship.backend.models.S3Object;
 import ucb.internship.backend.models.User;
@@ -49,7 +51,7 @@ public class UserServiceImpl implements UserService {
                 email,
                 hashedPassword,
                 s3ObjectId,
-                false,
+                0,
                 true
         );
         return repository.save(user);
@@ -69,5 +71,14 @@ public class UserServiceImpl implements UserService {
     public boolean userExists(String email) {
         User user = repository.findByEmail(email).orElse(null);
         return user != null;
+    }
+
+    @Override
+    public void requestApproved(Long id, Integer state) {
+        User user = this.repository.findById(id).orElseThrow();
+        user.setApproved(state);
+        User updateUser = user;
+        System.out.println("El usuario es"+ updateUser.getApproved());
+        this.repository.save(updateUser);
     }
 }

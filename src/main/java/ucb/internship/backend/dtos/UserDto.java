@@ -1,35 +1,13 @@
 package ucb.internship.backend.dtos;
 
+import lombok.Data;
+
+@Data
 public class UserDto {
+    private Long userId;
     private String email;
+    private Integer isApproved;
     private String password;
-
-    public UserDto() {
-    }
-
-    public UserDto(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "UserDto [email=" + email + ", password=" + password + "]";
-    }
+    private Long s3ProfilePicture;
+    private boolean status;
 }

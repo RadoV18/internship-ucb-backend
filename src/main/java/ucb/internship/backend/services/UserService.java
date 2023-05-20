@@ -39,4 +39,10 @@ public interface UserService
      * @return true if the user exists, false otherwise
      */
     boolean userExists(String email);
+
+    /**
+     * @param id The user ID to approve the request
+     */
+    void requestApproved(Long id,Integer state);
+
 }

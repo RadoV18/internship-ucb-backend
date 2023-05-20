@@ -1,5 +1,7 @@
 package ucb.internship.backend.models;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -7,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,6 +27,12 @@ public class CampusMajor {
     @JoinColumn(name = "majorId", referencedColumnName = "major_id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Major major;
+
+    @OneToMany(mappedBy = "campusMajor")
+    private List<Student> students;
+
+    @OneToMany(mappedBy = "campusMajor")
+    private List<Graduate> graduates;
 
     public CampusMajor(Long campusMajorId, Campus campus, Major major) {
         this.campusMajorId = campusMajorId;
@@ -68,6 +77,22 @@ public class CampusMajor {
 
     public void setMajor(Major major) {
         this.major = major;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
+
+    public List<Graduate> getGraduates() {
+        return graduates;
+    }
+
+    public void setGraduates(List<Graduate> graduates) {
+        this.graduates = graduates;
     }
 
     @Override

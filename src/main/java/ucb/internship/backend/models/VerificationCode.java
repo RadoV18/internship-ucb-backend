@@ -1,7 +1,6 @@
 package ucb.internship.backend.models;
 
 import jakarta.persistence.*;
-import ucb.internship.backend.dtos.VerificationCodeDto;
 
 @Entity
 @Table(name = "verification_code", schema = "public")
