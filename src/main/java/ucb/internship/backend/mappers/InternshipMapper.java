@@ -46,25 +46,30 @@ public class InternshipMapper {
         internshipApiDto.setStartingDate(internship.getStartingDate());
         internshipApiDto.setEndingDate(internship.getEndingDate());
         List<String> benefitList = new ArrayList<>();
-        List<String> roleList = new ArrayList<>();
-        List<String> requirementList = new ArrayList<>();
-        List<String> majorList = new ArrayList<>();
         for (InternshipBenefit benefit : internship.getInternshipBenefits()) {
             benefitList.add(benefit.getDescription());
         }
+        internshipApiDto.setInternshipBenefits(benefitList);
+        List<String> roleList = new ArrayList<>();
         for (InternshipRole role : internship.getInternshipRoles()) {
             roleList.add(role.getDescription());
         }
+        internshipApiDto.setInternshipRoles(roleList);
+        List<String> requirementList = new ArrayList<>();
         for (InternshipRequirement requirement : internship.getInternshipRequirements()) {
             requirementList.add(requirement.getDescription());
         }
+        internshipApiDto.setInternshipRequirements(requirementList);
+        List<String> majorList = new ArrayList<>();
         for (InternshipMajor major : internship.getMajorList()) {
             majorList.add(major.getMajor().getName());
         }
         internshipApiDto.setMajorList(majorList);
-        internshipApiDto.setInternshipRequirements(requirementList);
-        internshipApiDto.setInternshipRoles(roleList);
-        internshipApiDto.setInternshipBenefits(benefitList);
+        List<String> questionList = new ArrayList<>();
+        for (InternshipQuestion question : internship.getInternshipQuestions()) {
+            questionList.add(question.getDescription());
+        }
+        internshipApiDto.setInternshipQuestions(questionList);
         return internshipApiDto;
     }
 }

@@ -23,5 +23,6 @@ public class InternshipApiDto {
     private List<String> internshipBenefits;
     private List<String> internshipRequirements;
     private List<String> internshipRoles;
+    private List<String> internshipQuestions;
     private List<String> majorList;
 }
