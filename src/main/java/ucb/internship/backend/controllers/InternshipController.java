@@ -7,38 +7,28 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ucb.internship.backend.dtos.InternshipListDto;
-import ucb.internship.backend.dtos.ResponseDto;
-import ucb.internship.backend.services.impl.InternshipServiceImpl;
-import ucb.internship.backend.dtos.InternshipDto;
+import ucb.internship.backend.dtos.*;
+import ucb.internship.backend.services.InternshipService;
 import ucb.internship.backend.models.Internship;
 
 import java.sql.Date;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*")
+@RequestMapping("/api/internships")
 public class InternshipController {
-    private InternshipServiceImpl internshipService;
-    public static final Logger LOGGER = LoggerFactory.getLogger(InternshipController.class);
     @Autowired
-    public InternshipController(InternshipServiceImpl internshipService) {
-        this.internshipService = internshipService;
-    }
-    @PostMapping("/internship")
-    public ResponseEntity<String> createInternship(@RequestBody InternshipDto internshipDto){
+    private InternshipService internshipService;
+    public static final Logger LOGGER = LoggerFactory.getLogger(InternshipController.class);
+
+    @PostMapping
+    public ResponseEntity<ResponseDto<Void>> createInternship(@RequestBody InternshipDto internshipDto){
         LOGGER.info("Creating internship {}", internshipDto);
-        String response = internshipService.createInternship(internshipDto);
-        if(response.equals("Error creating internship")){
-            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        internshipService.createInternship(internshipDto);
+        return ResponseEntity.ok(new ResponseDto<>(null, "Convocatoria creada exitosamente.", true));
     }
-    @GetMapping("/internship/{id}")
-    public List<Internship> getInternship(@PathVariable Integer id){
-        return internshipService.getInternshipById(id);
-    }
-    @GetMapping("/internship")
+
+    @GetMapping
     public ResponseEntity<ResponseDto<Page<InternshipListDto>>> getInternship(
             @RequestParam(required = false) String city,
             @RequestParam(required = false) String major,
@@ -57,5 +47,35 @@ public class InternshipController {
 
     }
 
+    @GetMapping("/institution/{id}/active")
+    public ResponseEntity<ResponseDto<List<ActiveInternshipDto>>> getActiveInternshipsByInstitutionId(
+            @PathVariable Long id
+    ) {
+        List<ActiveInternshipDto> internships = internshipService.getActiveInternshipsByInstitutionId(id);
+        return ResponseEntity.ok(new ResponseDto<>(internships, null, true));
+    }
 
+    @GetMapping("/{id}/applicants")
+    public ResponseEntity<ResponseDto<List<ApplicantDto>>> getApplicantsByInternshipId (
+            @PathVariable Long id
+    ) {
+        List<ApplicantDto> applicants = internshipService.getApplicantsByInternshipId(id);
+        return ResponseEntity.ok(new ResponseDto<>(applicants, null, true));
+    }
+
+    @GetMapping("/internship/{id}")
+    public ResponseEntity<ResponseDto<InternshipApiDto>> getInternshipById(@PathVariable Integer id) {
+        return ResponseEntity.ok(new ResponseDto<>(internshipService.getInternshipApiById(id), null, true));
+    }
+
+    @GetMapping("/internship")
+    public ResponseEntity<ResponseDto<List<InternshipApiDto>>> getInternshipAll() {
+        return ResponseEntity.ok(new ResponseDto<>(internshipService.getInternshipAll(), null, true));
+    }
+
+    @PutMapping("/internship/{state}/{id}")
+    public ResponseEntity<ResponseDto<InternshipApiDto>> internshipAccepted(@PathVariable Integer id, @PathVariable Integer state) {
+        internshipService.internShipChangeAprovedState(id, state);
+        return ResponseEntity.ok(new ResponseDto<>(internshipService.getInternshipApiById(id), null, true));
+    }
 }

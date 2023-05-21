@@ -76,7 +76,6 @@ public class UserServiceImpl implements UserService {
     public void setRequestStatus(Long id, Integer state) {
         User user = this.repository.findById(id).orElseThrow();
         user.setIsApproved(state);
-        System.out.println("El usuario es"+ user.getIsApproved());
         this.repository.save(user);
     }
 }
