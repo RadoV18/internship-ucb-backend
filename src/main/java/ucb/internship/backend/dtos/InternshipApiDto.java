@@ -14,6 +14,7 @@ import java.util.List;
 public class InternshipApiDto {
     private Long internshipId;
     private String institution;
+    private String profilePicture;
     private String title;
     private String description;
     private String city;

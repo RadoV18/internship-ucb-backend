@@ -39,6 +39,7 @@ public class InternshipMapper {
         InternshipApiDto internshipApiDto = new InternshipApiDto();
         internshipApiDto.setInternshipId(internship.getInternshipId());
         internshipApiDto.setInstitution(internship.getInstitution().getName());
+        internshipApiDto.setProfilePicture(internship.getInstitution().getUserUcb().getS3ProfilePicture().getUrl());
         internshipApiDto.setCity(internship.getCity().getName());
         internshipApiDto.setTitle(internship.getTitle());
         internshipApiDto.setDescription(internship.getDescription());
