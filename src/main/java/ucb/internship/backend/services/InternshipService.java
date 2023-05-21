@@ -11,13 +11,13 @@ import org.springframework.data.domain.Page;
 public interface InternshipService {
     String createInternship(InternshipDto internshipDTO);
 
-    InternshipApiDto getInternshipApiById(Integer id);
+    InternshipApiDto getInternshipApiById(Long id);
 
     List<InternshipApiDto> getInternshipAll();
 
-    void internShipChangeAprovedState(Integer id, Integer state);
+    void internShipChangeAprovedState(Long id, Integer state);
 
-    List<Internship> getInternshipById(Integer id);
+    List<Internship> getInternshipById(Long id);
 
     List<ActiveInternshipDto> getActiveInternshipsByInstitutionId(Long id);
 

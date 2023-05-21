@@ -1,18 +1,20 @@
 package ucb.internship.backend.mappers;
 
 import ucb.internship.backend.dtos.InternshipListDto;
+import ucb.internship.backend.mapper.InstitutionsMapper;
+import ucb.internship.backend.models.Internship;
 
 public class InternshipListMapper {
-    public static InternshipListDto objectToDto(Object[] object){
+    public static InternshipListDto objectToDto(Internship internship){
         InternshipListDto internshipList = new InternshipListDto();
-        internshipList.setInternshipId((Integer) object[0]);
-        internshipList.setTitle((String) object[1]);
-        internshipList.setDescription((String) object[2]);
-        internshipList.setStartingDate((java.sql.Timestamp) object[3]);
-        internshipList.setEndingDate((java.sql.Timestamp) object[4]);
-        internshipList.setInstitution((String) object[6]);
-        internshipList.setUrl((String) object[7]);
-        internshipList.setCity((String) object[5]);
+        internshipList.setInternshipId(internship.getInternshipId());
+        internshipList.setTitle(internship.getTitle());
+        internshipList.setDescription(internship.getDescription());
+        internshipList.setStartingDate(internship.getStartingDate());
+        internshipList.setEndingDate(internship.getEndingDate());
+        internshipList.setInstitution(internship.getInstitution().getName());
+        internshipList.setCity(internship.getCity().getName());
+        internshipList.setUrl(internship.getInstitution().getUserUcb().getS3ProfilePicture().getUrl());
         return internshipList;
     }
 }

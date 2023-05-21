@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -26,10 +27,10 @@ public class Internship {
     private Integer isApproved;
 
     @Column(name = "starting_date")
-    private Timestamp startingDate;
+    private Date startingDate;
 
     @Column(name = "ending_date")
-    private Timestamp endingDate;
+    private Date endingDate;
 
     private Boolean status;
 

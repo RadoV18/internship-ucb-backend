@@ -27,9 +27,7 @@ public class InternshipServiceImpl implements InternshipService {
     private final InstitutionRepository institutionRepository;
     private final MajorRepository majorRepository;
     public static final Logger LOGGER = LoggerFactory.getLogger(InternshipServiceImpl.class.getName());
-    private static final Integer dayInMilis = 86400000;
-    private static final Integer hourInMilis = 3600000;
-    private static final Integer minuteInMilis = 60000;
+
     @Autowired
     public InternshipServiceImpl(
         InternshipRepository internshipRepository,
@@ -107,29 +105,36 @@ public class InternshipServiceImpl implements InternshipService {
     }
     @Override
     public Page<InternshipListDto> filterInternships(String city , Date startingDate, Date endingDate, String major, Integer page, Integer size) {
-        Timestamp startDate = null, endDate = null;
-        if(city == null || city.isEmpty())
+        Date startDate = null;
+        Date endDate = null;
+        if(city == null || city.isEmpty()) {
             city = "%";
-        else
-            city = "%"+city+"%";
-        if(startingDate == null)
-            startDate = Timestamp.valueOf("1970-01-01 00:00:00");
-        else
-            startDate = new Timestamp(startingDate.getTime()+dayInMilis);
-        if(endingDate == null)
-            endDate = Timestamp.valueOf("2100-01-01 00:00:00");
-        else
-            endDate = new Timestamp(endingDate.getTime()+dayInMilis+hourInMilis* 23L +minuteInMilis* 59L);
-        if(major == null || major.isEmpty())
+        } else {
+            city = "%" + city + "%";
+        }
+        if(startingDate == null) {
+            startDate = Date.valueOf("1970-01-01");
+        } else {
+            startDate = startingDate;
+        }
+        if(endingDate == null) {
+            endDate = Date.valueOf("2100-01-01");
+        } else {
+            endDate = endingDate;
+        }
+        if(major == null || major.isEmpty()) {
             major = "%";
-        else
-            major = "%"+major+"%";
-        if(page == null)
+        } else {
+            major = "%" + major + "%";
+        }
+        if(page == null) {
             page = 0;
-        if(size == null)
+        }
+        if(size == null) {
             size = 10;
+        }
         LOGGER.info("city: {}, startDate: {}, endDate: {}, major: {}, page: {}, size: {}", city, startDate, endDate, major, page, size);
-        Page<Object[]> objectList= internshipRepository.findInternshipList(city,startDate,endDate,major,PageRequest.of(page,size));
+        Page<Internship> objectList = internshipRepository.findInternshipList(city, startDate, endDate, major, PageRequest.of(page,size));
         return objectList.map(InternshipListMapper::objectToDto);
 
     }
@@ -153,12 +158,12 @@ public class InternshipServiceImpl implements InternshipService {
         return result;
     }
 
-    public List<Internship> getInternshipById(Integer id){
+    public List<Internship> getInternshipById(Long id){
         return  internshipRepository.findByInternshipId(id);
     }
 
     @Override
-    public InternshipApiDto getInternshipApiById(Integer id){
+    public InternshipApiDto getInternshipApiById(Long id){
         Internship internship = internshipRepository.findById(id).orElseThrow();
         return InternshipMapper.entityToApiDto(internship);
     }
@@ -175,7 +180,7 @@ public class InternshipServiceImpl implements InternshipService {
     }
 
     @Override
-    public void internShipChangeAprovedState(Integer id, Integer state) {
+    public void internShipChangeAprovedState(Long id, Integer state) {
         Internship internship = internshipRepository.findById(id).orElseThrow();
         internship.setIsApproved(state);
         internshipRepository.save(internship);

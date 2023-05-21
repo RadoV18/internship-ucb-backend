@@ -42,7 +42,7 @@ public class InternshipMapper {
         internshipApiDto.setCity(internship.getCity().getName());
         internshipApiDto.setTitle(internship.getTitle());
         internshipApiDto.setDescription(internship.getDescription());
-        internshipApiDto.setApproved(internship.getIsApproved());
+        internshipApiDto.setIsApproved(internship.getIsApproved());
         internshipApiDto.setStartingDate(internship.getStartingDate());
         internshipApiDto.setEndingDate(internship.getEndingDate());
         List<String> benefitList = new ArrayList<>();

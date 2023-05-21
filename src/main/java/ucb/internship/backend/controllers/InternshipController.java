@@ -63,7 +63,7 @@ public class InternshipController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseDto<InternshipApiDto>> getInternshipById(@PathVariable Integer id) {
+    public ResponseEntity<ResponseDto<InternshipApiDto>> getInternshipById(@PathVariable Long id) {
         return ResponseEntity.ok(new ResponseDto<>(internshipService.getInternshipApiById(id), null, true));
     }
 
@@ -73,7 +73,7 @@ public class InternshipController {
     }
 
     @PutMapping("/{id}/status/{state}")
-    public ResponseEntity<ResponseDto<Long>> internshipAccepted(@PathVariable Integer id, @PathVariable Integer state) {
+    public ResponseEntity<ResponseDto<Long>> internshipAccepted(@PathVariable Long id, @PathVariable Integer state) {
         internshipService.internShipChangeAprovedState(id, state);
         return ResponseEntity.ok(new ResponseDto<>(internshipService.getInternshipApiById(id).getInternshipId(), null, true));
     }

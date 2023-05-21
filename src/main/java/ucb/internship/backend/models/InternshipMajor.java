@@ -16,7 +16,7 @@ public class InternshipMajor {
     @Id
     @Column(name = "internship_major_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer internshipMajorId;
+    private Long internshipMajorId;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "internship_id")
