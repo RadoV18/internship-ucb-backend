@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class MajorDto {
-    private Long majorId;
-    private String name;
+public class InternshipRoleDto {
+    private Long id;
+    private String description;
 }

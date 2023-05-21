@@ -12,14 +12,26 @@ public class InternshipMapper {
     public static InternshipDto entityToDto(Internship internship) {
         InternshipDto internshipDto = new InternshipDto();
         internshipDto.setInternshipId(internship.getInternshipId());
-        internshipDto.setInternshipBenefits(internship.getInternshipBenefits());
-        internshipDto.setInternshipRequirements(internship.getInternshipRequirements());
-        internshipDto.setInternshipRoles(internship.getInternshipRoles());
+        internshipDto.setInternshipBenefits(internship.getInternshipBenefits().
+                stream().
+                map(InternshipBenefitMapper::entityToDto).
+                collect(Collectors.toList()));
+        internshipDto.setInternshipRequirements(internship.getInternshipRequirements().
+                stream().
+                map(InternshipRequirementMapper::entityToDto).
+                collect(Collectors.toList()));
+        internshipDto.setInternshipRoles(internship.getInternshipRoles().
+                stream().
+                map(InternshipRoleMapper::entityToDto).
+                collect(Collectors.toList()));
         internshipDto.setIsApproved(internship.getIsApproved());
         internshipDto.setStartingDate(internship.getStartingDate());
         internshipDto.setEndingDate(internship.getEndingDate());
         internshipDto.setCityId(internship.getCity().getCityId());
-        internshipDto.setMajorList(internship.getMajorList().stream().map(InternshipMajor::getMajor).collect(Collectors.toList()));
+        internshipDto.setMajorList(internship.getMajorList().
+                stream().
+                map(internshipMajor -> MajorMapper.entityToDto(internshipMajor.getMajor()))
+                .toList());
         return internshipDto;
     }
 

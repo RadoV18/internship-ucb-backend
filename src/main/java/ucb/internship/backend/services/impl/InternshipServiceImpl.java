@@ -9,17 +9,11 @@ import org.springframework.stereotype.Service;
 import ucb.internship.backend.dtos.*;
 import ucb.internship.backend.mappers.InternshipListMapper;
 import ucb.internship.backend.mappers.InternshipMapper;
-import ucb.internship.backend.models.Institution;
-import ucb.internship.backend.models.Internship;
-import ucb.internship.backend.models.InternshipMajor;
-import ucb.internship.backend.repositories.InstitutionRepository;
-import ucb.internship.backend.repositories.InternshipRepository;
+import ucb.internship.backend.models.*;
+import ucb.internship.backend.repositories.*;
 import ucb.internship.backend.services.InternshipService;
 import java.sql.Timestamp;
 
-import ucb.internship.backend.models.City;
-import ucb.internship.backend.repositories.CityRepository;
-import ucb.internship.backend.repositories.InternshipApplicationRepository;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
@@ -31,6 +25,7 @@ public class InternshipServiceImpl implements InternshipService {
     private final InternshipApplicationRepository internshipApplicationRepository;
     private final CityRepository cityRepository;
     private final InstitutionRepository institutionRepository;
+    private final MajorRepository majorRepository;
     public static final Logger LOGGER = LoggerFactory.getLogger(InternshipServiceImpl.class.getName());
     private static final Integer dayInMilis = 86400000;
     private static final Integer hourInMilis = 3600000;
@@ -40,12 +35,14 @@ public class InternshipServiceImpl implements InternshipService {
         InternshipRepository internshipRepository,
         InternshipApplicationRepository internshipApplicationRepository,
         CityRepository cityRepository,
-        InstitutionRepository institutionRepository
+        InstitutionRepository institutionRepository,
+        MajorRepository majorRepository
     ) {
         this.internshipRepository = internshipRepository;
         this.internshipApplicationRepository = internshipApplicationRepository;
         this.cityRepository = cityRepository;
         this.institutionRepository = institutionRepository;
+        this.majorRepository = majorRepository;
     }
 
     public String createInternship(InternshipDto internshipDto) {
@@ -62,28 +59,44 @@ public class InternshipServiceImpl implements InternshipService {
             newInternship.setEndingDate(internshipDto.getEndingDate());
             newInternship.setCity(city);
             newInternship.setInternshipBenefits(internshipDto.getInternshipBenefits().stream().map(benefit -> {
-                benefit.setInternship(newInternship);
-                benefit.setStatus(true);
-                return benefit;
+                InternshipBenefit newBenefit = new InternshipBenefit();
+                newBenefit.setDescription(benefit.getDescription());
+                newBenefit.setInternship(newInternship);
+                newBenefit.setStatus(true);
+                return newBenefit;
             }).toList());
 
             newInternship.setInternshipRequirements(internshipDto.getInternshipRequirements().stream().map(requirement -> {
-                requirement.setInternship(newInternship);
-                requirement.setStatus(true);
-                return requirement;
+                InternshipRequirement newRequirement = new InternshipRequirement();
+                newRequirement.setDescription(requirement.getDescription());
+                newRequirement.setInternship(newInternship);
+                newRequirement.setStatus(true);
+                return newRequirement;
             }).toList());
             newInternship.setInternshipRoles(internshipDto.getInternshipRoles().stream().map(role -> {
-                role.setInternship(newInternship);
-                role.setStatus(true);
-                return role;
+                InternshipRole newRole = new InternshipRole();
+                newRole.setDescription(role.getDescription());
+                newRole.setInternship(newInternship);
+                newRole.setStatus(true);
+                return newRole;
             }).toList());
             newInternship.setInternshipQuestions(internshipDto.getInternshipQuestions().stream().map(question -> {
-                question.setInternship(newInternship);
-                question.setStatus(true);
-                return question;
+                InternshipQuestion newQuestion = new InternshipQuestion();
+                newQuestion.setDescription(question.getDescription());
+                newQuestion.setInternship(newInternship);
+                newQuestion.setStatus(true);
+                return newQuestion;
             }).toList());
             newInternship.setMajorList(internshipDto.getMajorList().stream().map(
-                    major -> new InternshipMajor(newInternship, major, true)).toList());
+                major -> {
+                    Major newMajor = majorRepository.findById(major.getMajorId()).orElseThrow(() -> new RuntimeException("Major not found"));
+                    InternshipMajor newInternshipMajor = new InternshipMajor();
+                    newInternshipMajor.setMajor(newMajor);
+                    newInternshipMajor.setInternship(newInternship);
+                    newInternshipMajor.setStatus(true);
+                    return newInternshipMajor;
+                }
+            ).toList());
             LOGGER.info("Internship {}", newInternship);
             internshipRepository.save(newInternship);
         } catch (Exception e) {

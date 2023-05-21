@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ucb.internship.backend.dtos.*;
 import ucb.internship.backend.services.InternshipService;
-import ucb.internship.backend.models.Internship;
 
 import java.sql.Date;
 import java.util.List;
