@@ -24,4 +24,6 @@ public class InternshipApiDto {
     private List<String> internshipRequirements;
     private List<String> internshipRoles;
     private List<String> majorList;
+    private List<InternshipQuestionDto> internshipQuestions; // added
+    private Long institutionId; // added
 }

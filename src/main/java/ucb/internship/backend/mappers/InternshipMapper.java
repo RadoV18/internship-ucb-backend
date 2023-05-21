@@ -2,6 +2,7 @@ package ucb.internship.backend.mappers;
 
 import ucb.internship.backend.dtos.InternshipApiDto;
 import ucb.internship.backend.dtos.InternshipDto;
+import ucb.internship.backend.dtos.InternshipQuestionDto;
 import ucb.internship.backend.models.*;
 
 import java.util.ArrayList;
@@ -12,25 +13,18 @@ public class InternshipMapper {
     public static InternshipDto entityToDto(Internship internship) {
         InternshipDto internshipDto = new InternshipDto();
         internshipDto.setInternshipId(internship.getInternshipId());
-        internshipDto.setInternshipBenefits(internship.getInternshipBenefits().
-                stream().
-                map(InternshipBenefitMapper::entityToDto).
-                collect(Collectors.toList()));
-        internshipDto.setInternshipRequirements(internship.getInternshipRequirements().
-                stream().
-                map(InternshipRequirementMapper::entityToDto).
-                collect(Collectors.toList()));
-        internshipDto.setInternshipRoles(internship.getInternshipRoles().
-                stream().
-                map(InternshipRoleMapper::entityToDto).
-                collect(Collectors.toList()));
+        internshipDto.setInternshipBenefits(internship.getInternshipBenefits().stream()
+                .map(InternshipBenefitMapper::entityToDto).collect(Collectors.toList()));
+        internshipDto.setInternshipRequirements(internship.getInternshipRequirements().stream()
+                .map(InternshipRequirementMapper::entityToDto).collect(Collectors.toList()));
+        internshipDto.setInternshipRoles(internship.getInternshipRoles().stream().map(InternshipRoleMapper::entityToDto)
+                .collect(Collectors.toList()));
         internshipDto.setIsApproved(internship.getIsApproved());
         internshipDto.setStartingDate(internship.getStartingDate());
         internshipDto.setEndingDate(internship.getEndingDate());
         internshipDto.setCityId(internship.getCity().getCityId());
-        internshipDto.setMajorList(internship.getMajorList().
-                stream().
-                map(internshipMajor -> MajorMapper.entityToDto(internshipMajor.getMajor()))
+        internshipDto.setMajorList(internship.getMajorList().stream()
+                .map(internshipMajor -> MajorMapper.entityToDto(internshipMajor.getMajor()))
                 .toList());
         return internshipDto;
     }
@@ -49,6 +43,7 @@ public class InternshipMapper {
         List<String> roleList = new ArrayList<>();
         List<String> requirementList = new ArrayList<>();
         List<String> majorList = new ArrayList<>();
+        List<InternshipQuestionDto> questionList = new ArrayList<>();
         for (InternshipBenefit benefit : internship.getInternshipBenefits()) {
             benefitList.add(benefit.getDescription());
         }
@@ -61,10 +56,17 @@ public class InternshipMapper {
         for (InternshipMajor major : internship.getMajorList()) {
             majorList.add(major.getMajor().getName());
         }
+        // added
+        for (InternshipQuestion question : internship.getInternshipQuestions()) {
+            questionList.add(new InternshipQuestionDto(question.getInternshipQuestionId(), question.getDescription()));
+        }
         internshipApiDto.setMajorList(majorList);
         internshipApiDto.setInternshipRequirements(requirementList);
         internshipApiDto.setInternshipRoles(roleList);
         internshipApiDto.setInternshipBenefits(benefitList);
+        // added
+        internshipApiDto.setInternshipQuestions(questionList);
+        internshipApiDto.setInstitutionId(internship.getInstitution().getInstitutionId());
         return internshipApiDto;
     }
 }
