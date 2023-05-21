@@ -62,19 +62,19 @@ public class InternshipController {
         return ResponseEntity.ok(new ResponseDto<>(applicants, null, true));
     }
 
-    @GetMapping("/internship/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ResponseDto<InternshipApiDto>> getInternshipById(@PathVariable Integer id) {
         return ResponseEntity.ok(new ResponseDto<>(internshipService.getInternshipApiById(id), null, true));
     }
 
-    @GetMapping("/internship")
+    @GetMapping("/pending")
     public ResponseEntity<ResponseDto<List<InternshipApiDto>>> getInternshipAll() {
         return ResponseEntity.ok(new ResponseDto<>(internshipService.getInternshipAll(), null, true));
     }
 
-    @PutMapping("/internship/{state}/{id}")
-    public ResponseEntity<ResponseDto<InternshipApiDto>> internshipAccepted(@PathVariable Integer id, @PathVariable Integer state) {
+    @PutMapping("/{id}/status/{state}")
+    public ResponseEntity<ResponseDto<Long>> internshipAccepted(@PathVariable Integer id, @PathVariable Integer state) {
         internshipService.internShipChangeAprovedState(id, state);
-        return ResponseEntity.ok(new ResponseDto<>(internshipService.getInternshipApiById(id), null, true));
+        return ResponseEntity.ok(new ResponseDto<>(internshipService.getInternshipApiById(id).getInternshipId(), null, true));
     }
 }
