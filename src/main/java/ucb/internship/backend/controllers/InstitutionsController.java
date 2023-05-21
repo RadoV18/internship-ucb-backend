@@ -31,4 +31,10 @@ public class InstitutionsController {
         LOGGER.info("REQUEST: El resultado de la consulta es {}", result);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @GetMapping(path = "/{institutionId}")
+    public ResponseEntity<InstitutionsDto> getInstitutionByIdDto(@PathVariable Long institutionId) {
+        InstitutionsDto institutionsDto = institutionsBL.getInstitutionById(institutionId);
+        return new ResponseEntity<>(institutionsDto, HttpStatus.OK);
+    }
 }
