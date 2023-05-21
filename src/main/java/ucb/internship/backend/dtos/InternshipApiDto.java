@@ -1,8 +1,16 @@
 package ucb.internship.backend.dtos;
 
+import lombok.*;
+
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
 public class InternshipApiDto {
     private Long internshipId;
     private String institution;
@@ -10,97 +18,10 @@ public class InternshipApiDto {
     private String description;
     private String city;
     private Integer isApproved;
-    private Timestamp startingDate;
-    private Timestamp endingDate;
+    private Date startingDate;
+    private Date endingDate;
     private List<String> internshipBenefits;
     private List<String> internshipRequirements;
     private List<String> internshipRoles;
     private List<String> majorList;
-
-    public Long getInternshipId() {
-        return internshipId;
-    }
-    public void setInternshipId(Long internshipId) {
-        this.internshipId = internshipId;
-    }
-    public String getInstitution() {
-        return institution;
-    }
-    public void setInstitution(String institution) {
-        this.institution = institution;
-    }
-    public String getTitle() {
-        return title;
-    }
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    public String getDescription() {
-        return description;
-    }
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    public Integer isApproved() {
-        return isApproved;
-    }
-    public void setApproved(Integer isApproved) {
-        this.isApproved = isApproved;
-    }
-    public Timestamp getStartingDate() {
-        return startingDate;
-    }
-    public void setStartingDate(Timestamp startingDate) {
-        this.startingDate = startingDate;
-    }
-    public Timestamp getEndingDate() {
-        return endingDate;
-    }
-    public void setEndingDate(Timestamp endingDate) {
-        this.endingDate = endingDate;
-    }
-    public List<String> getInternshipBenefits() {
-        return internshipBenefits;
-    }
-    public void setInternshipBenefits(List<String> internshipBenefits) {
-        this.internshipBenefits = internshipBenefits;
-    }
-    public List<String> getInternshipRequirements() {
-        return internshipRequirements;
-    }
-    public void setInternshipRequirements(List<String> internshipRequirements) {
-        this.internshipRequirements = internshipRequirements;
-    }
-    public List<String> getInternshipRoles() {
-        return internshipRoles;
-    }
-    public void setInternshipRoles(List<String> internshipRoles) {
-        this.internshipRoles = internshipRoles;
-    }
-    public String getCity() {
-        return city;
-    }
-    public void setCity(String city) {
-        this.city = city;
-    }
-    public List<String> getMajorList() {
-        return majorList;
-    }
-    public void setMajorList(List<String> majorList) {
-        this.majorList = majorList;
-    }
-
-    @Override
-    public String toString() {
-        return "InternshipApiDto [internshipId=" + internshipId + ", institutionId=" + institution + ", title="
-                + title + ", description=" + description + ", isApproved=" + isApproved + ", startingDate="
-                + startingDate + ", endingDate=" + endingDate + ", internshipBenefits=" + internshipBenefits
-                + ", internshipRequirements=" + internshipRequirements + ", internshipRoles=" + internshipRoles
-                + ", cityId=" + city + ", majorList=" + majorList + "]";
-    }
-
-
-
-
-
 }

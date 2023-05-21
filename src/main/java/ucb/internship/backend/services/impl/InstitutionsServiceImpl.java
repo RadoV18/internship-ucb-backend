@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import ucb.internship.backend.dtos.InstitucionsDto;
+import ucb.internship.backend.dtos.InstitutionsDto;
 import ucb.internship.backend.mapper.InstitutionsMapper;
 import ucb.internship.backend.models.Institution;
 import ucb.internship.backend.models.User;
@@ -32,20 +32,19 @@ public class InstitutionsServiceImpl implements InstitutionsService{
     }
 
     @Override
-    public List<InstitucionsDto> getInstitutions() {
+    public List<InstitutionsDto> getInstitutions() {
         LOGGER.info("BUSINESS-LOGIC: Iniciando petición para obtener el listado de personas");
         List<Institution> result = this.institutionRepository.findAll();
-        List<InstitucionsDto> resultDTO = new ArrayList<>();
+        List<InstitutionsDto> resultDto = new ArrayList<>();
         result.stream().forEach(institution ->{
             if (institution.getUserUcb().getIsApproved() ==0) {
-                User usuario = this.userRepository.findById(institution.getUserUcb().getUserId()).orElseThrow();
-                InstitucionsDto institucionsDTO = new InstitucionsDto();
-                institucionsDTO = InstitutionsMapper.entityToDto(institution, usuario);
-                resultDTO.add(institucionsDTO);
+                User user = this.userRepository.findById(institution.getUserUcb().getUserId()).orElseThrow();
+                InstitutionsDto institutionDto = InstitutionsMapper.entityToDto(institution, user);
+                resultDto.add(institutionDto);
             }
         });
-        LOGGER.info("BUSINESS-LOGIC: EL resultado de la cosnulta es {}",resultDTO);
-        return resultDTO;
+        LOGGER.info("BUSINESS-LOGIC: EL resultado de la cosnulta es {}",resultDto);
+        return resultDto;
     }
 
     @Override

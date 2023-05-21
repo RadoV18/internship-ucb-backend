@@ -39,7 +39,7 @@ public class UsersController
     }
 
     @PutMapping(value = "/{id}/status/{state}")
-    public void aprobado(@PathVariable Long id,@PathVariable Integer state) {
+    public void setRequestStatus(@PathVariable Long id, @PathVariable Integer state) {
         userService.setRequestStatus(id, state);
     }
     
