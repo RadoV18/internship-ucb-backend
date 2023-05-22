@@ -69,9 +69,10 @@ public class InternshipController {
     public ResponseEntity<ResponseDto<Boolean>> updateApplicationStatus(
             @PathVariable Long id,
             @PathVariable Long applicationId,
-            @PathVariable Integer state
+            @PathVariable Integer state,
+            @RequestBody String message
     ) {
-        internshipApplicationService.updateApplicationStatus(id, applicationId, state);
+        internshipApplicationService.updateApplicationStatus(id, applicationId, state, message);
         return ResponseEntity.ok(new ResponseDto<>(true, null, true));
     }
 

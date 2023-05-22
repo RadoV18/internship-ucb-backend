@@ -58,7 +58,7 @@ public class InternshipApplicationServiceImpl implements InternshipApplicationSe
     }
 
     @Override
-    public Boolean updateApplicationStatus(Long internshipId, Long applicationId, Integer status) {
+    public Boolean updateApplicationStatus(Long internshipId, Long applicationId, Integer status, String message) {
         internshipRepository.findById(internshipId).orElseThrow(() -> new RuntimeException("Internship not found"));
         InternshipApplication internshipApplication = internshipApplicationRepository.findById(applicationId).orElseThrow(() -> new RuntimeException("Internship application not found"));
         internshipApplication.setAdmitted(status);
