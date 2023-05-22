@@ -24,4 +24,6 @@ public interface InternshipService {
     List<ApplicantDto> getApplicantsByInternshipId(Long id);
 
     Page<InternshipListDto> filterInternships(String city , Date startingDate, Date endingDate, String major, Integer page, Integer size);
+
+    InternshipDetailsDto getInternshipDetailsById(Long id);
 }

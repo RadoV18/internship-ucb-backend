@@ -1,7 +1,7 @@
 package ucb.internship.backend.mappers;
 
-import ucb.internship.backend.dtos.InternshipApiDto;
-import ucb.internship.backend.dtos.InternshipDto;
+import ucb.internship.backend.dtos.*;
+import ucb.internship.backend.mapper.InstitutionsMapper;
 import ucb.internship.backend.models.*;
 
 import java.util.ArrayList;
@@ -39,6 +39,7 @@ public class InternshipMapper {
         InternshipApiDto internshipApiDto = new InternshipApiDto();
         internshipApiDto.setInternshipId(internship.getInternshipId());
         internshipApiDto.setInstitution(internship.getInstitution().getName());
+        internshipApiDto.setProfilePicture(internship.getInstitution().getUserUcb().getS3ProfilePicture().getUrl());
         internshipApiDto.setCity(internship.getCity().getName());
         internshipApiDto.setTitle(internship.getTitle());
         internshipApiDto.setDescription(internship.getDescription());
@@ -46,25 +47,67 @@ public class InternshipMapper {
         internshipApiDto.setStartingDate(internship.getStartingDate());
         internshipApiDto.setEndingDate(internship.getEndingDate());
         List<String> benefitList = new ArrayList<>();
-        List<String> roleList = new ArrayList<>();
-        List<String> requirementList = new ArrayList<>();
-        List<String> majorList = new ArrayList<>();
         for (InternshipBenefit benefit : internship.getInternshipBenefits()) {
             benefitList.add(benefit.getDescription());
         }
+        internshipApiDto.setInternshipBenefits(benefitList);
+        List<String> roleList = new ArrayList<>();
         for (InternshipRole role : internship.getInternshipRoles()) {
             roleList.add(role.getDescription());
         }
+        internshipApiDto.setInternshipRoles(roleList);
+        List<String> requirementList = new ArrayList<>();
         for (InternshipRequirement requirement : internship.getInternshipRequirements()) {
             requirementList.add(requirement.getDescription());
         }
+        internshipApiDto.setInternshipRequirements(requirementList);
+        List<String> majorList = new ArrayList<>();
         for (InternshipMajor major : internship.getMajorList()) {
             majorList.add(major.getMajor().getName());
         }
         internshipApiDto.setMajorList(majorList);
-        internshipApiDto.setInternshipRequirements(requirementList);
-        internshipApiDto.setInternshipRoles(roleList);
-        internshipApiDto.setInternshipBenefits(benefitList);
+        List<String> questionList = new ArrayList<>();
+        for (InternshipQuestion question : internship.getInternshipQuestions()) {
+            questionList.add(question.getDescription());
+        }
+        internshipApiDto.setInternshipQuestions(questionList);
         return internshipApiDto;
+    }
+
+    public static InternshipDetailsDto entityToDetailsDto(Internship internship) {
+        InternshipDetailsDto internshipDetailsDto = new InternshipDetailsDto();
+        internshipDetailsDto.setInternshipId(internship.getInternshipId());
+        internshipDetailsDto.setTitle(internship.getTitle());
+        internshipDetailsDto.setDescription(internship.getDescription());
+        internshipDetailsDto.setStartingDate(internship.getStartingDate());
+        internshipDetailsDto.setEndingDate(internship.getEndingDate());
+        internshipDetailsDto.setInstitution(InstitutionsMapper.entityToResDto(internship.getInstitution()));
+        internshipDetailsDto.setCity(CityMapper.entityToDto(internship.getCity()));
+        List<InternshipBenefitDto> benefitList = new ArrayList<>();
+        for (InternshipBenefit benefit : internship.getInternshipBenefits()) {
+            benefitList.add(InternshipBenefitMapper.entityToDto(benefit));
+        }
+        internshipDetailsDto.setInternshipBenefits(benefitList);
+        List<InternshipRequirementDto> requirementList = new ArrayList<>();
+        for (InternshipRequirement requirement : internship.getInternshipRequirements()) {
+            requirementList.add(InternshipRequirementMapper.entityToDto(requirement));
+        }
+        internshipDetailsDto.setInternshipRequirements(requirementList);
+        List<InternshipRoleDto> roleList = new ArrayList<>();
+        for (InternshipRole role : internship.getInternshipRoles()) {
+            roleList.add(InternshipRoleMapper.entityToDto(role));
+        }
+        internshipDetailsDto.setInternshipRoles(roleList);
+        List<MajorDto> majorList = new ArrayList<>();
+        for (InternshipMajor major : internship.getMajorList()) {
+            majorList.add(MajorMapper.entityToDto(major.getMajor()));
+        }
+        internshipDetailsDto.setMajorList(majorList);
+        List<InternshipQuestionDto> questionList = new ArrayList<>();
+        for (InternshipQuestion question : internship.getInternshipQuestions()) {
+            questionList.add(InternshipQuestionMapper.entityToDto(question));
+        }
+        internshipDetailsDto.setInternshipQuestions(questionList);
+        return internshipDetailsDto;
     }
 }

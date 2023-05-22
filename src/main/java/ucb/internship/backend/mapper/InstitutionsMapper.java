@@ -1,5 +1,6 @@
 package ucb.internship.backend.mapper;
 
+import ucb.internship.backend.dtos.InstitutionResDto;
 import ucb.internship.backend.dtos.InstitutionsDto;
 import ucb.internship.backend.models.Institution;
 import ucb.internship.backend.models.User;
@@ -20,5 +21,19 @@ public class InstitutionsMapper {
         institutionsDto.setUser(UserMapper.entityToDto(user));
         return institutionsDto;
     }
-    
+
+    public static InstitutionResDto entityToResDto(Institution institution) {
+        InstitutionResDto institutionResDto = new InstitutionResDto();
+        institutionResDto.setInstitutionId(institution.getInstitutionId());
+        institutionResDto.setName(institution.getName());
+        institutionResDto.setDescription(institution.getDescription());
+        institutionResDto.setArea(institution.getArea());
+        institutionResDto.setContactFirstName(institution.getContactFirstName());
+        institutionResDto.setContactLastName(institution.getContactLastName());
+        institutionResDto.setContactEmail(institution.getContactEmail());
+        institutionResDto.setContactPhone(institution.getContactPhone());
+        institutionResDto.setContactPosition(institution.getContactPosition());
+        institutionResDto.setUser(UserMapper.entityToResDto(institution.getUserUcb()));
+        return institutionResDto;
+    }
 }

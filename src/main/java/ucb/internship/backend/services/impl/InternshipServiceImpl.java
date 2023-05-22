@@ -172,8 +172,8 @@ public class InternshipServiceImpl implements InternshipService {
     public List<InternshipApiDto> getInternshipAll(){
         List<InternshipApiDto> listInternship = new ArrayList<>();
         List<Internship> list = internshipRepository.findByIsApproved(0);
-        for (Internship convocatory : list) {
-            InternshipApiDto internshipApiDto = InternshipMapper.entityToApiDto(convocatory);
+        for (Internship pendingInternship : list) {
+            InternshipApiDto internshipApiDto = InternshipMapper.entityToApiDto(pendingInternship);
             listInternship.add(internshipApiDto);
         }
         return listInternship;
@@ -185,5 +185,11 @@ public class InternshipServiceImpl implements InternshipService {
         internship.setIsApproved(state);
         internshipRepository.save(internship);
         LOGGER.info("data {}", internship);
+    }
+
+    @Override
+    public InternshipDetailsDto getInternshipDetailsById(Long id) {
+        Internship internship = internshipRepository.findById(id).orElseThrow();
+        return InternshipMapper.entityToDetailsDto(internship);
     }
 }

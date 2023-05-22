@@ -67,6 +67,11 @@ public class InternshipController {
         return ResponseEntity.ok(new ResponseDto<>(internshipService.getInternshipApiById(id), null, true));
     }
 
+    @GetMapping("/{id}/details")
+    public ResponseEntity<ResponseDto<InternshipDetailsDto>> getInternshipDetailsById(@PathVariable Long id) {
+        return ResponseEntity.ok(new ResponseDto<>(internshipService.getInternshipDetailsById(id), null, true));
+    }
+
     @GetMapping("/pending")
     public ResponseEntity<ResponseDto<List<InternshipApiDto>>> getInternshipAll() {
         return ResponseEntity.ok(new ResponseDto<>(internshipService.getInternshipAll(), null, true));
