@@ -4,13 +4,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ucb.internship.backend.dtos.ApplicantDto;
+import ucb.internship.backend.models.Internship;
 import ucb.internship.backend.models.InternshipApplication;
 
 import java.util.List;
 
 @Repository
 public interface InternshipApplicationRepository extends JpaRepository<InternshipApplication, Long> {
-    Integer countAllByInternshipId(Long internshipId);
+    Integer countAllByInternship(Internship internship);
 
     @Query(value = """
         SELECT s3o.url
@@ -26,7 +27,7 @@ public interface InternshipApplicationRepository extends JpaRepository<Internshi
     @Query("""
     SELECT new ucb.internship.backend.dtos.ApplicantDto(u.userId, p.firstName, p.lastName, m.name, u.email, ia.submittedOn, ia.admitted, s3cv.url, s3pp.url)
     FROM InternshipApplication ia
-    INNER JOIN Person p ON ia.personId = p.personId
+    INNER JOIN Person p ON ia.person.personId = p.personId
     INNER JOIN User u ON p.userUcb.userId = u.userId
     LEFT JOIN Student s ON p.personId = s.person.personId
     LEFT JOIN Graduate g ON p.personId = g.person.personId
@@ -34,7 +35,7 @@ public interface InternshipApplicationRepository extends JpaRepository<Internshi
     INNER JOIN Major m ON cm.major.majorId = m.majorId
     LEFT JOIN S3Object s3cv ON p.s3Cv.s3ObjectId = s3cv.s3ObjectId
     LEFT JOIN S3Object s3pp ON u.s3ProfilePicture.s3ObjectId = s3pp.s3ObjectId
-    WHERE ia.internshipId = :internshipId
+    WHERE ia.internship.internshipId = :internshipId
     """)
     List<ApplicantDto> getApplicantsByInternshipId(Long internshipId);
 }
