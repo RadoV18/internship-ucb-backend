@@ -76,6 +76,7 @@ public class UserServiceImpl implements UserService {
     public void setRequestStatus(Long id, Integer state) {
         User user = this.repository.findById(id).orElseThrow();
         user.setIsApproved(state);
+        // TODO: send email to student or institution
         this.repository.save(user);
     }
 }
