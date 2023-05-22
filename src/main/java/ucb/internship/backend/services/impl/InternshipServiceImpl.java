@@ -140,7 +140,37 @@ public class InternshipServiceImpl implements InternshipService {
     }
     @Override
     public List<ApplicantDto> getApplicantsByInternshipId(Long id) {
-        return internshipApplicationRepository.getApplicantsByInternshipId(id);
+        Internship internship = internshipRepository.findById(id).orElseThrow(() -> new RuntimeException("Internship not found"));
+        List<InternshipApplication> applications = internship.getInternshipApplications();
+        List<ApplicantDto> result = new ArrayList<>();
+        for (InternshipApplication application : applications) {
+            ApplicantDto applicantDto = new ApplicantDto();
+            applicantDto.setId(application.getInternshipApplicationId());
+            applicantDto.setFirstName(application.getPerson().getFirstName());
+            applicantDto.setLastName(application.getPerson().getLastName());
+            String major = null;
+            if(application.getPerson().getStudent() != null) {
+                major = application.getPerson().getStudent().getCampusMajor().getMajor().getName();
+            } else if(application.getPerson().getGraduate() != null) {
+                major = application.getPerson().getGraduate().getCampusMajor().getMajor().getName();
+            }
+            applicantDto.setMajor(major);
+            applicantDto.setEmail(application.getPerson().getUserUcb().getEmail());
+            applicantDto.setSubmittedOn(application.getSubmittedOn());
+            applicantDto.setStatus(application.getAdmitted());
+            applicantDto.setProfilePictureUrl(application.getPerson().getUserUcb().getS3ProfilePicture().getUrl());
+            List<QuestionResponseDto> responses = new ArrayList<>();
+            for (InternshipApplicationQuestion response : application.getInternshipApplicationQuestions()) {
+                QuestionResponseDto responseDto = new QuestionResponseDto();
+                responseDto.setQuestionId(response.getInternshipQuestion().getInternshipQuestionId());
+                responseDto.setQuestion(response.getInternshipQuestion().getDescription());
+                responseDto.setResponse(response.getResponse());
+                responses.add(responseDto);
+            }
+            applicantDto.setQuestionResponses(responses);
+            result.add(applicantDto);
+        }
+        return result;
     }
     @Override
     public List<ActiveInternshipDto> getActiveInternshipsByInstitutionId(Long id) {

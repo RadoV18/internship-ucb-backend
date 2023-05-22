@@ -29,12 +29,12 @@ public interface InternshipApplicationRepository extends JpaRepository<Internshi
     FROM InternshipApplication ia
     INNER JOIN Person p ON ia.person.personId = p.personId
     INNER JOIN User u ON p.userUcb.userId = u.userId
+    LEFT JOIN S3Object s3cv ON p.s3Cv.s3ObjectId = s3cv.s3ObjectId
+    LEFT JOIN S3Object s3pp ON u.s3ProfilePicture.s3ObjectId = s3pp.s3ObjectId
     LEFT JOIN Student s ON p.personId = s.person.personId
     LEFT JOIN Graduate g ON p.personId = g.person.personId
     INNER JOIN CampusMajor cm ON s.campusMajor.campusMajorId = cm.campusMajorId OR g.campusMajor.campusMajorId = cm.campusMajorId
     INNER JOIN Major m ON cm.major.majorId = m.majorId
-    LEFT JOIN S3Object s3cv ON p.s3Cv.s3ObjectId = s3cv.s3ObjectId
-    LEFT JOIN S3Object s3pp ON u.s3ProfilePicture.s3ObjectId = s3pp.s3ObjectId
     WHERE ia.internship.internshipId = :internshipId
     """)
     List<ApplicantDto> getApplicantsByInternshipId(Long internshipId);

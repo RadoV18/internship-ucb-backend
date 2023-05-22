@@ -29,7 +29,7 @@ public class User {
 
     @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "s3_object_id", referencedColumnName = "s3_object_id")
+    @JoinColumn(name = "s3_profile_picture", referencedColumnName = "s3_object_id")
     private S3Object s3ProfilePicture;
 
     @Column(name = "is_approved")

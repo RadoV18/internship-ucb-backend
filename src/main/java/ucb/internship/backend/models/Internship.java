@@ -52,6 +52,9 @@ public class Internship {
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "internship")
     private List<InternshipApplicationQuestion> internshipApplicationQuestions;
 
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "internship")
+    private List<InternshipApplication> internshipApplications;
+
     @ManyToOne
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @JoinColumn(name = "institution_id")
