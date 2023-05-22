@@ -186,4 +186,10 @@ public class InternshipServiceImpl implements InternshipService {
         internshipRepository.save(internship);
         LOGGER.info("data {}", internship);
     }
+
+    @Override
+    public InternshipDetailsDto getInternshipDetailsById(Long id) {
+        Internship internship = internshipRepository.findById(id).orElseThrow();
+        return InternshipMapper.entityToDetailsDto(internship);
+    }
 }

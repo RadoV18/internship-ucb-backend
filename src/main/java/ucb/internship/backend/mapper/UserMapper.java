@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import ucb.internship.backend.dtos.UserDto;
+import ucb.internship.backend.dtos.UserResDto;
 import ucb.internship.backend.models.User;
 
 @JsonIdentityInfo(
@@ -19,4 +20,11 @@ public class UserMapper {
         return userDto;
     }
 
+    public static UserResDto entityToResDto(User user) {
+        UserResDto userResDto = new UserResDto();
+        userResDto.setUserId(user.getUserId());
+        userResDto.setEmail(user.getEmail());
+        userResDto.setProfilePicture(user.getS3ProfilePicture().getUrl());
+        return userResDto;
+    }
 }
