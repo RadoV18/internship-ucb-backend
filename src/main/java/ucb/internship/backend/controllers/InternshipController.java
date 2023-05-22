@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ucb.internship.backend.dtos.*;
+import ucb.internship.backend.services.InternshipApplicationService;
 import ucb.internship.backend.services.InternshipService;
 
 import java.sql.Date;
@@ -18,6 +19,8 @@ import java.util.List;
 public class InternshipController {
     @Autowired
     private InternshipService internshipService;
+    @Autowired
+    private InternshipApplicationService internshipApplicationService;
     public static final Logger LOGGER = LoggerFactory.getLogger(InternshipController.class);
 
     @PostMapping
@@ -81,5 +84,12 @@ public class InternshipController {
     public ResponseEntity<ResponseDto<Long>> internshipAccepted(@PathVariable Long id, @PathVariable Integer state) {
         internshipService.internShipChangeAprovedState(id, state);
         return ResponseEntity.ok(new ResponseDto<>(internshipService.getInternshipApiById(id).getInternshipId(), null, true));
+    }
+
+    @PostMapping("/{id}")
+    public ResponseEntity<InternshipApplicationDto> applyToInternship(
+            @RequestBody InternshipApplicationDto internshipApplicationDto) {
+        internshipApplicationService.applyToInternship(internshipApplicationDto);
+        return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
 }

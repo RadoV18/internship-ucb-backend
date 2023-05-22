@@ -1,10 +1,16 @@
 package ucb.internship.backend.models;
 
-
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.sql.Date;
+import java.util.List;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(name = "internship_application")
 public class InternshipApplication {
@@ -12,10 +18,6 @@ public class InternshipApplication {
     @Column(name = "internship_application_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long internshipApplicationId;
-    @Column(name = "internship_id")
-    private Long internshipId;
-    @Column(name = "person_id")
-    private Long personId;
     @Column(name = "submitted_on")
     private Date submittedOn;
     @Column(name = "admitted")
@@ -23,66 +25,16 @@ public class InternshipApplication {
     @Column(name = "status")
     private Boolean status;
 
-    public InternshipApplication() {
-    }
+    @ManyToOne
+    @JoinColumn(name = "internship_id")
+    @ToString.Exclude
+    private Internship internship;
 
-    public Long getInternshipApplicationId() {
-        return internshipApplicationId;
-    }
+    @ManyToOne
+    @JoinColumn(name = "person_id")
+    @ToString.Exclude
+    private Person person;
 
-    public void setInternshipApplicationId(Long internshipApplicationId) {
-        this.internshipApplicationId = internshipApplicationId;
-    }
-
-    public Long getInternshipId() {
-        return internshipId;
-    }
-
-    public void setInternshipId(Long internshipId) {
-        this.internshipId = internshipId;
-    }
-
-    public Long getPersonId() {
-        return personId;
-    }
-
-    public void setPersonId(Long personId) {
-        this.personId = personId;
-    }
-
-    public Date getSubmittedOn() {
-        return submittedOn;
-    }
-
-    public void setSubmittedOn(Date submittedOn) {
-        this.submittedOn = submittedOn;
-    }
-
-    public Integer getAdmitted() {
-        return admitted;
-    }
-
-    public void setAdmitted(Integer admitted) {
-        this.admitted = admitted;
-    }
-
-    public Boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(Boolean status) {
-        this.status = status;
-    }
-
-    @Override
-    public String toString() {
-        return "InternshipApplication{" +
-                "internshipApplicationId=" + internshipApplicationId +
-                ", internshipId=" + internshipId +
-                ", personId=" + personId +
-                ", submittedOn=" + submittedOn +
-                ", admitted=" + admitted +
-                ", status=" + status +
-                '}';
-    }
+    @OneToMany(mappedBy = "internshipApplication")
+    private List<InternshipApplicationQuestion> internshipApplicationQuestions;
 }
