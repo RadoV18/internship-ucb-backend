@@ -148,7 +148,7 @@ public class InternshipServiceImpl implements InternshipService {
         Institution institution = institutionRepository.findById(id).orElseThrow(() -> new RuntimeException("Institution not found"));
         List<Internship> internships = internshipRepository.findAllByInstitutionAndIsApprovedIs(institution, 1);
         for (Internship internship : internships) {
-            Integer applicantCount = internshipApplicationRepository.countAllByInternshipId(internship.getInternshipId());
+            Integer applicantCount = internshipApplicationRepository.countAllByInternship(internship);
             List<String> profilePictures = internshipApplicationRepository.getProfilePicturesByInternshipId(internship.getInternshipId());
             ApplicantSummaryDto applicationSummary = new ApplicantSummaryDto(applicantCount, profilePictures);
             City city = cityRepository.findByCityId(internship.getCity().getCityId());

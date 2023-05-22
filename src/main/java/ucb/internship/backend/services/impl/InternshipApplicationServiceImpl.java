@@ -4,11 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ucb.internship.backend.dtos.InternshipApplicationDto;
-import ucb.internship.backend.models.InternshipApplication;
-import ucb.internship.backend.models.InternshipApplicationQuestion;
+import ucb.internship.backend.dtos.InternshipApplicationQuestionDto;
+import ucb.internship.backend.dtos.InternshipQuestionDto;
+import ucb.internship.backend.models.*;
 import ucb.internship.backend.repositories.InternshipApplicationQuestionRepository;
 import ucb.internship.backend.repositories.InternshipApplicationRepository;
+import ucb.internship.backend.repositories.InternshipRepository;
+import ucb.internship.backend.repositories.PersonRepository;
 import ucb.internship.backend.services.InternshipApplicationService;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class InternshipApplicationServiceImpl implements InternshipApplicationService {
@@ -16,21 +24,32 @@ public class InternshipApplicationServiceImpl implements InternshipApplicationSe
     private InternshipApplicationRepository internshipApplicationRepository;
     @Autowired
     private InternshipApplicationQuestionRepository internshipApplicationQuestionRepository;
+    @Autowired
+    private InternshipRepository internshipRepository;
+    @Autowired
+    private PersonRepository personRepository;
 
     @Override
-    public InternshipApplicationDto postPersonSkill(InternshipApplicationDto internshipApplicationDto) {
-        InternshipApplication internshipApplication = internshipApplicationRepository
-                .save(new InternshipApplication(null, internshipApplicationDto.getInternshipId(),
-                        internshipApplicationDto.getPersonId(), new java.sql.Date(0), Integer.valueOf(0),
-                        Boolean.valueOf(true)));
+    public InternshipApplicationDto applyToInternship(InternshipApplicationDto internshipApplicationDto) {
+        Internship internship = internshipRepository.findById(internshipApplicationDto.getInternshipId()).orElseThrow(() -> new RuntimeException("Internship not found"));
+        Person person = personRepository.findById(internshipApplicationDto.getPersonId()).orElseThrow(() -> new RuntimeException("Person not found"));
 
-        internshipApplicationDto.getInternshipApplicationQuestionDtos().forEach((internshipApplicationQuestionDto) -> {
-            internshipApplicationQuestionRepository
-                    .save(new InternshipApplicationQuestion(internshipApplicationQuestionDto.getInternshipId(),
-                            internshipApplicationQuestionDto.getInternshipQuestionId(),
-                            internshipApplication.getInternshipApplicationId(),
-                            internshipApplicationQuestionDto.getResponse()));
-        });
-        return new InternshipApplicationDto(null, null, null, null, null, null, null);
+        List<InternshipQuestion> internshipQuestions = internship.getInternshipQuestions();
+        Map<Long, InternshipQuestion> internshipQuestionMap = internshipQuestions.stream().collect(Collectors.toMap(InternshipQuestion::getInternshipQuestionId, internshipQuestion -> internshipQuestion));
+
+        InternshipApplication internshipApplication = new InternshipApplication();
+        internshipApplication.setInternship(internship);
+        internshipApplication.setPerson(person);
+        internshipApplication.setInternshipApplicationQuestions(new ArrayList<>());
+        for (InternshipApplicationQuestionDto questionDto : internshipApplicationDto.getInternshipApplicationQuestions()) {
+            InternshipApplicationQuestion internshipApplicationQuestion = new InternshipApplicationQuestion();
+            internshipApplicationQuestion.setInternshipApplication(internshipApplication);
+            internshipApplicationQuestion.setInternshipQuestion(internshipQuestionMap.get(questionDto.getQuestionId()));
+            internshipApplicationQuestion.setResponse(questionDto.getResponse());
+            internshipApplicationQuestion.setStatus(true);
+            internshipApplication.getInternshipApplicationQuestions().add(internshipApplicationQuestion);
+        }
+        internshipApplicationRepository.save(internshipApplication);
+        return internshipApplicationDto;
     }
 }
