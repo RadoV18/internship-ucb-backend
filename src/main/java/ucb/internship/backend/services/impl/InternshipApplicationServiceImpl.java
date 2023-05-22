@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import ucb.internship.backend.dtos.InternshipApplicationDto;
 import ucb.internship.backend.dtos.InternshipApplicationQuestionDto;
-import ucb.internship.backend.dtos.InternshipQuestionDto;
 import ucb.internship.backend.models.*;
 import ucb.internship.backend.repositories.InternshipApplicationQuestionRepository;
 import ucb.internship.backend.repositories.InternshipApplicationRepository;
