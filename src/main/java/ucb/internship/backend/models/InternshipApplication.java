@@ -26,12 +26,12 @@ public class InternshipApplication {
     private Boolean status;
 
     @ManyToOne
-    @JoinColumn(name = "internship_id", insertable = false, updatable = false)
+    @JoinColumn(name = "internship_id")
     @ToString.Exclude
     private Internship internship;
 
     @ManyToOne
-    @JoinColumn(name = "person_id", insertable = false, updatable = false)
+    @JoinColumn(name = "person_id")
     @ToString.Exclude
     private Person person;
 

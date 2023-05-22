@@ -40,16 +40,21 @@ public class InternshipApplicationServiceImpl implements InternshipApplicationSe
         InternshipApplication internshipApplication = new InternshipApplication();
         internshipApplication.setInternship(internship);
         internshipApplication.setPerson(person);
-        internshipApplication.setInternshipApplicationQuestions(new ArrayList<>());
+        internshipApplication.setAdmitted(0);
+        internshipApplication.setStatus(true);
+        internshipApplication.setSubmittedOn(new java.sql.Date(System.currentTimeMillis()));
+        List<InternshipApplicationQuestion> questionList = new ArrayList<>();
         for (InternshipApplicationQuestionDto questionDto : internshipApplicationDto.getInternshipApplicationQuestions()) {
             InternshipApplicationQuestion internshipApplicationQuestion = new InternshipApplicationQuestion();
+            internshipApplicationQuestion.setInternship(internship);
             internshipApplicationQuestion.setInternshipApplication(internshipApplication);
             internshipApplicationQuestion.setInternshipQuestion(internshipQuestionMap.get(questionDto.getQuestionId()));
             internshipApplicationQuestion.setResponse(questionDto.getResponse());
             internshipApplicationQuestion.setStatus(true);
-            internshipApplication.getInternshipApplicationQuestions().add(internshipApplicationQuestion);
+            questionList.add(internshipApplicationQuestion);
         }
         internshipApplicationRepository.save(internshipApplication);
+        internshipApplicationQuestionRepository.saveAll(questionList);
         return internshipApplicationDto;
     }
 }

@@ -89,7 +89,7 @@ public class InternshipController {
     @PostMapping("/{id}")
     public ResponseEntity<InternshipApplicationDto> applyToInternship(
             @RequestBody InternshipApplicationDto internshipApplicationDto) {
-        InternshipApplicationDto response = internshipApplicationService.applyToInternship(internshipApplicationDto);
+        internshipApplicationService.applyToInternship(internshipApplicationDto);
         return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
 }

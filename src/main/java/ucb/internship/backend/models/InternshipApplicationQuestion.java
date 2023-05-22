@@ -15,6 +15,7 @@ import java.util.List;
 public class InternshipApplicationQuestion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "internship_application_questions_id")
     private Long internshipApplicationQuestionId;
 
     @ManyToOne
