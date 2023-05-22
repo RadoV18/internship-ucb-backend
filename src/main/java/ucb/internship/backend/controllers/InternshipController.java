@@ -65,6 +65,17 @@ public class InternshipController {
         return ResponseEntity.ok(new ResponseDto<>(applicants, null, true));
     }
 
+    @PutMapping("/{id}/applications/{applicationId}/status/{state}")
+    public ResponseEntity<ResponseDto<Boolean>> updateApplicationStatus(
+            @PathVariable Long id,
+            @PathVariable Long applicationId,
+            @PathVariable Integer state
+    ) {
+        internshipApplicationService.updateApplicationStatus(id, applicationId, state);
+        return ResponseEntity.ok(new ResponseDto<>(true, null, true));
+    }
+
+
     @GetMapping("/{id}")
     public ResponseEntity<ResponseDto<InternshipApiDto>> getInternshipById(@PathVariable Long id) {
         return ResponseEntity.ok(new ResponseDto<>(internshipService.getInternshipApiById(id), null, true));

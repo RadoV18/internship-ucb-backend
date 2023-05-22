@@ -56,4 +56,14 @@ public class InternshipApplicationServiceImpl implements InternshipApplicationSe
         internshipApplicationQuestionRepository.saveAll(questionList);
         return internshipApplicationDto;
     }
+
+    @Override
+    public Boolean updateApplicationStatus(Long internshipId, Long applicationId, Integer status) {
+        internshipRepository.findById(internshipId).orElseThrow(() -> new RuntimeException("Internship not found"));
+        InternshipApplication internshipApplication = internshipApplicationRepository.findById(applicationId).orElseThrow(() -> new RuntimeException("Internship application not found"));
+        internshipApplication.setAdmitted(status);
+        internshipApplicationRepository.save(internshipApplication);
+        // TODO: Send email to applicant
+        return true;
+    }
 }

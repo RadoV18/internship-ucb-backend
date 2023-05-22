@@ -25,7 +25,7 @@ public interface InternshipApplicationRepository extends JpaRepository<Internshi
     List<String> getProfilePicturesByInternshipId(Long internshipId);
 
     @Query("""
-    SELECT new ucb.internship.backend.dtos.ApplicantDto(u.userId, p.firstName, p.lastName, m.name, u.email, ia.submittedOn, ia.admitted, s3cv.url, s3pp.url)
+    SELECT new ucb.internship.backend.dtos.ApplicantDto(u.userId, ia.internshipApplicationId, p.firstName, p.lastName, m.name, u.email, ia.submittedOn, ia.admitted, s3cv.url, s3pp.url)
     FROM InternshipApplication ia
     INNER JOIN Person p ON ia.person.personId = p.personId
     INNER JOIN User u ON p.userUcb.userId = u.userId
