@@ -5,16 +5,21 @@ import org.springframework.stereotype.Service;
 
 import ucb.internship.backend.dtos.InternshipApplicationDto;
 import ucb.internship.backend.dtos.InternshipApplicationQuestionDto;
+import ucb.internship.backend.dtos.NotificationDto;
+import ucb.internship.backend.mailing.EmailVariables;
+import ucb.internship.backend.mailing.Recipient;
+import ucb.internship.backend.mailing.Template;
 import ucb.internship.backend.models.*;
 import ucb.internship.backend.repositories.InternshipApplicationQuestionRepository;
 import ucb.internship.backend.repositories.InternshipApplicationRepository;
 import ucb.internship.backend.repositories.InternshipRepository;
 import ucb.internship.backend.repositories.PersonRepository;
+import ucb.internship.backend.services.EmailService;
 import ucb.internship.backend.services.InternshipApplicationService;
+import ucb.internship.backend.services.PushNotificationsService;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.sql.Timestamp;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,6 +32,10 @@ public class InternshipApplicationServiceImpl implements InternshipApplicationSe
     private InternshipRepository internshipRepository;
     @Autowired
     private PersonRepository personRepository;
+    @Autowired
+    private EmailService emailService;
+    @Autowired
+    private PushNotificationsService pushNotificationsService;
 
     @Override
     public InternshipApplicationDto applyToInternship(InternshipApplicationDto internshipApplicationDto) {
@@ -63,7 +72,30 @@ public class InternshipApplicationServiceImpl implements InternshipApplicationSe
         InternshipApplication internshipApplication = internshipApplicationRepository.findById(applicationId).orElseThrow(() -> new RuntimeException("Internship application not found"));
         internshipApplication.setAdmitted(status);
         internshipApplicationRepository.save(internshipApplication);
-        // TODO: Send email to applicant
+
+        notifyApplicant(internshipApplication, message);
+
         return true;
+    }
+
+    private void notifyApplicant(InternshipApplication application, String message) {
+
+        var person = application.getPerson();
+        Recipient recipient = new Recipient(person.getUserUcb().getEmail(), person.getFirstName() + " " + person.getLastName());
+        var mailVariables = new Hashtable<String, String>();
+        mailVariables.put(EmailVariables.APPLICATION_TITLE.get(), application.getInternship().getTitle());
+        mailVariables.put(EmailVariables.APPLICATION_EMPLOYER.get(), application.getInternship().getInstitution().getName());
+        mailVariables.put(EmailVariables.APPLICATION_STATUS.get(), application.getAdmitted() == 1 ? "Aceptada" : "Rechazada");
+        mailVariables.put(EmailVariables.APPLICATION_MESSAGE.get(), message);
+
+        emailService.sendEmail(recipient, mailVariables , Template.INTERNSHIP_APPLICATION_UPDATE);
+
+        var notification = new NotificationDto<InternshipApplication>(
+                "",
+                "Verifique su correo por la postulación "+ application.getInternship().getTitle(),
+                new Timestamp(new Date().getTime()),
+                "");
+
+        pushNotificationsService.push(notification, person.getUserUcb().getUserId().toString());
     }
 }
