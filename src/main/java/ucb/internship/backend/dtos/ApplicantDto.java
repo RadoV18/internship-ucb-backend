@@ -12,6 +12,7 @@ import java.util.List;
 @ToString
 public class ApplicantDto {
     private Long id;
+    private Long applicationId;
     private String firstName;
     private String lastName;
     private String major;
