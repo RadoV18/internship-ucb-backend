@@ -26,4 +26,6 @@ public interface InternshipService {
     Page<InternshipListDto> filterInternships(String city , Date startingDate, Date endingDate, String major, Integer page, Integer size);
 
     InternshipDetailsDto getInternshipDetailsById(Long id);
+
+    List<InternshipApiDto> getInternshipActive(Long idInstitution, Integer state);
 }
