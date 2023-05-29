@@ -53,7 +53,7 @@ public class ProfileServiceImpl implements ProfileService {
         profileDto.setLastName(person.getLastName());
         profileDto.setFirstName(person.getFirstName());
         profileDto.setPhoneNumber(person.getPhoneNumber());
-        profileDto.setUrl(s3Object.getUrl());
+        profileDto.setProfilePicture(s3Object.getUrl());
         profileDto.setCi(person.getCi());
         if(student == null){
             profileDto.setGraduate(true);
@@ -82,8 +82,8 @@ public class ProfileServiceImpl implements ProfileService {
             studentRepository.save(student);
         }
         if(cv != null){
-//            S3Object s3Object = fileStorageService.createObject(cv);
-//            person.setS3Cv(s3Object.getS3ObjectId());
+            S3Object s3Object = fileStorageService.createObject(cv);
+            person.setS3Cv(s3Object.getS3ObjectId());
             logger.info("CV name {}",cv.getOriginalFilename());
         }
         person.setPhoneNumber(profileDto.getPhoneNumber());
