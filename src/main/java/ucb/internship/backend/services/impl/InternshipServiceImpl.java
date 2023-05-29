@@ -145,7 +145,8 @@ public class InternshipServiceImpl implements InternshipService {
         List<ApplicantDto> result = new ArrayList<>();
         for (InternshipApplication application : applications) {
             ApplicantDto applicantDto = new ApplicantDto();
-            applicantDto.setId(application.getInternshipApplicationId());
+            applicantDto.setId(application.getPerson().getPersonId());
+            applicantDto.setApplicationId(application.getInternshipApplicationId());
             applicantDto.setFirstName(application.getPerson().getFirstName());
             applicantDto.setLastName(application.getPerson().getLastName());
             String major = null;
@@ -158,6 +159,7 @@ public class InternshipServiceImpl implements InternshipService {
             applicantDto.setEmail(application.getPerson().getUserUcb().getEmail());
             applicantDto.setSubmittedOn(application.getSubmittedOn());
             applicantDto.setStatus(application.getAdmitted());
+            applicantDto.setCvUrl(application.getPerson().getS3Cv().getUrl());
             applicantDto.setProfilePictureUrl(application.getPerson().getUserUcb().getS3ProfilePicture().getUrl());
             List<QuestionResponseDto> responses = new ArrayList<>();
             for (InternshipApplicationQuestion response : application.getInternshipApplicationQuestions()) {
