@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ucb.internship.backend.dtos.InstitutionsDto;
+import ucb.internship.backend.dtos.UserDto;
 import ucb.internship.backend.mapper.InstitutionsMapper;
 import ucb.internship.backend.models.Institution;
 import ucb.internship.backend.models.User;
@@ -62,5 +63,29 @@ public class InstitutionsServiceImpl implements InstitutionsService {
                 institution.get().getContactFirstName(), institution.get().getContactLastName(),
                 institution.get().getContactEmail(), institution.get().getContactPhone(),
                 institution.get().getContactPosition(), null);
+    }
+
+    @Override
+    public void updateInstitution(InstitutionsDto institutionsDto) {
+        Institution institution = institutionRepository.findById(institutionsDto.getInstitutionId()).orElseThrow();
+        institution.setArea(institutionsDto.getArea());
+        institution.setDescription(institutionsDto.getDescription());
+        institution.setContactFirstName(institutionsDto.getContactFirstName());
+        institution.setContactLastName(institutionsDto.getContactLastName());
+        institution.setContactPhone(institutionsDto.getContactPhone());
+        institution.setContactEmail(institutionsDto.getContactEmail());
+        institution.setContactPosition(institutionsDto.getContactPosition());
+        institutionRepository.save(institution);
+    }
+
+    @Override
+    public InstitutionsDto getInstitutionByEmail(String email) {
+        Institution institution = institutionRepository.findInstitutionByUserUcbEmail(email);
+        UserDto userDto = new UserDto();
+        userDto.setS3ProfilePicture(institution.getUserUcb().getS3ProfilePicture().getUrl());
+        return new InstitutionsDto(institution.getInstitutionId(), institution.getName(),
+                institution.getDescription(), institution.getArea(), institution.getContactFirstName(),
+                institution.getContactLastName(), institution.getContactEmail(), institution.getContactPhone(),
+                institution.getContactPosition(), userDto);
     }
 }
