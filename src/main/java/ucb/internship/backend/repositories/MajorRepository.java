@@ -3,8 +3,8 @@ package ucb.internship.backend.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import ucb.internship.backend.models.Major;
-
 @Repository
 public interface MajorRepository extends JpaRepository<Major, Integer>{
     @Query(value = "Select m from Major m , Student s, CampusMajor c " +
