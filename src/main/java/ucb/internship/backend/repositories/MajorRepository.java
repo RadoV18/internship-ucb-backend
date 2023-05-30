@@ -6,15 +6,15 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import ucb.internship.backend.models.Major;
 @Repository
-public interface MajorRepository extends JpaRepository<Major, Integer>{
+public interface MajorRepository extends JpaRepository<Major, Long>{
     @Query(value = "Select m from Major m , Student s, CampusMajor c " +
-            "where s.campusMajorId = c.campusMajorId " +
+            "where s.campusMajor.campusMajorId = c.campusMajorId " +
             "and c.major.majorId = m.majorId " +
             "and s.studentId = :studentId")
     Major findMajorByStudentId(Long studentId);
 
     @Query(value = "Select m from Major m , Graduate g, CampusMajor c " +
-            "where g.campusMajorId = c.campusMajorId " +
+            "where g.campusMajor.campusMajorId = c.campusMajorId " +
             "and c.major.majorId = m.majorId " +
             "and g.graduateId = :graduateId")
     Major findMajorByGraduateId(Long graduateId);

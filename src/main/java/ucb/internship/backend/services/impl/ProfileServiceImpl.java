@@ -12,16 +12,12 @@ import ucb.internship.backend.repositories.*;
 import ucb.internship.backend.services.FileStorageService;
 import ucb.internship.backend.services.ProfileService;
 
-import java.sql.Date;
-
 @Service
 public class ProfileServiceImpl implements ProfileService {
 
     private final PersonRepository personRepository;
     private final StudentRepository studentRepository;
     private final MajorRepository majorRepository;
-    private final S3ObjectRepository s3ObjectRepository;
-    private final UserRepository userRepository;
     private final FileStorageService fileStorageService;
     private final GraduateRepository graduateRepository;
     public static Logger logger = LoggerFactory.getLogger(ProfileServiceImpl.class);
@@ -29,13 +25,12 @@ public class ProfileServiceImpl implements ProfileService {
     public ProfileServiceImpl(PersonRepository personRepository,
                               StudentRepository studentRepository,
                               MajorRepository majorRepository,
-                              S3ObjectRepository s3ObjectRepository,
-                              UserRepository userRepository, FileStorageService fileStorageService, GraduateRepository graduateRepository) {
+                              FileStorageService fileStorageService,
+                              GraduateRepository graduateRepository
+    ) {
         this.personRepository = personRepository;
         this.studentRepository = studentRepository;
         this.majorRepository = majorRepository;
-        this.s3ObjectRepository = s3ObjectRepository;
-        this.userRepository = userRepository;
         this.fileStorageService = fileStorageService;
         this.graduateRepository = graduateRepository;
     }
@@ -43,9 +38,8 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public ProfileDto getStudentProfileByEmail(String email) {
         Person person = personRepository.findPersonByEmail(email);
-        User user = userRepository.findById(person.getUserId()).orElseThrow();
-        S3Object s3Object = s3ObjectRepository.findById(user.getS3ProfilePicture()).orElseThrow();
-        Student student = studentRepository.findStudentByPersonId(person.getPersonId());
+        S3Object s3Object = person.getUserUcb().getS3ProfilePicture();
+        Student student = studentRepository.findStudentByPerson(person);
         Graduate graduate;
         Major major;
         ProfileDto profileDto = new ProfileDto();
@@ -57,16 +51,16 @@ public class ProfileServiceImpl implements ProfileService {
         profileDto.setCi(person.getCi());
         if(student == null){
             profileDto.setGraduate(true);
-            graduate = graduateRepository.findGraduateByPersonId(person.getPersonId());
+            graduate = graduateRepository.findGraduateByPerson(person);
             major = majorRepository.findMajorByGraduateId(graduate.getGraduateId());
             profileDto.setGraduationDate(graduate.getGraduationDate());
             profileDto.setMajor(major.getName());
         }
         else{
-           profileDto.setGraduate(false);
-           major = majorRepository.findMajorByStudentId(student.getStudentId());
-           profileDto.setSemester(student.getSemester());
-           profileDto.setMajor(major.getName());
+            profileDto.setGraduate(false);
+            major = majorRepository.findMajorByStudentId(student.getStudentId());
+            profileDto.setSemester(student.getSemester());
+            profileDto.setMajor(major.getName());
         }
 
         return profileDto;
@@ -77,19 +71,17 @@ public class ProfileServiceImpl implements ProfileService {
         Person person = personRepository.findById(profileDto.getPersonId()).orElseThrow();
         Student student;
         if(!profileDto.isGraduate()){
-            student = studentRepository.findStudentByPersonId(person.getPersonId());
+            student = studentRepository.findStudentByPerson(person);
             student.setSemester(profileDto.getSemester());
             studentRepository.save(student);
         }
         if(cv != null){
             S3Object s3Object = fileStorageService.createObject(cv);
-            person.setS3Cv(s3Object.getS3ObjectId());
+            person.setS3Cv(s3Object);
             logger.info("CV name {}",cv.getOriginalFilename());
         }
         person.setPhoneNumber(profileDto.getPhoneNumber());
         personRepository.save(person);
         return "Updated";
     }
-
-
 }

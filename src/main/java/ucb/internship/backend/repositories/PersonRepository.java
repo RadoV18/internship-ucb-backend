@@ -8,6 +8,6 @@ import ucb.internship.backend.models.Person;
 
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Long> {
-    @Query(value = "Select p from Person p , User u where p.userId = u.userId and u.email like :email" )
-    public Person findPersonByEmail(String email);
+    @Query(value = "Select p from Person p , User u where p.userUcb.userId = u.userId and u.email like :email" )
+    Person findPersonByEmail(String email);
 }
