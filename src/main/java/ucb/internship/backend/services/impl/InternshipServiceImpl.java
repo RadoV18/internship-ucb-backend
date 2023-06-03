@@ -224,4 +224,17 @@ public class InternshipServiceImpl implements InternshipService {
         Internship internship = internshipRepository.findById(id).orElseThrow();
         return InternshipMapper.entityToDetailsDto(internship);
     }
+
+    @Override
+    public List<InternshipApiDto> getInternshipActive(Long idInstitution, Integer state) {
+        Institution institution = institutionRepository.findById(idInstitution).orElseThrow();
+        List<Internship> data = internshipRepository.findAllByInstitutionAndIsApprovedIs(institution, state);
+        List<InternshipApiDto> newData = new ArrayList<>();
+        for (Internship internship : data) {
+            InternshipApiDto internshipApiDto = InternshipMapper.entityToApiDto(internship);
+            newData.add(internshipApiDto);
+        }
+        return newData;
+    }
+    
 }
