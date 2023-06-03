@@ -12,11 +12,11 @@ import ucb.internship.backend.mappers.InternshipMapper;
 import ucb.internship.backend.models.*;
 import ucb.internship.backend.repositories.*;
 import ucb.internship.backend.services.InternshipService;
-import java.sql.Timestamp;
 
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -221,5 +221,18 @@ public class InternshipServiceImpl implements InternshipService {
     public InternshipDetailsDto getInternshipDetailsById(Long id) {
         Internship internship = internshipRepository.findById(id).orElseThrow();
         return InternshipMapper.entityToDetailsDto(internship);
+    }
+    @Override
+    public List<InternshipListDto> getInternshipByTitleOrInstitutionName(String title) {
+        LOGGER.info("title: {}", title);
+        title = "%" + title + "%";
+        List<Internship> internships = internshipRepository
+                .findByTitleLikeIgnoreCaseOrInstitutionNameLikeIgnoreCaseAndIsApproved(title,title,1);
+        return internships.stream().map(InternshipListMapper::objectToDto).collect(Collectors.toList());
+    }
+    @Override
+    public List<InternshipListDto> getTop5Internships() {
+        List<Internship> internships = internshipRepository.findTop5ByIsApprovedOrderByInternshipIdDesc(1);
+        return internships.stream().map(InternshipListMapper::objectToDto).collect(Collectors.toList());
     }
 }

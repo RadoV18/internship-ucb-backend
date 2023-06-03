@@ -104,4 +104,14 @@ public class InternshipController {
         internshipApplicationService.applyToInternship(internshipApplicationDto);
         return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<ResponseDto<List<InternshipListDto>>> getInternshipByInstitutionId(@RequestParam String title) {
+        return ResponseEntity.ok(new ResponseDto<>(internshipService.getInternshipByTitleOrInstitutionName(title), null, true));
+    }
+
+    @GetMapping("/last")
+    public ResponseEntity<ResponseDto<List<InternshipListDto>>> getLast5Internships() {
+        return ResponseEntity.ok(new ResponseDto<>(internshipService.getTop5Internships(), null, true));
+    }
 }

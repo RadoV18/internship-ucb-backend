@@ -39,4 +39,6 @@ public interface InternshipRepository  extends JpaRepository<Internship, Long> {
                                         @Param("endingDate") Date endingDate,
                                         @Param("major") String major,
                                         Pageable pageable);
+    List<Internship> findByTitleLikeIgnoreCaseOrInstitutionNameLikeIgnoreCaseAndIsApproved(String title, String institutionName, Integer isApproved);
+    List<Internship> findTop5ByIsApprovedOrderByInternshipIdDesc(Integer isApproved);
 }
