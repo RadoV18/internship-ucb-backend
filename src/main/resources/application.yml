@@ -4,7 +4,7 @@ spring:
   datasource:
     type: org.postgresql.jdbc2.optional.SimpleDataSource
     username: ${DB_USER:postgres}
-    password: ${DB_PASSWORD:root}
+    password: ${DB_PASSWORD:password}
     # password: ${DB_PASSWORD:password}
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_DATABASE:internship}
   jpa:

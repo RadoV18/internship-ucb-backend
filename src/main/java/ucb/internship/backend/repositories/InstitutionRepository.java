@@ -10,4 +10,6 @@ public interface InstitutionRepository extends JpaRepository<Institution, Long> 
      * @return the saved institution
      */
     Institution save(Institution institution);
+
+    Institution findInstitutionByUserUcbEmail(String email);
 }
