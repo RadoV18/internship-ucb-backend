@@ -5,7 +5,10 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
+import ucb.internship.backend.dtos.AuthDto;
 import ucb.internship.backend.exceptions.FileStorageException;
+import ucb.internship.backend.models.Institution;
+import ucb.internship.backend.models.Person;
 import ucb.internship.backend.models.S3Object;
 import ucb.internship.backend.models.User;
 import org.springframework.stereotype.Service;
@@ -21,14 +24,31 @@ public class UserServiceImpl implements UserService {
     private FileStorageService fileStorageService;
 
     @Override
-    public User authenticate(String email, String password) {
-
-        var user = repository.findByEmailAndIsApprovedIs(email, 1).orElse(null);
+    public AuthDto authenticate(String email, String password) {
+        User user = repository.findByEmailAndIsApprovedIs(email, 1).orElse(null);
 
         if (user != null && user.authenticate(password)) {
-            return user;
+            AuthDto authDto = new AuthDto();
+            authDto.setUserId(user.getUserId());
+            authDto.setEmail(user.getEmail());
+            authDto.setProfilePictureUrl(user.getS3ProfilePicture().getUrl());
+            Institution institution = user.getInstitution();
+            if(institution != null) {
+                authDto.setId(institution.getInstitutionId());
+                authDto.setName(institution.getName());
+                authDto.setAccountType(1);
+                return authDto;
+            }
+            Person person = user.getPerson();
+            if(person != null) {
+                authDto.setId(person.getPersonId());
+                authDto.setName(person.getFirstName() + " " + person.getLastName());
+                authDto.setAccountType(2);
+                return authDto;
+            }
+            authDto.setAccountType(0);
+            return authDto;
         }
-
         return null;
     }
 

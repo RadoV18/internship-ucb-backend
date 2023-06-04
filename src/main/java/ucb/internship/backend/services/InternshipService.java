@@ -28,4 +28,6 @@ public interface InternshipService {
     InternshipDetailsDto getInternshipDetailsById(Long id);
 
     void updateInternship(InternshipDto internshipDto);
+
+    List<InternshipApiDto> getInternshipActive(Long idInstitution, Integer state);
 }

@@ -109,4 +109,9 @@ public class InternshipController {
         internshipApplicationService.applyToInternship(internshipApplicationDto);
         return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
+
+    @GetMapping("/institution/{idInstitution}/status/{state}")
+    public ResponseEntity<ResponseDto<List<InternshipApiDto>>> getInternshipActiveConvocatory(@PathVariable Long idInstitution, @PathVariable Integer state) {
+        return ResponseEntity.ok(new ResponseDto<>(internshipService.getInternshipActive(idInstitution,state), "List of institutions and Approved states", true));
+    }
 }
