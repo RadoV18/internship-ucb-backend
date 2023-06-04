@@ -10,4 +10,8 @@ public interface InstitutionsService {
     void requestApproved(Long id, Integer state);
 
     InstitutionsDto getInstitutionById(Long institutionId);
+
+    void updateInstitution(InstitutionsDto institutionsDto);
+
+    InstitutionsDto getInstitutionByEmail(String email);
 }

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ucb.internship.backend.dtos.InstitutionsDto;
+import ucb.internship.backend.dtos.ResponseDto;
 import ucb.internship.backend.services.InstitutionsService;
 
 @RestController
@@ -35,6 +36,24 @@ public class InstitutionsController {
     @GetMapping(path = "/{institutionId}")
     public ResponseEntity<InstitutionsDto> getInstitutionByIdDto(@PathVariable Long institutionId) {
         InstitutionsDto institutionsDto = institutionsBL.getInstitutionById(institutionId);
+        return new ResponseEntity<>(institutionsDto, HttpStatus.OK);
+    }
+
+    @PutMapping
+    public ResponseEntity<ResponseDto<String>> updateInstitution(@RequestBody InstitutionsDto institutionDto){
+        try{
+            institutionsBL.updateInstitution(institutionDto);
+            ResponseDto<String> responseDto = new ResponseDto<>(null,"Institucion actualizada correctamente", true);
+            return new ResponseEntity<ResponseDto<String>>(responseDto,HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<InstitutionsDto> getInstitutionByEmail(@PathVariable String email) {
+        InstitutionsDto institutionsDto = institutionsBL.getInstitutionByEmail(email);
         return new ResponseEntity<>(institutionsDto, HttpStatus.OK);
     }
 }

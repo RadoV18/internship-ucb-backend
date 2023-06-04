@@ -78,10 +78,15 @@ public class InternshipController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseDto<InternshipApiDto>> getInternshipById(@PathVariable Long id) {
-        return ResponseEntity.ok(new ResponseDto<>(internshipService.getInternshipApiById(id), null, true));
+    public ResponseEntity<ResponseDto<InternshipDto>> getInternshipById(@PathVariable Long id) {
+        return ResponseEntity.ok(new ResponseDto<>(internshipService.getInternshipById(id), null, true));
     }
-
+    @PutMapping
+    public ResponseEntity<ResponseDto<Void>> updateInternship(@RequestBody InternshipDto internshipDto){
+        LOGGER.info("Updating internship {}", internshipDto);
+        internshipService.updateInternship(internshipDto);
+        return ResponseEntity.ok(new ResponseDto<>(null, "Convocatoria actualizada exitosamente.", true));
+    }
     @GetMapping("/{id}/details")
     public ResponseEntity<ResponseDto<InternshipDetailsDto>> getInternshipDetailsById(@PathVariable Long id) {
         return ResponseEntity.ok(new ResponseDto<>(internshipService.getInternshipDetailsById(id), null, true));

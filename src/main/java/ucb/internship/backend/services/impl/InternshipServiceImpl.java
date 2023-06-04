@@ -17,6 +17,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -190,8 +191,8 @@ public class InternshipServiceImpl implements InternshipService {
         return result;
     }
 
-    public List<Internship> getInternshipById(Long id){
-        return  internshipRepository.findByInternshipId(id);
+    public InternshipDto getInternshipById(Long id){
+        return  InternshipMapper.entityToDto(internshipRepository.findById(id).orElseThrow());
     }
 
     @Override
@@ -226,6 +227,45 @@ public class InternshipServiceImpl implements InternshipService {
     }
 
     @Override
+    public void updateInternship(InternshipDto internshipDto) {
+       Internship internship = internshipRepository.findById(internshipDto.getInternshipId()).orElseThrow();
+       internship.setStartingDate(internshipDto.getStartingDate());
+       internship.setEndingDate(internshipDto.getEndingDate());
+       internship.setCity(cityRepository.findByCityId(internshipDto.getCityId()));
+       internship.setDescription(internshipDto.getDescription());
+       internship.getMajorList().clear();
+       internship.getInternshipRequirements().clear();
+       internship.getInternshipQuestions().clear();
+       internship.getInternshipRoles().clear();
+       internship.getInternshipBenefits().clear();
+       List<InternshipRole> internshipRoleList = internshipDto.getInternshipRoles().stream()
+                       .map(role -> new InternshipRole(null, internship, role.getDescription(), true))
+                       .toList();
+       List<InternshipRequirement> internshipRequirementList = internshipDto.getInternshipRequirements().stream()
+               .map(requirement -> new InternshipRequirement(null,  internship,requirement.getDescription(),true))
+               .toList();
+       List<InternshipQuestion> internshipQuestions = internshipDto.getInternshipQuestions().stream()
+               .map(question -> new InternshipQuestion(null, internship, question.getDescription(), true))
+               .toList();
+       List<InternshipBenefit> internshipBenefits = internshipDto.getInternshipBenefits().stream()
+               .map(benefit -> new InternshipBenefit(null, internship, benefit.getDescription(), true))
+               .toList();
+       List<InternshipMajor> majorList = internshipDto.getMajorList().stream().map(
+               major ->{
+                     Major major1 = majorRepository.findById(major.getMajorId()).orElseThrow();
+                     return new InternshipMajor(null, internship, major1, true);
+               }
+       ).toList();
+       internship.getInternshipRequirements().addAll(internshipRequirementList);
+       internship.getInternshipQuestions().addAll(internshipQuestions);
+       internship.getInternshipBenefits().addAll(internshipBenefits);
+       internship.getMajorList().addAll(majorList);
+       internship.getInternshipRoles().addAll(internshipRoleList);
+       internshipRepository.save(internship);
+       LOGGER.info("data {}", internship);
+    }
+
+    @Override
     public List<InternshipApiDto> getInternshipActive(Long idInstitution, Integer state) {
         Institution institution = institutionRepository.findById(idInstitution).orElseThrow();
         List<Internship> data = internshipRepository.findAllByInstitutionAndIsApprovedIs(institution, state);
@@ -236,5 +276,4 @@ public class InternshipServiceImpl implements InternshipService {
         }
         return newData;
     }
-    
 }
