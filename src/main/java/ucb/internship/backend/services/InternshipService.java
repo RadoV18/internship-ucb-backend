@@ -1,4 +1,5 @@
 package ucb.internship.backend.services;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import ucb.internship.backend.dtos.InternshipDto;
 import ucb.internship.backend.models.Internship;
 
@@ -26,6 +27,10 @@ public interface InternshipService {
     Page<InternshipListDto> filterInternships(String city , Date startingDate, Date endingDate, String major, Integer page, Integer size);
 
     InternshipDetailsDto getInternshipDetailsById(Long id);
+  
+    List<InternshipListDto> getInternshipByTitleOrInstitutionName(String title);
+  
+    List<InternshipListDto> getTop5Internships();
 
     void updateInternship(InternshipDto internshipDto);
 
