@@ -91,7 +91,7 @@ public class InternshipApplicationServiceImpl implements InternshipApplicationSe
         emailService.sendEmail(recipient, mailVariables , Template.INTERNSHIP_APPLICATION_UPDATE);
 
         var notification = new NotificationDto<InternshipApplication>(
-                "",
+                application.getInternship().getInstitution().getUserUcb().getS3ProfilePicture().getUrl(),
                 "Verifique su correo por la postulación "+ application.getInternship().getTitle(),
                 new Timestamp(new Date().getTime()),
                 "");

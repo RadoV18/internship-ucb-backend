@@ -1,6 +1,8 @@
 package ucb.internship.backend.services;
 
 import org.springframework.web.multipart.MultipartFile;
+import ucb.internship.backend.dtos.AuthDto;
+import ucb.internship.backend.dtos.UserDto;
 import ucb.internship.backend.exceptions.FileStorageException;
 import ucb.internship.backend.models.User;
 
@@ -11,7 +13,7 @@ public interface UserService
      * @param password The users password
      * @return the user if the email and password are correct, null otherwise
      */
-    User authenticate(String email, String password);
+    AuthDto authenticate(String email, String password);
 
     /**
      * Stores a user in the database

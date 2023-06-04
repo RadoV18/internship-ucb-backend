@@ -5,7 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ucb.internship.backend.dtos.AuthDto;
 import ucb.internship.backend.dtos.PostLoginDto;
+import ucb.internship.backend.dtos.ResponseDto;
+import ucb.internship.backend.dtos.UserDto;
 import ucb.internship.backend.models.User;
 import ucb.internship.backend.services.UserService;
 
@@ -21,15 +24,13 @@ public class AuthenticationController
      * @return the user if the email and password are correct, will serve UNAUTHORIZED otherwise
      */
     @PostMapping
-    public ResponseEntity<User> authenticate(@Valid @RequestBody PostLoginDto body)
-    {
-        var user = userService.authenticate(body.email(), body.password());
+    public ResponseEntity<ResponseDto<AuthDto>> authenticate(@Valid @RequestBody PostLoginDto body) {
+        AuthDto user = userService.authenticate(body.email(), body.password());
 
-        if ( user == null)
-        {
+        if ( user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(new ResponseDto<>(user, null, true));
     }
 }

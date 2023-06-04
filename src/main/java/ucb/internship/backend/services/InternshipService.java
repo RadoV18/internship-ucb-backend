@@ -18,7 +18,7 @@ public interface InternshipService {
 
     void internShipChangeAprovedState(Long id, Integer state);
 
-    List<Internship> getInternshipById(Long id);
+    InternshipDto getInternshipById(Long id);
 
     List<ActiveInternshipDto> getActiveInternshipsByInstitutionId(Long id);
 
@@ -27,7 +27,12 @@ public interface InternshipService {
     Page<InternshipListDto> filterInternships(String city , Date startingDate, Date endingDate, String major, Integer page, Integer size);
 
     InternshipDetailsDto getInternshipDetailsById(Long id);
+  
     List<InternshipListDto> getInternshipByTitleOrInstitutionName(String title);
+  
     List<InternshipListDto> getTop5Internships();
 
+    void updateInternship(InternshipDto internshipDto);
+
+    List<InternshipApiDto> getInternshipActive(Long idInstitution, Integer state);
 }

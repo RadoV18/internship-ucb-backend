@@ -20,6 +20,8 @@ public interface InternshipRepository  extends JpaRepository<Internship, Long> {
 
     List<Internship> findByIsApproved(Integer isApproved);
 
+    List<Internship> findByInstitution(Institution institution);
+
     @Query(value = """
     SELECT DISTINCT i.*
     FROM internship i
