@@ -20,7 +20,7 @@ public class InternshipQuestion {
     @JoinColumn(name = "internship_id")
     @ToString.Exclude
     private Internship internship;
-    @Column(name = "question")
+    @Column(name = "description")
     private String description;
 
     private Boolean status;
