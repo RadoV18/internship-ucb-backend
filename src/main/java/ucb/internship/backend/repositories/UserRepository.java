@@ -16,7 +16,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
 
     /**
-     * @param email The user email to look in the database
+     * @param email      The user email to look in the database
      * @param isApproved the value to check whether the user is approved or not
      * @return the user if it exists, null otherwise
      */
@@ -24,6 +24,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     /**
      * saves a user in the database
+     * 
      * @param user the user to save
      * @return the saved user
      */
@@ -34,15 +35,16 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @return the user
      */
     @Query(value = """
-    SELECT u.* FROM UCB_USER u
-    INNER JOIN PERSON p
-        ON p.user_id = u.user_id
-    INNER JOIN STUDENT s
-        ON p.person_id = s.person_id
-    WHERE
-        u.user_id = :userId
-        AND u.status = TRUE
-    """, nativeQuery = true)
+            SELECT u.* FROM UCB_USER u
+            INNER JOIN PERSON p
+                ON p.user_id = u.user_id
+            INNER JOIN STUDENT s
+                ON p.person_id = s.person_id
+            WHERE
+                u.user_id = :userId
+                AND u.status = TRUE
+            """, nativeQuery = true)
     User checkUserIsStudent(Long userId);
 
+    Boolean existsByEmail(String email);
 }

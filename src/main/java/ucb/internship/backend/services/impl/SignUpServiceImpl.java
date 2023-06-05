@@ -1,6 +1,5 @@
 package ucb.internship.backend.services.impl;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -57,7 +56,7 @@ public class SignUpServiceImpl implements SignUpService {
             InstitutionSignUpDto institutionSignUpDto,
             MultipartFile image) throws FileStorageException {
         User savedUser = userService.createUser(institutionSignUpDto.getEmail(), institutionSignUpDto.getPassword(),
-                image);
+                image, "institution");
         // save the institution in the database
         Institution institution = new Institution();
         institution.setUserUcb(savedUser);
@@ -85,7 +84,7 @@ public class SignUpServiceImpl implements SignUpService {
         // save the user in the database
         String email = studentDto.getPerson().getUser().getEmail();
         String password = studentDto.getPerson().getUser().getPassword();
-        User savedUser = userService.createUser(email, password, profilePicture);
+        User savedUser = userService.createUser(email, password, profilePicture, "student");
 
         // upload the cv
         S3Object savedS3Object = null;
@@ -115,7 +114,8 @@ public class SignUpServiceImpl implements SignUpService {
 
         // generate the verification code
         VerificationCode verificationCode = verificationCodeService.createVerificationCode(savedUser.getUserId());
-        Recipient recipient = new Recipient(savedUser.getEmail(), savedPerson.getFirstName() + " " + savedPerson.getLastName());
+        Recipient recipient = new Recipient(savedUser.getEmail(),
+                savedPerson.getFirstName() + " " + savedPerson.getLastName());
         sendVerificationCode(recipient, verificationCode.getCode());
         return new VerificationCodeDto(verificationCode.getUuid(), savedUser.getEmail());
     }
@@ -126,7 +126,7 @@ public class SignUpServiceImpl implements SignUpService {
         // save the user in the database
         String email = graduateDto.getPerson().getUser().getEmail();
         String password = graduateDto.getPerson().getUser().getPassword();
-        User savedUser = userService.createUser(email, password, profilePicture);
+        User savedUser = userService.createUser(email, password, profilePicture, "graduate");
 
         // upload the cv
         S3Object savedS3Object = null;
@@ -155,14 +155,15 @@ public class SignUpServiceImpl implements SignUpService {
 
         // generate the verification code
         VerificationCode verificationCode = verificationCodeService.createVerificationCode(savedUser.getUserId());
-        Recipient recipient = new Recipient(savedUser.getEmail(), savedPerson.getFirstName() + " " + savedPerson.getLastName());
+        Recipient recipient = new Recipient(savedUser.getEmail(),
+                savedPerson.getFirstName() + " " + savedPerson.getLastName());
         sendVerificationCode(recipient, verificationCode.getCode());
         return new VerificationCodeDto(verificationCode.getUuid(), savedUser.getEmail());
     }
 
-    private void sendVerificationCode(Recipient recipient ,String verificationCode) {
+    private void sendVerificationCode(Recipient recipient, String verificationCode) {
         var mailVariables = new Hashtable<String, String>();
         mailVariables.put(EmailVariables.VERIFICATION_CODE.get(), verificationCode);
-        emailService.sendEmail(recipient, mailVariables , Template.VERIFICATION_CODE);
+        emailService.sendEmail(recipient, mailVariables, Template.VERIFICATION_CODE);
     }
 }

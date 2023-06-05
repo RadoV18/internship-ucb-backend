@@ -2,12 +2,16 @@ package ucb.internship.backend.models;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;
 import lombok.*;
+import ucb.internship.backend.jwt.models.Role;
 
 @Entity
 @Table(name = "ucb_user", schema = "public")
@@ -46,6 +50,10 @@ public class User {
     @OneToOne(mappedBy = "userUcb", cascade = CascadeType.ALL)
     @ToString.Exclude
     private Person person;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
     /**
      * @param password The password to be checked

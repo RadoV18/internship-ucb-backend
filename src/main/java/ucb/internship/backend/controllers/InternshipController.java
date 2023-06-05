@@ -24,7 +24,7 @@ public class InternshipController {
     public static final Logger LOGGER = LoggerFactory.getLogger(InternshipController.class);
 
     @PostMapping
-    public ResponseEntity<ResponseDto<Void>> createInternship(@RequestBody InternshipDto internshipDto){
+    public ResponseEntity<ResponseDto<Void>> createInternship(@RequestBody InternshipDto internshipDto) {
         LOGGER.info("Creating internship {}", internshipDto);
         internshipService.createInternship(internshipDto);
         return ResponseEntity.ok(new ResponseDto<>(null, "Convocatoria creada exitosamente.", true));
@@ -37,12 +37,15 @@ public class InternshipController {
             @RequestParam(required = false) Date startingDate,
             @RequestParam(required = false) Date endingDate,
             @RequestParam(required = false) Integer page,
-            @RequestParam(required = false) Integer size){
-        try{
-            LOGGER.info("starting get internship list with parameters city: {}, major: {}, startingDate: {}, endingDate: {}, page: {}, size: {}", city, major, startingDate, endingDate, page, size);
-            Page<InternshipListDto> internshipList = internshipService.filterInternships(city, startingDate, endingDate, major, page, size);
-            return ResponseEntity.ok(new ResponseDto<>( internshipList,"List Obtained",true));
-        } catch (Exception e){
+            @RequestParam(required = false) Integer size) {
+        try {
+            LOGGER.info(
+                    "starting get internship list with parameters city: {}, major: {}, startingDate: {}, endingDate: {}, page: {}, size: {}",
+                    city, major, startingDate, endingDate, page, size);
+            Page<InternshipListDto> internshipList = internshipService.filterInternships(city, startingDate, endingDate,
+                    major, page, size);
+            return ResponseEntity.ok(new ResponseDto<>(internshipList, "List Obtained", true));
+        } catch (Exception e) {
             LOGGER.error("Error getting internship list {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
@@ -51,16 +54,14 @@ public class InternshipController {
 
     @GetMapping("/institution/{id}/active")
     public ResponseEntity<ResponseDto<List<ActiveInternshipDto>>> getActiveInternshipsByInstitutionId(
-            @PathVariable Long id
-    ) {
+            @PathVariable Long id) {
         List<ActiveInternshipDto> internships = internshipService.getActiveInternshipsByInstitutionId(id);
         return ResponseEntity.ok(new ResponseDto<>(internships, null, true));
     }
 
     @GetMapping("/{id}/applicants")
-    public ResponseEntity<ResponseDto<List<ApplicantDto>>> getApplicantsByInternshipId (
-            @PathVariable Long id
-    ) {
+    public ResponseEntity<ResponseDto<List<ApplicantDto>>> getApplicantsByInternshipId(
+            @PathVariable Long id) {
         List<ApplicantDto> applicants = internshipService.getApplicantsByInternshipId(id);
         return ResponseEntity.ok(new ResponseDto<>(applicants, null, true));
     }
@@ -70,23 +71,23 @@ public class InternshipController {
             @PathVariable Long id,
             @PathVariable Long applicationId,
             @PathVariable Integer state,
-            @RequestBody String message
-    ) {
+            @RequestBody String message) {
         internshipApplicationService.updateApplicationStatus(id, applicationId, state, message);
         return ResponseEntity.ok(new ResponseDto<>(true, null, true));
     }
-
 
     @GetMapping("/{id}")
     public ResponseEntity<ResponseDto<InternshipDto>> getInternshipById(@PathVariable Long id) {
         return ResponseEntity.ok(new ResponseDto<>(internshipService.getInternshipById(id), null, true));
     }
+
     @PutMapping
-    public ResponseEntity<ResponseDto<Void>> updateInternship(@RequestBody InternshipDto internshipDto){
+    public ResponseEntity<ResponseDto<Void>> updateInternship(@RequestBody InternshipDto internshipDto) {
         LOGGER.info("Updating internship {}", internshipDto);
         internshipService.updateInternship(internshipDto);
         return ResponseEntity.ok(new ResponseDto<>(null, "Convocatoria actualizada exitosamente.", true));
     }
+
     @GetMapping("/{id}/details")
     public ResponseEntity<ResponseDto<InternshipDetailsDto>> getInternshipDetailsById(@PathVariable Long id) {
         return ResponseEntity.ok(new ResponseDto<>(internshipService.getInternshipDetailsById(id), null, true));
@@ -100,7 +101,8 @@ public class InternshipController {
     @PutMapping("/{id}/status/{state}")
     public ResponseEntity<ResponseDto<Long>> internshipAccepted(@PathVariable Long id, @PathVariable Integer state) {
         internshipService.internShipChangeAprovedState(id, state);
-        return ResponseEntity.ok(new ResponseDto<>(internshipService.getInternshipApiById(id).getInternshipId(), null, true));
+        return ResponseEntity
+                .ok(new ResponseDto<>(internshipService.getInternshipApiById(id).getInternshipId(), null, true));
     }
 
     @PostMapping("/{id}")
@@ -111,17 +113,21 @@ public class InternshipController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<ResponseDto<List<InternshipListDto>>> getInternshipByInstitutionId(@RequestParam String title) {
-        return ResponseEntity.ok(new ResponseDto<>(internshipService.getInternshipByTitleOrInstitutionName(title), null, true));
+    public ResponseEntity<ResponseDto<List<InternshipListDto>>> getInternshipByInstitutionId(
+            @RequestParam String title) {
+        return ResponseEntity
+                .ok(new ResponseDto<>(internshipService.getInternshipByTitleOrInstitutionName(title), null, true));
     }
 
     @GetMapping("/last")
     public ResponseEntity<ResponseDto<List<InternshipListDto>>> getLast5Internships() {
         return ResponseEntity.ok(new ResponseDto<>(internshipService.getTop5Internships(), null, true));
     }
-  
+
     @GetMapping("/institution/{idInstitution}/status/{state}")
-    public ResponseEntity<ResponseDto<List<InternshipApiDto>>> getInternshipActiveConvocatory(@PathVariable Long idInstitution, @PathVariable Integer state) {
-        return ResponseEntity.ok(new ResponseDto<>(internshipService.getInternshipActive(idInstitution,state), "List of institutions and Approved states", true));
+    public ResponseEntity<ResponseDto<List<InternshipApiDto>>> getInternshipActiveConvocatory(
+            @PathVariable Long idInstitution, @PathVariable Integer state) {
+        return ResponseEntity.ok(new ResponseDto<>(internshipService.getInternshipActive(idInstitution, state),
+                "List of institutions and Approved states", true));
     }
 }
