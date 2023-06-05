@@ -190,10 +190,11 @@ public class InternshipServiceImpl implements InternshipService {
         return result;
     }
 
-    public InternshipDto getInternshipById(Long id){
-        return  InternshipMapper.entityToDto(internshipRepository.findById(id).orElseThrow());
+    public InternshipDto getInternshipById(Long id) {
+        Internship internship =   internshipRepository.findById(id).orElseThrow();
+        LOGGER.info("Internship {}", internship);
+        return InternshipMapper.entityToDto(internship);
     }
-
     @Override
     public InternshipApiDto getInternshipApiById(Long id){
         Internship internship = internshipRepository.findById(id).orElseThrow();

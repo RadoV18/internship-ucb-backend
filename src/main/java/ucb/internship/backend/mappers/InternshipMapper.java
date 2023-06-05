@@ -25,6 +25,11 @@ public class InternshipMapper {
         internshipDto.setMajorList(internship.getMajorList().stream()
                 .map(internshipMajor -> MajorMapper.entityToDto(internshipMajor.getMajor()))
                 .toList());
+        internshipDto.setInternshipQuestions(internship.getInternshipQuestions().stream()
+                .map(InternshipQuestionMapper::entityToDto).collect(Collectors.toList()));
+        internshipDto.setTitle(internship.getTitle());
+        internshipDto.setDescription(internship.getDescription());
+        internshipDto.setInstitutionId(internship.getInstitution().getInstitutionId());
         return internshipDto;
     }
 
