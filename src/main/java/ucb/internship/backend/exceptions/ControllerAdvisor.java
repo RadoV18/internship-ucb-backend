@@ -19,13 +19,4 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         logger.error(e.getMessage());
     }
 
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<ResponseDto<Null>> handleRuntimeException(RuntimeException e) {
-        e.printStackTrace();
-        logger.error(e.getMessage());
-        return ResponseEntity.ok(new ResponseDto<>(null, e.getMessage(), false));
-    }
-
-
-
 }

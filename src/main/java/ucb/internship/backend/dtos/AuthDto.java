@@ -1,6 +1,8 @@
 // TODO: change this to token and refresh token
 package ucb.internship.backend.dtos;
 
+import java.util.List;
+
 import lombok.*;
 
 @NoArgsConstructor
@@ -15,4 +17,9 @@ public class AuthDto {
     private String name;
     private String email;
     private String profilePictureUrl;
+
+    private String token;
+    private String type = "Bearer";
+    private String refreshToken;
+    private List<String> roles;
 }
