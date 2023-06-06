@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ucb.internship.backend.dtos.*;
 import ucb.internship.backend.services.InternshipApplicationService;
@@ -53,6 +54,7 @@ public class InternshipController {
     }
 
     @GetMapping("/institution/{id}/active")
+    @PreAuthorize("hasRole('INSTITUTION')")
     public ResponseEntity<ResponseDto<List<ActiveInternshipDto>>> getActiveInternshipsByInstitutionId(
             @PathVariable Long id) {
         List<ActiveInternshipDto> internships = internshipService.getActiveInternshipsByInstitutionId(id);
