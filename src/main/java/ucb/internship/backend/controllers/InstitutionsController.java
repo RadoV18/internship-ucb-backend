@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ucb.internship.backend.dtos.InstitutionsDto;
 import ucb.internship.backend.dtos.ResponseDto;
@@ -26,6 +27,7 @@ public class InstitutionsController {
     }
 
     @GetMapping("/new")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<InstitutionsDto>> get_institutions() {
         LOGGER.info("REQUEST: Iniciando petición para obtener el listado de instituciones");
         List<InstitutionsDto> result = institutionsBL.getInstitutions();
@@ -40,12 +42,12 @@ public class InstitutionsController {
     }
 
     @PutMapping
-    public ResponseEntity<ResponseDto<String>> updateInstitution(@RequestBody InstitutionsDto institutionDto){
-        try{
+    public ResponseEntity<ResponseDto<String>> updateInstitution(@RequestBody InstitutionsDto institutionDto) {
+        try {
             institutionsBL.updateInstitution(institutionDto);
-            ResponseDto<String> responseDto = new ResponseDto<>(null,"Institucion actualizada correctamente", true);
-            return new ResponseEntity<ResponseDto<String>>(responseDto,HttpStatus.OK);
-        }catch (Exception e){
+            ResponseDto<String> responseDto = new ResponseDto<>(null, "Institucion actualizada correctamente", true);
+            return new ResponseEntity<ResponseDto<String>>(responseDto, HttpStatus.OK);
+        } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

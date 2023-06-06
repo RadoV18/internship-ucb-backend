@@ -32,6 +32,7 @@ public class InternshipController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('STUDENT') or hasRole('GRADUATE')")
     public ResponseEntity<ResponseDto<Page<InternshipListDto>>> getInternship(
             @RequestParam(required = false) String city,
             @RequestParam(required = false) String major,
@@ -62,6 +63,7 @@ public class InternshipController {
     }
 
     @GetMapping("/{id}/applicants")
+    @PreAuthorize("hasRole('INSTITUTION')")
     public ResponseEntity<ResponseDto<List<ApplicantDto>>> getApplicantsByInternshipId(
             @PathVariable Long id) {
         List<ApplicantDto> applicants = internshipService.getApplicantsByInternshipId(id);
@@ -69,6 +71,7 @@ public class InternshipController {
     }
 
     @PutMapping("/{id}/applications/{applicationId}/status/{state}")
+    @PreAuthorize("hasRole('INSTITUTION')")
     public ResponseEntity<ResponseDto<Boolean>> updateApplicationStatus(
             @PathVariable Long id,
             @PathVariable Long applicationId,
@@ -84,6 +87,7 @@ public class InternshipController {
     }
 
     @PutMapping
+    @PreAuthorize("hasRole('INSTITUTION')")
     public ResponseEntity<ResponseDto<Void>> updateInternship(@RequestBody InternshipDto internshipDto) {
         LOGGER.info("Updating internship {}", internshipDto);
         internshipService.updateInternship(internshipDto);
@@ -91,16 +95,19 @@ public class InternshipController {
     }
 
     @GetMapping("/{id}/details")
+    @PreAuthorize("hasRole('STUDENT') or hasRole('GRADUATE')")
     public ResponseEntity<ResponseDto<InternshipDetailsDto>> getInternshipDetailsById(@PathVariable Long id) {
         return ResponseEntity.ok(new ResponseDto<>(internshipService.getInternshipDetailsById(id), null, true));
     }
 
     @GetMapping("/pending")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ResponseDto<List<InternshipApiDto>>> getInternshipAll() {
         return ResponseEntity.ok(new ResponseDto<>(internshipService.getInternshipAll(), null, true));
     }
 
     @PutMapping("/{id}/status/{state}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ResponseDto<Long>> internshipAccepted(@PathVariable Long id, @PathVariable Integer state) {
         internshipService.internShipChangeAprovedState(id, state);
         return ResponseEntity
